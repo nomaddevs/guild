@@ -70,6 +70,7 @@ func main() {
 	}
 
 	fmt.Println("Configuring server settings...")
+
 	tls, err := db.GetTLS()
 	if nil != err {
 		fmt.Println("TLS retrieval attempt failed:")
