@@ -1,0 +1,35 @@
+{{define "navbar"}}
+<nav class="navbar navbar-default navbar-static-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">NoBelfsAllowed - US Thrall</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li>&emsp;</li>
+      <li>&emsp;</li>
+    </ul>
+    <ul class="nav navbar-nav">
+      <li {{if eq .Active "home" }}class="active"{{end}}><a href="/">Home</a></li>
+      <li {{if eq .Active "about" }}class="active"{{end}}><a href="/about">About</a></li>
+      <li {{if eq .Active "media" }}class="active"{{end}}><a href="/media">Media</a></li>
+      <li {{if eq .Active "roster" }}class="active"{{end}}><a href="/roster">Roster</a></li>
+      <li {{if eq .Active "apply" }}class="active"{{end}}><a href="/apply">Apply</a></li>
+      <li {{if eq .Active "sim" }}class="active"{{end}}><a href="/sim">Sim</a></li>
+    </ul>
+
+  {{with .User}}
+    {{if not .BattleTag}}
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+      <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+    </ul>
+    {{else}}
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="#"><span class="glyphicon glyphicon-user"></span> {{.BattleTag}}</a></li>
+      <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Logout </a></li>
+    </ul>
+    {{end}}
+  {{end}}
+  </div>
+</nav>
+{{end}}

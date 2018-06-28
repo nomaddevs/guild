@@ -1,0 +1,39 @@
+{{define "content"}}
+<div class="container">
+  {{with .guildinfo}}
+    Realm: {{.Realm}}<br>
+    Battlegroup: {{.Battlegroup}}<br>
+    Achievement Points: {{.AchievementPoints}}<br>
+  {{end}}
+
+  <h2>Members</h2>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>&nbsp;</th>
+        <th>Name</th>
+        <th>Rank</th>
+        <th>Class</th>
+        <th>Race</th>
+        <th>Gender</th>
+        <th>Level</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{with .guildinfo}}
+      {{range .Members}}
+      <tr>
+        <th><img src="https://render-us.worldofwarcraft.com/character/{{.Character.Thumbnail}}"></th>
+        <th>{{.Character.Name}}</th>
+        <th>{{.Rank}}</th>
+        <th>{{.Character.Class}}</th>
+        <th>{{.Character.Race}}</th>
+        <th>{{.Character.Gender}}</th>
+        <th>{{.Character.Level}}</th>
+      </tr> 
+      {{end}}
+      {{end}}
+    </tbody>
+  </table>
+</div>
+{{end}}

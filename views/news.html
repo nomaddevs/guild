@@ -1,0 +1,39 @@
+{{define "content"}}
+<div class="container">
+
+<div class="row">
+
+<div class="col-md-8">
+  {{range .NewsPosts}}
+  <div class="panel panel-default">
+    <div class="panel-heading">{{.Title}}</div>
+    <div class="panel-body">{{.Body}}</div>
+    <div class="panel-footer">Posted by {{.Author}} on {{.Date}}</div>
+  </div>
+  {{end}}
+</div>
+
+<div class="col-md-4">
+  <div class="panel panel-default">
+    <div class="panel-heading">Recruitment</div>
+    <div class="panel-body">Panel Content</div>
+    <div class="panel-footer"></div>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">Progression</div>
+    <div class="panel-body">Panel Content</div>
+    <div class="panel-footer"></div>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">Mythic+ Leaderboard</div>
+    <div class="panel-body">Panel Content</div>
+    <div class="panel-footer"></div>
+  </div>
+</div>
+
+</div>
+
+</div>
+{{end}}

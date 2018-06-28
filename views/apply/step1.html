@@ -1,0 +1,101 @@
+{{define "content"}}
+<div class="container">
+{{with .User}}
+  {{if not .BattleTag}}
+  <div class="well well-sm"><center>Click <a href="/login">here</a> to authenticate via the Battle.net API.<br>(You'll need to navigate to this page again)</center></div>
+  {{else}}
+  <div class="well well-sm"><center>You're authenticated! Let's get started:</center></div>
+  {{end}}
+{{end}}
+{{with .Characters}}
+  {{if not .CharacterList}}
+  {{else}}
+  <form action="/apply" method="POST">
+    <div class="panel panel-default">
+      <div class="panel-heading"><h3>Your Level 110 Characters <small>(please select one)</small></h3></div>
+      <div class="radio">
+  {{range .CharacterList}}
+    {{if eq .Level 110}}
+      <div class="panel-body">
+        <label>
+        <input type="radio" name="optradio">
+          <div class="row">
+            <div class="col-md-4">
+              <img src="https://render-us.worldofwarcraft.com/character/{{.Thumbnail}}">
+            </div>
+            <div class="col-md-8">
+              <div class="row"><div class="col-md-12"><h4>Name: <small>{{.Name}}</small></h4></div></div>
+              <div class="row"><div class="col-md-12"><h4>Realm: <small>{{.Realm}}</small></h4></div></div>
+              <div class="row"><div class="col-md-12"><h4>Battlegroup: <small>{{.Battlegroup}}</small></h4></div></div>
+            </div>
+          </div>
+        </label>
+      </div>
+    {{end}}
+  {{end}}
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading"><h3>Personal Information</h3></div>
+      <div class="panel-body">
+        <div class="form-group">
+          <input type="email" class="form-control" id="email" placeholder="Email">
+        </div>
+        <div class="form-group">
+          <input type="text" class="form-control" id="realname" placeholder="Real Name (Can enter first name only)">
+        </div>
+        <div class="form-group">
+          <input type="text" class="form-control" id="location" placeholder="Location">
+        </div>
+        <div class="form-group">
+          <input type="text" class="form-control" id="age" placeholder="Age">
+        </div>
+        <div class="form-group">
+          <input type="text" class="form-control" id="gender" placeholder="Gender">
+        </div>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading"><h3>Questionnaire</h3></div>
+      <div class="panel-body">
+        <div class="form-group">
+          <label for="comment">Computer Specs:</label>
+          <textarea class="form-control" rows="5" id="computerspecs" placeholder="Describe your processor, graphics card, etc."></textarea>
+        </div>
+        <div class="form-group">
+          <label for="comment">Previous Guilds:</label>
+          <textarea class="form-control" rows="5" id="previousguilds" placeholder="Guilds you've played with before, and servers they reside in."></textarea>
+        </div>
+        <div class="form-group">
+          <label for="comment">Reasons for Leaving:</label>
+          <textarea class="form-control" rows="5" id="leavingreasons" placeholder="Why did you leave your previous guilds?"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="comment">Reason(s) for Joining Casual Cupcake:</label>
+          <textarea class="form-control" rows="5" id="whyjoin" placeholder="Why do you want to join Casual Cupcake and not another guild?"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading"><h3>Final Step</h3></div>
+      <div class="panel-body">
+        <div class="form-group">
+          <label for="comment">References:</label>
+          <input type="text" class="form-control" id="references" placeholder="People we can contact to research you.">
+        </div>
+        <div class="form-group">
+          <label for="comment">Final Remarks:</label>
+          <textarea class="form-control" rows="5" id="finalremarks" placeholder="Links to VODs of boss kills, your personal Twitch.tv stream, or other things that might make you look good."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <center><button type="submit" class="btn btn-default">Submit Application</button></center>
+  </form>
+</div>
+  {{end}}
+{{end}}
+{{end}}

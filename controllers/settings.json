@@ -1,0 +1,16 @@
+{
+	"dbconfig": {
+		"username": "guild",
+		"unixsocketpath": "",
+		"password": "a",
+		"host": "172.17.0.2",
+		"port": "3306",
+		"database": "guild",
+		"charset": "utf8",
+	},
+	"tlsconfig": {
+		"addr": "443",
+		"certFile": "/etc/letsencrypt/live/www.casualcupcake.com/fullchain.pem",
+		"keyFile": "/etc/letsencrypt/live/www.casualcupcake.com/privkey.pem",
+	},
+}
