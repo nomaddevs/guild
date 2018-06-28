@@ -5,6 +5,7 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/gorilla/securecookie"
+	"github.com/munsy/guild/api"
 )
 
 // Route struct.
@@ -61,4 +62,10 @@ var routes = Routes{
 	Route{"Admin", "POST", "/upload", upload},
 	Route{"NewNewsPost", "GET", "/new_news", handleMakeNewsPost},
 	Route{"NewNewsPost", "POST", "/new_news", handleMakeNewsPost},
+
+	// API
+	Route{"Angular", "GET", api.EndpointTestAngular, api.HandleAngular},
+	Route{"Angular", "POST", api.EndpointTestAngular, api.HandleAngular},
+	Route{"Test", "GET", api.EndpointTest, handleTest},
+	Route{"Test", "POST", api.EndpointTest, handleTest},
 }

@@ -11,8 +11,8 @@ import (
 	"strings"
 	"syscall"
 
-	"github.com/munsylol/guild/models"
-	"github.com/munsylol/guild/controllers"
+	"github.com/munsy/guild/controllers"
+	"github.com/munsy/guild/models"
 	"golang.org/x/crypto/ssh/terminal"
 )
 
@@ -98,7 +98,6 @@ func main() {
 	// From setting up simulationcraft. Example page. Delete later.
 	simcHandler := http.StripPrefix("/simc/", http.FileServer(http.Dir("./simc/")))
 	router.PathPrefix("/simc/").Handler(simcHandler)
-
 
 	router.PathPrefix("/css/").Handler(cssHandler)
 	router.PathPrefix("/js/").Handler(jsHandler)

@@ -1,15 +1,12 @@
-package controllers
+package api
 
 import (
 	"encoding/json"
-	//"fmt"
-	//"html/template"
 	"net/http"
-	//"github.com/munsylol/guild/models"
 )
 
-// About page
-func handleAngular(w http.ResponseWriter, r *http.Request) {
+// HandleAngular handles AngularJS
+func HandleAngular(w http.ResponseWriter, r *http.Request) {
 	/*
 		session, err := store.Get(r, "cupcake")
 		if err != nil {
