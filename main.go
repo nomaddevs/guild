@@ -91,7 +91,8 @@ func main() {
 	fmt.Println("Starting server...")
 	router := controllers.NewRouter()
 	cssHandler := http.StripPrefix("/css/", http.FileServer(http.Dir("./views/css/")))
-	jsHandler := http.StripPrefix("/js/", http.FileServer(http.Dir("./views/js/")))
+	jsHandler := http.StripPrefix("/js/", http.FileServer(http.Dir("./views/js/dist/js")))
+	//jsHandler := http.StripPrefix("/js/", http.FileServer(http.Dir("./views/js/")))
 	imagesHandler := http.StripPrefix("/images/", http.FileServer(http.Dir("./views/images/")))
 	newsImagesHandler := http.StripPrefix("/images/news/", http.FileServer(http.Dir("./views/images/news/")))
 
