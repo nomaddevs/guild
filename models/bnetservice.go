@@ -69,7 +69,7 @@ func Get(url string, v interface{}) error {
 	err = json.Unmarshal([]byte(body), &v)
 	if nil != err {
 		return err
-	} 
+	}
 
 	return nil
 }

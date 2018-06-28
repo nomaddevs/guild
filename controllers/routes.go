@@ -43,6 +43,7 @@ var routes = Routes{
 	Route{"Roster", "GET", "/roster", handleRoster},
 	Route{"About", "GET", "/about", handleAbout},
 	Route{"Media", "GET", "/media", handleMedia},
+	Route{"Sim", "GET", "/sim", handleSim},
 
 	// Battle.net authentication routing
 	Route{"Login", "GET", "/login", handleBnetLogin},
@@ -52,4 +53,12 @@ var routes = Routes{
 	// Recruitment application routing
 	Route{"Apply", "GET", "/apply", handleApply},
 	Route{"Apply", "POST", "/apply", handleApply},
+
+	// Super duper top secret shit lol
+	Route{"Admin", "GET", "/admin", handleAdmin},
+	Route{"Admin", "POST", "/admin", handleAdmin},
+	Route{"Admin", "GET", "/upload", upload},
+	Route{"Admin", "POST", "/upload", upload},
+	Route{"NewNewsPost", "GET", "/new_news", handleMakeNewsPost},
+	Route{"NewNewsPost", "POST", "/new_news", handleMakeNewsPost},
 }

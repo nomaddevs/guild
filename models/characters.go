@@ -1,7 +1,5 @@
 package models
 
-//import bnet "github.com/mitchellh/go-bnet"
-
 // CharacterSpec represents the character specilization information 
 // for a particular WoW character from a given WoW profile.
 type CharacterSpec struct {

@@ -7,6 +7,8 @@ USE guild;
 
 CREATE TABLE tlsinfo(addr varchar(256) NOT NULL PRIMARY KEY, certfile varchar(256) NOT NULL, keyfile varchar(256) NOT NULL);
 
+CREATE TABLE applications(id BIGINT NOT NULL AUTO_INCREMENT, wowcharacter varchar(50) NOT NULL, email varchar(50) NOT NULL, realname varchar(50) NOT NULL, location varchar(100) NOT NULL, age TINYINT NOT NULL, gender varchar(20) NOT NULL, computerspecs varchar(500) NOT NULL, previousguilds varchar(500) NOT NULL, reasonsleavingguilds varchar(500) NOT NULL, whyjointhisguild varchar(500) NOT NULL, wowreferences varchar(500) NOT NULL, finalremarks varchar(500) NOT NULL, PRIMARY KEY (id)) ENGINE = InnoDB;
+
 CREATE TABLE CREATE TABLE bnetapi(apikey varchar(32) NOT NULL PRIMARY KEY, apisecret varchar(32) NOT NULL);
 
 CREATE TABLE newsposts(id BIGINT NOT NULL AUTO_INCREMENT, title VARCHAR(128) NOT NULL, body MEDIUMBLOB NOT NULL, date DATETIME NOT NULL, author VARCHAR(64) NOT NULL, PRIMARY KEY (id)) ENGINE = InnoDB;
@@ -22,13 +24,12 @@ CREATE USER 'guild'@'localhost' IDENTIFIED BY 'a';
 GRANT ALL PRIVILEGES ON *.* TO 'guild'@'localhost';
 */
 
-package controllers
+package models
 
 import (
 	"database/sql"
 	"errors"
 
-	"github.com/munsylol/guild/models"
 	_ "github.com/go-sql-driver/mysql"
 )
 
@@ -137,50 +138,5 @@ func (db *MariaDBConfig) GetTLS() (*TLSconfig, error) {
 	}
 
 	return cfg, nil
-}
-
-func GetNewsPosts(username, password string) ([]models.NewsPost, error) {
-	db := &MariaDBConfig{
-                username,
-                "",
-                password,
-                "localhost",
-                "3306",
-                "guild",
-                "",
-        }
-
-        // Create the database handle, confirm driver is present
-        conn, err := sql.Open(db.DriverName(), db.ConnectionString())
-        if nil != err {
-                return nil, err
-        }
-        defer conn.Close()
-
-        err = conn.Ping()
-        if err != nil {
-                return nil, err
-        }
-
-	// Execute the query
-	rows, err := conn.Query("SELECT * FROM newsposts")
-	if err != nil {
-		return nil, err
-	}
-
-	npList := []models.NewsPost{}
-
-	// Fetch rows
-	for rows.Next() {
-		var np models.NewsPost
-		err = rows.Scan(&np.ID, &np.Title, &np.Body, &np.Date, &np.Author)
-		if err != nil {
-			return nil, err
-		}
-
-		npList = append(npList, np)
-	}
-
-        return npList, nil
 }
 

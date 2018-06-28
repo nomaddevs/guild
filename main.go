@@ -11,6 +11,7 @@ import (
 	"strings"
 	"syscall"
 
+	"github.com/munsylol/guild/models"
 	"github.com/munsylol/guild/controllers"
 	"golang.org/x/crypto/ssh/terminal"
 )
@@ -37,8 +38,9 @@ func credentials() (string, string) {
 
 	fmt.Print("Enter Password: ")
 	bytePassword, err := terminal.ReadPassword(int(syscall.Stdin))
-	if err == nil {
-		fmt.Println("\nPassword typed: " + string(bytePassword))
+	if err != nil {
+		fmt.Println("Bad password read")
+		panic(err)
 	}
 	password := string(bytePassword)
 
@@ -57,7 +59,7 @@ func main() {
 	} else {
 		username, password = credentials()
 	}
-	db := &controllers.MariaDBConfig{
+	db := &models.MariaDBConfig{
 		username,
 		"",
 		password,
@@ -74,7 +76,7 @@ func main() {
 		fmt.Println(err.Error())
 		os.Exit(1)
 	}
-	cfg := &controllers.Config{
+	cfg := &models.Config{
 		db,
 		tls,
 	}
