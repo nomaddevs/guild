@@ -75,7 +75,6 @@ func main() {
 	if nil != err {
 		fmt.Println("TLS retrieval attempt failed:")
 		fmt.Println(err.Error())
-		os.Exit(1)
 	}
 	cfg := &models.Config{
 		db,
@@ -86,7 +85,6 @@ func main() {
 	if nil != err {
 		fmt.Println("Database test failed:")
 		fmt.Println(err.Error())
-		os.Exit(1)
 	}
 
 	fmt.Println("Starting server...")
