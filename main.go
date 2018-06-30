@@ -11,7 +11,7 @@ import (
 	"strings"
 	"syscall"
 
-	"github.com/munsy/guild/controllers"
+	//"github.com/munsy/guild/controllers"
 	"github.com/munsy/guild/models"
 	"golang.org/x/crypto/ssh/terminal"
 )
@@ -76,6 +76,7 @@ func main() {
 		fmt.Println("TLS retrieval attempt failed:")
 		fmt.Println(err.Error())
 	}
+
 	cfg := &models.Config{
 		db,
 		tls,
@@ -88,31 +89,36 @@ func main() {
 	}
 
 	fmt.Println("Starting server...")
-	router := controllers.NewRouter()
-	cssHandler := http.StripPrefix("/css/", http.FileServer(http.Dir("./views/css/")))
-	jsHandler := http.StripPrefix("/js/", http.FileServer(http.Dir("./views/js/dist/js/")))
-	//jsHandler := http.StripPrefix("/js/", http.FileServer(http.Dir("./views/js/")))
-	imagesHandler := http.StripPrefix("/images/", http.FileServer(http.Dir("./views/images/")))
-	newsImagesHandler := http.StripPrefix("/images/news/", http.FileServer(http.Dir("./views/images/news/")))
+	/*
+		router := controllers.NewRouter()
+		cssHandler := http.StripPrefix("/css/", http.FileServer(http.Dir("./views/css/")))
+		jsHandler := http.StripPrefix("/js/", http.FileServer(http.Dir("./views/js/dist/js/")))
+		//jsHandler := http.StripPrefix("/js/", http.FileServer(http.Dir("./views/js/")))
+		imagesHandler := http.StripPrefix("/images/", http.FileServer(http.Dir("./views/images/")))
+		newsImagesHandler := http.StripPrefix("/images/news/", http.FileServer(http.Dir("./views/images/news/")))
 
-	// From setting up simulationcraft. Example page. Delete later.
-	simcHandler := http.StripPrefix("/simc/", http.FileServer(http.Dir("./simc/")))
-	router.PathPrefix("/simc/").Handler(simcHandler)
+		// From setting up simulationcraft. Example page. Delete later.
+		simcHandler := http.StripPrefix("/simc/", http.FileServer(http.Dir("./simc/")))
+		router.PathPrefix("/simc/").Handler(simcHandler)
 
-	router.PathPrefix("/css/").Handler(cssHandler)
-	router.PathPrefix("/js/").Handler(jsHandler)
-	router.PathPrefix("/images/").Handler(imagesHandler)
-	router.PathPrefix("/images/news/").Handler(newsImagesHandler)
+		router.PathPrefix("/css/").Handler(cssHandler)
+		router.PathPrefix("/js/").Handler(jsHandler)
+		router.PathPrefix("/images/").Handler(imagesHandler)
+		router.PathPrefix("/images/news/").Handler(newsImagesHandler)
+	*/
+
+	fs := http.FileServer(http.Dir("views"))
+	http.Handle("/", fs)
 
 	if nil == cfg.TLS {
 		fmt.Println("TLS configuration not set. Falling back to HTTP...")
-		http.ListenAndServe(":80", router)
+		http.ListenAndServe(":80", nil)
 	} else {
 		fmt.Println("Redirecting HTTPS traffic to " + cfg.TLS.Addr)
 		// Redirect all HTTP requests to HTTPS.
 		go http.ListenAndServe(":80", http.HandlerFunc(redirect))
 
 		// Start the server through TLS/SSL.
-		log.Fatal(http.ListenAndServeTLS(cfg.TLS.Addr, cfg.TLS.CertFile, cfg.TLS.KeyFile, router))
+		log.Fatal(http.ListenAndServeTLS(cfg.TLS.Addr, cfg.TLS.CertFile, cfg.TLS.KeyFile, nil))
 	}
 }

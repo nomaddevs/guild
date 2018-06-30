@@ -11,7 +11,7 @@ func handleTest(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case "GET":
 		t := template.Must(template.ParseFiles(home + "/views/test.html"))
-		t.Execute(w, nil)
+		t.ExecuteTemplate(w, "nothing", nil)
 		break
 	default:
 		fmt.Fprintln(w, "How did you get here...?")

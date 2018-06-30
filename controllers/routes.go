@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -16,6 +17,10 @@ type Route struct {
 	HandlerFunc http.HandlerFunc
 }
 
+func (r Route) ToString() string {
+	return fmt.Sprintf("%-15s %-15s %-15s", r.Name, r.Method, r.Pattern)
+}
+
 // Routes type.
 type Routes []Route
 
@@ -27,6 +32,7 @@ var cookieHandler = securecookie.New(
 func NewRouter() *mux.Router {
 	router := mux.NewRouter().StrictSlash(true)
 	for _, route := range routes {
+		fmt.Printf("[Route] Loaded %s\n", route.ToString())
 		router.Methods(route.Method).Path(route.Pattern).Name(route.Name).Handler(route.HandlerFunc)
 	}
 	return router
@@ -64,8 +70,8 @@ var routes = Routes{
 	Route{"NewNewsPost", "POST", "/new_news", handleMakeNewsPost},
 
 	// API
-	Route{"Angular", "GET", api.EndpointTestAngular, api.HandleAngular},
-	Route{"Angular", "POST", api.EndpointTestAngular, api.HandleAngular},
-	Route{"Test", "GET", api.EndpointTest, handleTest},
-	Route{"Test", "POST", api.EndpointTest, handleTest},
+	Route{"Angular", "GET", "/test", handleTest},
+	Route{"Angular", "POST", "/test", handleTest},
+	Route{"Test", "GET", api.EndpointTest, api.HandleAngular},
+	Route{"Test", "POST", api.EndpointTest, api.HandleAngular},
 }

@@ -5,6 +5,5 @@ var (
 	Version      = "beta/"
 	EndpointRoot = API + Version
 
-	EndpointTest        = EndpointRoot + "test"
-	EndpointTestAngular = EndpointRoot + "angular"
+	EndpointTest = EndpointRoot + "test"
 )
