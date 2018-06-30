@@ -2,3 +2,5 @@ mariadbconfig.json
 settings.json
 guild
 guild.exe
+web/guild
+web/guild.exe

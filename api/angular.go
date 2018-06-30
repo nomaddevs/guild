@@ -2,6 +2,7 @@ package api
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 )
 
@@ -29,36 +30,23 @@ func HandleAngular(w http.ResponseWriter, r *http.Request) {
 		}
 	*/
 
-	data := struct {
-		Name  string
-		Class string
-		Spec  string
-	}{
-		"Munsy",
-		"Druid",
-		"Resto",
-	}
-
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusCreated)
-	json.NewEncoder(w).Encode(data)
-
-	/*
-		switch r.Method {
-		case "GET":
-			data := struct {
-				Active string
-				User   models.BnetUser
-			}{
-				"about",
-				user,
-			}
-
-			t := template.Must(template.ParseFiles(home+"/views/base.html", home+"/views/libraries.html", home+"/views/navbar.html", home+"/views/about.html"))
-			t.ExecuteTemplate(w, "base", data)
-			break
-		default:
-			fmt.Fprintln(w, "Sorry, nothing here!")
+	switch r.Method {
+	case "GET":
+		data := struct {
+			Name  string
+			Class string
+			Spec  string
+		}{
+			"Munsy",
+			"Druid",
+			"Resto",
 		}
-	*/
+
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusCreated)
+		json.NewEncoder(w).Encode(data)
+		break
+	default:
+		fmt.Fprintln(w, "Sorry, nothing here!")
+	}
 }
