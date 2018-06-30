@@ -1,8 +1,33 @@
 <!DOCTYPE html>
 <html lang="en-US">
+
+<title>Coming soon...</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<!-- Custom CSS templates -->
+<link rel="stylesheet" href="css/style.css">
+
+<!-- Favicon info -->
+<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+<link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16">
+<link rel="manifest" href="/images/manifest.json">
+<link rel="mask-icon" href="/images/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="theme-color" content="#ffffff">
+
 <body ng-app="guild">
 <div ng-controller="guildController">
+  <guild-header></guild-header>
   <guild-menu-bar></guild-menu-bar>
+  <guild-content guild-page="media"></guild-content>
+  <guild-footer></guild-footer>
 </div>
 <script src="js/angular.min.js"></script>
 <script src="js/guildModule.js"></script>

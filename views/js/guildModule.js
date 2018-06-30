@@ -1,11 +1,32 @@
 var app = angular.module('guild', []);
 
 app.controller("guildController", function($scope) {
-	$scope.MenuOptions = ["Home", "Media", "Roster", "Apply"];
+	$scope.MenuOptions = ["home", "media", "roster", "apply"];
+	$scope.User = {
+		BattleTag: 'Guest',
+		LoggedIn: false
+	};
 });
 
-app.directive('guildMenuBar', function(){
+app.directive('guildHeader', function(){
 	return{
-		template: '<b>You did it!</b>',
+		templateUrl: 'header.html',
+	};
+})
+.directive('guildMenuBar', function() {
+	return {
+		templateUrl: 'navbar.html',
+	};
+})
+.directive('guildContent', function() {
+	return {
+		templateUrl: function(elem, attr) {
+			return attr.guildPage + ".html";
+		}
+	};
+})
+.directive('guildFooter', function() {
+	return {
+		templateUrl: 'footer.html',
 	};
 });
