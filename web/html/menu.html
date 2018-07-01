@@ -18,13 +18,13 @@
       </ul>
 
       <!-- Show if user is NOT logged in -->
-      <ul class="nav navbar-nav navbar-right">
+      <ul class="nav navbar-nav navbar-right" ng-if="!User.LoggedIn">
         <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
         <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
       </ul>
 
       <!-- Show if user is logged in -->
-      <ul class="nav navbar-nav navbar-right">
+      <ul class="nav navbar-nav navbar-right" ng-if="User.LoggedIn">
         <li><a href="#"><span class="glyphicon glyphicon-user"></span> Placeholder</a></li>
         <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Logout </a></li>
       </ul>

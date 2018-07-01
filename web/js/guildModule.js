@@ -25,11 +25,12 @@ app.config(function($routeProvider) {
 
 
 app.controller("guildController",['$scope', '$location', function($scope, $location) {
-	//$scope.MenuOptions = { "Home": 1, "About": 2, "Media": 3, "Roster": 4, "Apply": 5, };
-	//$scope.ActivePage = $scope.MenuOptions.Home;
+	$scope.User = {
+		BattleTag: "",
+		LoggedIn: false,
+	};
 
 	$scope.ChangeView = function(view) {
-	 	//$scope.ActivePage = view;
 	 	$location.path(view);
 	};
 }]);
