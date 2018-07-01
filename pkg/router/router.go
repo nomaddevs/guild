@@ -15,3 +15,10 @@ func NewRouter() *mux.Router {
 	}
 	return router
 }
+
+func Load(router *mux.Router, r Routes) {
+	for _, route := range r {
+		fmt.Printf("[ROUTE] Loaded %s\n", route.ToString())
+		router.Methods(route.Method).Path(route.Pattern).Name(route.Name).Handler(route.HandlerFunc)
+	}
+}
