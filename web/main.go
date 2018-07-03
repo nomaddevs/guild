@@ -17,7 +17,7 @@ import (
 )
 
 func redirect(w http.ResponseWriter, req *http.Request) {
-	// remove/add not default ports from req.Host
+	// remove/add non default ports from req.Host
 	var target string
 
 	target = "https://" + req.Host + req.URL.Path
@@ -50,9 +50,11 @@ func credentials() (string, string) {
 func main() {
 	fmt.Println("Initializing...")
 	var username, password string
+
 	//fmt.Println("Setting up runtime...")
 	//runtime.GOMAXPROCS(runtime.NumCPU()) // Use max amount of cores
 	//fmt.Println("Set runtime to use maximum amount of cores.")
+
 	if 3 == len(os.Args) {
 		username = os.Args[1]
 		password = os.Args[2]

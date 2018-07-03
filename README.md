@@ -9,8 +9,14 @@
 * github.com/gorilla/sessions
 
 ## To Do List
-### Angular
-- [ ] Convert
+### Router
+- [ ] 
+
+### Battle.net
+- [ ] Login Callback
+
+### UI
+- [x] Convert to Angular
 
 ### Guild Roster
 - [ ] Automatic updates (hourly)
