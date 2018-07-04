@@ -10,14 +10,6 @@ type Routes []Route
 // Mappings to the website, administrator panels, and other potential services.
 
 var routes = Routes{
-	// Index page routing.
-	/*
-		Route{"Index", "GET", "/", handleIndex},
-		Route{"Index", "POST", "/", handleIndex},
-		Route{"Index", "GET", "/index", handleIndex},
-		Route{"Index", "POST", "/index", handleIndex},
-	*/
-
 	// Battle.net authentication routing
 	//Route{"Login", "GET", "/login", handleBnetLogin},
 	//Route{"Callback", "POST", "/callback", handleBnetCallback},
