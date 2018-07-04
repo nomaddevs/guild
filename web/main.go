@@ -11,7 +11,7 @@ import (
 	"strings"
 	"syscall"
 
-	"github.com/munsy/guild/conf"
+	"github.com/munsy/guild/config"
 	//"github.com/munsy/guild/pkg/router"
 	"golang.org/x/crypto/ssh/terminal"
 )
@@ -61,7 +61,7 @@ func main() {
 	} else {
 		username, password = credentials()
 	}
-	db := &conf.MariaDBConfig{
+	db := &config.MariaDBConfig{
 		username,
 		"",
 		password,
@@ -79,7 +79,7 @@ func main() {
 		fmt.Println(err.Error())
 	}
 
-	cfg := &conf.Config{
+	cfg := &config.Config{
 		db,
 		tls,
 	}
