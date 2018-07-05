@@ -54,6 +54,10 @@ func (w *AnsiColorString) String() string {
 	return color(w.color) + text + ANSI_N
 }
 
+func (w *AnsiColorString) GoString() string {
+	return w.String()
+}
+
 func (w *AnsiColorString) Black() *AnsiColorString {
 	w.color = 0
 	return w
