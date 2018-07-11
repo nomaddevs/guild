@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"html/template"
 	"net/http"
-	"os"
+	//"os"
 	"strings"
 
 	"github.com/gorilla/securecookie"
@@ -15,8 +15,6 @@ import (
 )
 
 const CAN_MAKE_NEWS_POSTS = 3
-
-var home, _ = os.Getwd()
 
 var store = sessions.NewCookieStore(securecookie.GenerateRandomKey(64))
 
