@@ -24,7 +24,7 @@ CREATE USER 'guild'@'localhost' IDENTIFIED BY 'a';
 GRANT ALL PRIVILEGES ON *.* TO 'guild'@'localhost';
 */
 
-package conf
+package config
 
 import (
 	"database/sql"

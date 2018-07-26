@@ -8,13 +8,51 @@ import (
 	"net/http"
 	"os"
 	//"runtime"
+	"encoding/json"
 	"strings"
 	"syscall"
+	"time"
 
 	"github.com/munsy/guild/config"
 	//"github.com/munsy/guild/pkg/router"
+	"github.com/munsy/gobattlenet"
 	"golang.org/x/crypto/ssh/terminal"
 )
+
+// handleRealmStatus handles realm statuses for AngularJS
+func handleRealmStatus(w http.ResponseWriter, r *http.Request) {
+	settings := &battlenet.Settings{
+		Client: &http.Client{Timeout: (10 * time.Second)},
+		Locale: battlenet.Locale.AmericanEnglish,
+		Region: battlenet.Regions.US,
+	}
+
+	client, err := battlenet.WoWClient(settings, "your-key-here")
+
+	if nil != err {
+		fmt.Fprintln(w, "There was an error :(")
+		fmt.Println(w, err.Error())
+		return
+	}
+
+	switch r.Method {
+	case "GET":
+		response, err := client.RealmStatus()
+
+		if nil != err {
+			fmt.Fprintln(w, "There was an error :(")
+			fmt.Println(w, err.Error())
+			return
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusCreated)
+		json.NewEncoder(w).Encode(response.Data)
+		break
+	default:
+		fmt.Fprintln(w, "Sorry, nothing here!")
+	}
+}
 
 func redirect(w http.ResponseWriter, req *http.Request) {
 	// remove/add non default ports from req.Host
@@ -117,6 +155,9 @@ func main() {
 	mux.Handle("/html/", http.StripPrefix("/html", http.FileServer(http.Dir("./html"))))
 	mux.Handle("/images/", http.StripPrefix("/images", http.FileServer(http.Dir("./images"))))
 	mux.Handle("/js/", http.StripPrefix("/js", http.FileServer(http.Dir("./js"))))
+
+	// Roster test
+	mux.HandleFunc("/realms/status", handleRealmStatus)
 
 	// Any other request, we should render our SPA's only html file,
 	// Allowing angular to do the routing on anything else other then the api
