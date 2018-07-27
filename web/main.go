@@ -157,7 +157,7 @@ func main() {
 	mux.Handle("/js/", http.StripPrefix("/js", http.FileServer(http.Dir("./js"))))
 
 	// Roster test
-	mux.HandleFunc("/realms/status", handleRealmStatus)
+	mux.HandleFunc("/api/v1/realms/status", handleRealmStatus)
 
 	// Any other request, we should render our SPA's only html file,
 	// Allowing angular to do the routing on anything else other then the api
