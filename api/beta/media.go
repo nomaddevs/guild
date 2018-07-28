@@ -1,4 +1,4 @@
-package api
+package beta
 
 import (
 	"fmt"
@@ -8,8 +8,8 @@ import (
 	"github.com/munsy/guild/models"
 )
 
-// Roster page
-func handleRoster(w http.ResponseWriter, r *http.Request) {
+// Media page
+func handleMedia(w http.ResponseWriter, r *http.Request) {
 	session, err := store.Get(r, "cupcake")
 	if err != nil {
 		fmt.Printf("Invalid session %v\n", session)
@@ -43,12 +43,16 @@ func handleRoster(w http.ResponseWriter, r *http.Request) {
 
 	switch r.Method {
 	case "GET":
-		t, _ := template.ParseFiles(home+"/views/base.html", home+"/views/libraries.html", home+"/views/navbar.html", home+"/views/roster.html")
-		t.ExecuteTemplate(w, "base", M{
-			"Active":    "roster",
-			"user":      User,
-			"guildinfo": Guildinfo,
-		})
+		data := struct {
+			Active string
+			User   models.BnetUser
+		}{
+			"media",
+			User,
+		}
+
+		t := template.Must(template.ParseFiles(home+"/views/base.html", home+"/views/libraries.html", home+"/views/navbar.html", home+"/views/media.html"))
+		t.ExecuteTemplate(w, "base", data)
 		break
 	default:
 		fmt.Fprintln(w, "Sorry, nothing here!")

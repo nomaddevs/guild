@@ -1,4 +1,4 @@
-package api
+package beta
 
 import (
 	"fmt"
@@ -11,7 +11,6 @@ import (
 	"github.com/gorilla/sessions"
 	"github.com/mitchellh/go-bnet"
 	"github.com/munsy/guild/models"
-	"golang.org/x/oauth2"
 )
 
 const CAN_MAKE_NEWS_POSTS = 3

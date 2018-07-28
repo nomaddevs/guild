@@ -13,6 +13,7 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/munsy/guild/api"
 	"github.com/munsy/guild/config"
 	"golang.org/x/crypto/ssh/terminal"
 )
@@ -92,22 +93,6 @@ func main() {
 	}
 
 	fmt.Println("Starting server...")
-
-	/*
-		router := router.NewRouter()
-
-		staticHandler := http.StripPrefix("/", http.FileServer(http.Dir("./static/")))
-		cssHandler := http.StripPrefix("/css/", http.FileServer(http.Dir("./static/css/")))
-		jsHandler := http.StripPrefix("/js/", http.FileServer(http.Dir("./static/js/")))
-		imagesHandler := http.StripPrefix("/images/", http.FileServer(http.Dir("./static/images/")))
-		newsImagesHandler := http.StripPrefix("/images/news/", http.FileServer(http.Dir("./static/images/news/")))
-
-		router.PathPrefix("/").Handler(staticHandler)
-		router.PathPrefix("/css/").Handler(cssHandler)
-		router.PathPrefix("/js/").Handler(jsHandler)
-		router.PathPrefix("/images/").Handler(imagesHandler)
-		router.PathPrefix("/images/news/").Handler(newsImagesHandler)
-	*/
 
 	// Creates a new serve mux
 	mux := api.New(0)

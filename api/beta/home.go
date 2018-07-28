@@ -1,4 +1,4 @@
-package api
+package beta
 
 import (
 	"fmt"
@@ -10,7 +10,7 @@ import (
 
 // Index page
 func handleIndex(w http.ResponseWriter, r *http.Request) {
-	session, err := store.Get(r, "cupcake")
+	session, err := store.Get(r, "guild")
 	if err != nil {
 		fmt.Printf("Invalid session %v\n", session)
 		http.Error(w, err.Error(), http.StatusInternalServerError)

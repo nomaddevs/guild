@@ -1,18 +1,29 @@
-package api
+package beta
 
 import (
 	"fmt"
 	"net/http"
 
+	"github.com/munsy/battlenet"
 	"golang.org/x/oauth2"
 )
 
-func handleBnetLogin(w http.ResponseWriter, r *http.Request) {
-	url := bnetOauthConfig.AuthCodeURL(oauthStateString)
+func LoginRedirect(w http.ResponseWriter, r *http.Request) {
+	config := &oauth2.Config{
+		RedirectURL:  BlizzardCallbackURL,
+		ClientID:     Key,
+		ClientSecret: Secret,
+		Scopes:       []string{"wow.profile"},
+		Endpoint:     battlenet.Endpoint(battlenet.Regions.US),
+	}
+	// Some random string, random for each request
+	oauthStateString := "random"
+
+	url := config.AuthCodeURL(oauthStateString)
 	http.Redirect(w, r, url, http.StatusTemporaryRedirect)
 }
 
-func handleBnetCallback(w http.ResponseWriter, r *http.Request) {
+func LoginCallback(w http.ResponseWriter, r *http.Request) {
 	session, _ := store.Get(r, "guild")
 
 	r.ParseForm()

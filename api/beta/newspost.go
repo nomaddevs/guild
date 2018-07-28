@@ -1,4 +1,4 @@
-package api
+package beta
 
 import (
 	"fmt"

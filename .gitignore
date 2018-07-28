@@ -4,3 +4,5 @@ guild
 guild.exe
 web/web
 web/web.exe
+cmd/cli/cli
+cmd/cli/cli.exe

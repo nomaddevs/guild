@@ -10,7 +10,6 @@ import (
 	"os"
 	"strconv"
 	"time"
-	//	"github.com/munsylol/guild/models"
 )
 
 // upload logic
