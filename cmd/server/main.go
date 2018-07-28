@@ -13,10 +13,15 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/munsy/battlenet"
 	"github.com/munsy/guild/api"
 	"github.com/munsy/guild/config"
 	"golang.org/x/crypto/ssh/terminal"
 )
+
+var runTLS = false
+
+const staticRoutes = []string{"bootstrap", "css", "html", "images", "js"}
 
 func redirect(w http.ResponseWriter, req *http.Request) {
 	// remove/add non default ports from req.Host
@@ -28,8 +33,19 @@ func redirect(w http.ResponseWriter, req *http.Request) {
 		target += "?" + req.URL.RawQuery
 	}
 
-	http.Redirect(w, req, target,
-		http.StatusTemporaryRedirect)
+	http.Redirect(w, req, target, http.StatusTemporaryRedirect)
+}
+
+// Create room for static files serving
+func register(mux *http.ServeMux, dir string) {
+	ds := "./"
+	s := "/"
+
+	dsdir := ds + dir
+	sdir := s + dir
+	sdirs := s + dir + s
+
+	mux.Handle(sdirs, http.StripPrefix(sdir, http.FileServer(http.Dir(dsdir))))
 }
 
 func main() {
@@ -51,12 +67,9 @@ func main() {
 
 	mux := guild.Load()
 
-	// Create room for static files serving
-	mux.Handle("/bootstrap/", http.StripPrefix("/bootstrap", http.FileServer(http.Dir("./bootstrap"))))
-	mux.Handle("/css/", http.StripPrefix("/css", http.FileServer(http.Dir("./css"))))
-	mux.Handle("/html/", http.StripPrefix("/html", http.FileServer(http.Dir("./html"))))
-	mux.Handle("/images/", http.StripPrefix("/images", http.FileServer(http.Dir("./images"))))
-	mux.Handle("/js/", http.StripPrefix("/js", http.FileServer(http.Dir("./js"))))
+	for i := 0; i < len(staticRoutes); i++ {
+		register(mux, staticRoutes[i])
+	}
 
 	// Any other request, we should render our SPA's only html file,
 	// Allowing angular to do the routing on anything else other then the api
@@ -67,15 +80,18 @@ func main() {
 		http.ServeFile(w, r, "html/index.html")
 	})
 
-	if nil == cfg.TLS {
+	if !runTLS {
 		fmt.Println("TLS configuration not set. Falling back to HTTP...")
 		http.ListenAndServe(":80", mux)
 	} else {
-		fmt.Println("Redirecting HTTPS traffic to " + cfg.TLS.Addr)
-		// Redirect all HTTP requests to HTTPS.
+		Addr := ":443"
+		CertFile := ""
+		KeyFile := ""
+
+		fmt.Println("Redirecting HTTPS traffic to " + Addr)
 		go http.ListenAndServe(":80", http.HandlerFunc(redirect))
 
 		// Start the server through TLS/SSL.
-		log.Fatal(http.ListenAndServeTLS(cfg.TLS.Addr, cfg.TLS.CertFile, cfg.TLS.KeyFile, mux))
+		log.Fatal(http.ListenAndServeTLS(Addr, CertFile, KeyFile, mux))
 	}
 }
