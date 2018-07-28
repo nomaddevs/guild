@@ -7,11 +7,17 @@ import (
 
 type API struct {
 	settings *APISettings
+	url      string
+	key      string
+	secret   string
 }
 
-func New(s *APISettings) {
+func New(s *battlenet.Settings, url, key, secret string) {
 	return &API{
 		settings: s,
+		url:      url,
+		key:      key,
+		secret:   secret,
 	}
 }
 

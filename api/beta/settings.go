@@ -18,11 +18,3 @@ func (s *APISettings) BlizzardCallbackURL() string {
 func (s *APISettings) BlizzardSettings() *battlenet.Settings {
 	return s.blizzardSettings
 }
-
-func (s *APISettings) Key() string {
-	return s.key
-}
-
-func (s *APISettings) Secret() string {
-	return s.secret
-}

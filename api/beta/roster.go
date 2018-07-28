@@ -10,7 +10,7 @@ import (
 
 // Roster page
 func (a *API) Roster(w http.ResponseWriter, r *http.Request) {
-	wow, err := battlenet.WoWClient(a.settings, a.key)
+	wow, err := battlenet.WoWClient(a.settings.BlizzardSettings(), a.key)
 
 	if nil != err {
 		fmt.Println(w, err.Error())

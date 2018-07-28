@@ -13,6 +13,7 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/munsy/guild/api"
 	"github.com/munsy/guild/config"
 	"golang.org/x/crypto/ssh/terminal"
 )
@@ -31,66 +32,7 @@ func redirect(w http.ResponseWriter, req *http.Request) {
 		http.StatusTemporaryRedirect)
 }
 
-func credentials() (string, string) {
-	reader := bufio.NewReader(os.Stdin)
-
-	fmt.Print("Enter Username: ")
-	username, _ := reader.ReadString('\n')
-
-	fmt.Print("Enter Password: ")
-	bytePassword, err := terminal.ReadPassword(int(syscall.Stdin))
-	if err != nil {
-		fmt.Println("Bad password read")
-		panic(err)
-	}
-	password := string(bytePassword)
-
-	return strings.TrimSpace(username), strings.TrimSpace(password)
-}
-
 func main() {
-	fmt.Println("Initializing...")
-	var username, password string
-
-	//fmt.Println("Setting up runtime...")
-	//runtime.GOMAXPROCS(runtime.NumCPU()) // Use max amount of cores
-	//fmt.Println("Set runtime to use maximum amount of cores.")
-
-	if 3 == len(os.Args) {
-		username = os.Args[1]
-		password = os.Args[2]
-	} else {
-		username, password = credentials()
-	}
-	db := &config.MariaDBConfig{
-		username,
-		"",
-		password,
-		"localhost",
-		"3306",
-		"guild",
-		"",
-	}
-
-	fmt.Println("Configuring server settings...")
-
-	tls, err := db.GetTLS()
-	if nil != err {
-		fmt.Println("TLS retrieval attempt failed:")
-		fmt.Println(err.Error())
-	}
-
-	cfg := &config.Config{
-		db,
-		tls,
-	}
-
-	err = cfg.DB.Test()
-	if nil != err {
-		fmt.Println("Database test failed:")
-		fmt.Println(err.Error())
-	}
-
 	fmt.Println("Starting server...")
 
 	// Create new settings
@@ -105,7 +47,9 @@ func main() {
 		Secret: "placeholder",
 	}
 
-	mux := api.New(settings)
+	guild := api.New(settings)
+
+	mux := guild.Load()
 
 	// Create room for static files serving
 	mux.Handle("/bootstrap/", http.StripPrefix("/bootstrap", http.FileServer(http.Dir("./bootstrap"))))

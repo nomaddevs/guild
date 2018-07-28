@@ -2,7 +2,7 @@ package beta
 
 // RealmStatus handles realm status data
 func (a *API) RealmStatus(w http.ResponseWriter, r *http.Request) {
-	client, err := battlenet.WoWClient(a.settings.Key(), "your-key-here")
+	client, err := battlenet.WoWClient(a.settings.BlizzardSettings(), a.key)
 
 	if nil != err {
 		fmt.Fprintln(w, "There was an error :(")

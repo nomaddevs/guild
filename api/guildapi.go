@@ -3,22 +3,23 @@ package api
 import (
 	"net/http"
 
+	"github.com/munsy/battlenet"
 	"github.com/munsy/guild/api/beta"
 )
 
 type GuildAPI struct {
-	Settings APISettings
+	Settings *battlenet.Settings
 	Beta     *beta.API
 }
 
-func New(s APISettings) *GuildAPI {
+func New(a *APISettings) *GuildAPI {
 	return &GuildAPI{
-		Settings: s,
-		Beta:     beta.New(s),
+		Settings: a,
+		Beta:     beta.New(a.BlizzardSettings, a.BlizzardCallbackURL, a.Key, a.Secret),
 	}
 }
 
-func Load() *http.ServeMux {
+func (g *GuildAPI) Load() *http.ServeMux {
 	mux := http.NewServeMux()
 
 	Beta.Load(mux)
