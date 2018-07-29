@@ -2,10 +2,7 @@ package beta
 
 import (
 	"fmt"
-	"html/template"
 	"net/http"
-
-	"github.com/munsy/guild/models"
 )
 
 // Media page

@@ -1,18 +1,20 @@
 package beta
 
 import (
-	"errors"
+	"encoding/json"
 	"net/http"
+
+	"github.com/munsy/battlenet"
 )
 
 type API struct {
-	settings *APISettings
+	settings *battlenet.Settings
 	url      string
 	key      string
 	secret   string
 }
 
-func New(s *battlenet.Settings, url, key, secret string) {
+func New(s *battlenet.Settings, url, key, secret string) *API {
 	return &API{
 		settings: s,
 		url:      url,
@@ -21,9 +23,15 @@ func New(s *battlenet.Settings, url, key, secret string) {
 	}
 }
 
-func (a *API) Load(mux *http.ServeMux) { //(*http.ServeMux, error) {
+func (a *API) Load(mux *http.ServeMux) {
 	mux.HandleFunc(EndpointRealms, a.RealmStatus)
 	mux.HandleFunc(EndpointRoster, a.Roster)
 
 	// return mux, nil
+}
+
+func (a *API) JSON(w http.ResponseWriter, v interface{}) {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusCreated)
+	json.NewEncoder(w).Encode(v)
 }

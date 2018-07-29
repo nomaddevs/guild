@@ -1,18 +1,18 @@
 package beta
 
 import (
-	"fmt"
+	//"fmt"
 	"net/http"
 
 	"github.com/munsy/battlenet"
 	"golang.org/x/oauth2"
 )
 
-func LoginRedirect(w http.ResponseWriter, r *http.Request) {
+func (a *API) LoginRedirect(w http.ResponseWriter, r *http.Request) {
 	config := &oauth2.Config{
-		RedirectURL:  BlizzardCallbackURL,
-		ClientID:     Key,
-		ClientSecret: Secret,
+		RedirectURL:  a.url,
+		ClientID:     a.key,
+		ClientSecret: a.secret,
 		Scopes:       []string{"wow.profile"},
 		Endpoint:     battlenet.Endpoint(battlenet.Regions.US),
 	}
@@ -23,7 +23,8 @@ func LoginRedirect(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, url, http.StatusTemporaryRedirect)
 }
 
-func LoginCallback(w http.ResponseWriter, r *http.Request) {
+/* fix
+func (a *API) LoginCallback(w http.ResponseWriter, r *http.Request) {
 	session, _ := store.Get(r, "guild")
 
 	r.ParseForm()
@@ -59,3 +60,4 @@ func LoginCallback(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintln(w, "Sorry, nothing here!")
 	}
 }
+*/

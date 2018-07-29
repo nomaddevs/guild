@@ -2,14 +2,11 @@ package beta
 
 import (
 	"fmt"
-	"html/template"
 	"net/http"
-
-	"github.com/munsy/guild/models"
 )
 
 func handleApply(w http.ResponseWriter, r *http.Request) {
-/*	
+	/*
 		app := &models.AppInfo{
 			Character:            r.FormValue("app_character"),
 			Email:                r.FormValue("app_email"),
@@ -24,7 +21,6 @@ func handleApply(w http.ResponseWriter, r *http.Request) {
 			References:           r.FormValue("app_references"),
 			FinalRemarks:         r.FormValue("app_finalremarks"),
 		}
-*/
-		fmt.Fprintln(w, "Sorry, nothing here!")
-	}
+	*/
+	fmt.Fprintln(w, "Sorry, nothing here!")
 }

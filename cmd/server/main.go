@@ -1,25 +1,18 @@
 package main
 
 import (
-	"bufio"
-	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
-	"os"
-	"strings"
-	"syscall"
 	"time"
 
 	"github.com/munsy/battlenet"
 	"github.com/munsy/guild/api"
-	"github.com/munsy/guild/config"
-	"golang.org/x/crypto/ssh/terminal"
 )
 
 var runTLS = false
 
-const staticRoutes = []string{"bootstrap", "css", "html", "images", "js"}
+var staticRoutes = [5]string{"bootstrap", "css", "html", "images", "js"}
 
 func redirect(w http.ResponseWriter, req *http.Request) {
 	// remove/add non default ports from req.Host

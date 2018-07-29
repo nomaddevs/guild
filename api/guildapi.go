@@ -3,12 +3,11 @@ package api
 import (
 	"net/http"
 
-	"github.com/munsy/battlenet"
 	"github.com/munsy/guild/api/beta"
 )
 
 type GuildAPI struct {
-	Settings *battlenet.Settings
+	Settings *APISettings
 	Beta     *beta.API
 }
 
@@ -22,7 +21,7 @@ func New(a *APISettings) *GuildAPI {
 func (g *GuildAPI) Load() *http.ServeMux {
 	mux := http.NewServeMux()
 
-	Beta.Load(mux)
+	g.Beta.Load(mux)
 
 	return mux
 }

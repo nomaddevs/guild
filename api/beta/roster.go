@@ -2,7 +2,6 @@ package beta
 
 import (
 	"fmt"
-	"html/template"
 	"net/http"
 
 	"github.com/munsy/battlenet"
@@ -10,7 +9,7 @@ import (
 
 // Roster page
 func (a *API) Roster(w http.ResponseWriter, r *http.Request) {
-	wow, err := battlenet.WoWClient(a.settings.BlizzardSettings(), a.key)
+	wow, err := battlenet.WoWClient(a.settings, a.key)
 
 	if nil != err {
 		fmt.Println(w, err.Error())
@@ -28,9 +27,7 @@ func (a *API) Roster(w http.ResponseWriter, r *http.Request) {
 
 	switch r.Method {
 	case "GET":
-		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(http.StatusCreated)
-		json.NewEncoder(w).Encode(response.Data)
+		a.JSON(w, response.Data)
 		break
 	default:
 		fmt.Fprintln(w, "Sorry, nothing here!")
