@@ -1,42 +1,44 @@
 package config
 
 import (
-	"encoding/json"
+	"bytes"
+	"fmt"
 	"io/ioutil"
 	"os"
+
+	"github.com/BurntSushi/toml"
 )
 
 type Config struct {
-	DB  *MariaDBConfig `json:"dbconfig"`
-	TLS *TLSconfig     `json:"tlsconfig"`
+	Key    string
+	Secret string
 }
 
-func NewConfig() (*Config, error) {
-	file, err := os.Open("./config.json")
-	if nil != err {
-		return nil, err
-	}
-	defer file.Close()
-
-	data, err := ioutil.ReadAll(file)
-	if nil != err {
-		return nil, err
+func WriteTOML(key, secret string) error {
+	var inputs = Config{
+		key,
+		secret,
 	}
 
-	var cfg *Config
+	var buffer bytes.Buffer
 
-	json.Unmarshal(data, &cfg)
+	encoder := toml.NewEncoder(&buffer)
 
-	return cfg, nil
-}
+	err := encoder.Encode(inputs)
 
-func (cfg *Config) Save(filename string) error {
-	data, err := json.Marshal(cfg)
 	if nil != err {
 		return err
 	}
 
-	ioutil.WriteFile("./config.json", data, 0644)
-	return nil
+	return ioutil.WriteFile("config.toml", buffer.Bytes(), 0644)
+}
 
+func ReadTOML(filename string) *Config {
+	var config *Config
+	if _, err := toml.DecodeFile(filename, &config); err != nil {
+		fmt.Println("Error reading %s:", filename)
+		fmt.Println("%s", err.Error())
+		os.Exit(1)
+	}
+	return config
 }

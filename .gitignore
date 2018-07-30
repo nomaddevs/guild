@@ -1,8 +1,10 @@
-mariadbconfig.json
-settings.json
-guild
-guild.exe
+cmd/server/config.toml
+cmd/server/server.exe
+cmd/server/sever
+cmd/cli/cli.exe
+cmd/cli/cli
 web/web
 web/web.exe
-cmd/cli/cli
-cmd/cli/cli.exe
+config.toml
+guild.exe
+guild

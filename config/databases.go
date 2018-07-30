@@ -6,7 +6,7 @@ import (
 
 type DBconfig interface {
 	DriverName() string          // "mysql", "mssql", etc
-	ConnectionString() string    // name:password@/database for mysql
+	ConnectionString() string    // username:password@tcp(host:port)/database for mysql
 	Test() error                 // See https://github.com/golang/go/wiki/SQLDrivers for a list of SQL drivers.
 	GetTLS() (*TLSconfig, error) // Gets the TLS info from table
 }

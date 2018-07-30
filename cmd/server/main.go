@@ -8,7 +8,10 @@ import (
 
 	"github.com/munsy/battlenet"
 	"github.com/munsy/guild/api"
+	"github.com/munsy/guild/config"
 )
+
+const configFilename = "config.toml"
 
 var runTLS = false
 
@@ -42,6 +45,8 @@ func register(mux *http.ServeMux, dir string) {
 func main() {
 	fmt.Println("Starting server...")
 
+	config := config.ReadTOML(configFilename)
+
 	// Create new settings
 	settings := &api.APISettings{
 		BlizzardCallbackURL: "https://www.munsy.net/callback",
@@ -50,8 +55,8 @@ func main() {
 			Locale: battlenet.Locale.AmericanEnglish,
 			Region: battlenet.Regions.US,
 		},
-		Key:    "placeholder",
-		Secret: "placeholder",
+		Key:    config.Key,
+		Secret: config.Secret,
 	}
 
 	guild := api.New(settings)
