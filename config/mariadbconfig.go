@@ -108,34 +108,3 @@ func (db *MariaDBConfig) Test() error {
 
 	return nil
 }
-
-func (db *MariaDBConfig) GetTLS() (*TLSconfig, error) {
-	// Create the database handle, confirm driver is present
-	conn, err := sql.Open(db.DriverName(), db.ConnectionString())
-	if nil != err {
-		return nil, err
-	}
-	defer conn.Close()
-
-	err = conn.Ping()
-	if err != nil {
-		return nil, err
-	}
-
-	addr := ""
-	certfile := ""
-	keyfile := ""
-
-	conn.QueryRow("SELECT * FROM tlsinfo").Scan(&addr, &certfile, &keyfile)
-	if "" == addr || "" == certfile || "" == keyfile {
-		return nil, errors.New("Error retrieving TLS info.")
-	}
-
-	cfg := &TLSconfig{
-		addr,
-		certfile,
-		keyfile,
-	}
-
-	return cfg, nil
-}
