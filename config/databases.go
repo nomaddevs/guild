@@ -4,36 +4,6 @@ import (
 	"database/sql"
 )
 
-type DBconfig interface {
-	DriverName() string       // "mysql", "mssql", etc
-	ConnectionString() string // username:password@tcp(host:port)/database for mysql
-	Test() error              // See https://github.com/golang/go/wiki/SQLDrivers for a list of SQL drivers.
-}
-
-type dbquery struct {
-	query string
-}
-
-// change this later
-//func GetAPICredential(column string) string {
-func GetAPICredential(username, password, host, port, database, table, column string) string {
-	//db, err := sql.Open("mysql", "<username>:<pw>@tcp(<HOST>:<port>)/<dbname>")
-	db, err := sql.Open("mysql", username+":"+password+"@tcp("+host+":"+port+")/"+database)
-	if nil != err {
-		panic(err)
-	}
-	defer db.Close()
-
-	var key string
-	db.QueryRow("SELECT " + column + " FROM " + table).Scan(&key)
-
-	if len(key) != 32 {
-		panic("Bad API credential length from column: " + column + " in table: " + table + "\ntrying to find key: " + key + "with length: " + string(len(key)))
-	}
-
-	return key
-}
-
 /*
 ===================================================================
 |Some of The Most Important SQL Commands                          |
@@ -51,3 +21,13 @@ func GetAPICredential(username, password, host, port, database, table, column st
 |DROP INDEX         - deletes an index                            |
 -------------------------------------------------------------------
 */
+
+type DBconfig interface {
+	DriverName() string       // "mysql", "mssql", etc
+	ConnectionString() string // username:password@tcp(host:port)/database for mysql
+	Test() error              // See https://github.com/golang/go/wiki/SQLDrivers for a list of SQL drivers.
+}
+
+type dbquery struct {
+	query string
+}

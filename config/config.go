@@ -9,36 +9,62 @@ import (
 	"github.com/BurntSushi/toml"
 )
 
-type Config struct {
-	Key    string
-	Secret string
+var (
+	Key      string
+	Secret   string
+	Addr     string
+	CertFile string
+	KeyFile  string
+)
+
+type cfg struct {
+	key      string
+	secret   string
+	addr     string
+	certFile string
+	keyFile  string
+	dbuname  string
+	dbpasswd string
 }
 
-func WriteTOML(key, secret string) error {
-	var inputs = Config{
-		key,
-		secret,
+func Write(filename string) error {
+	c := &cfg{
+		key:      Key,
+		secret:   Secret,
+		addr:     Addr,
+		certFile: CertFile,
+		keyFile:  KeyFile,
+		dbuname:  DBUsername,
+		dbpasswd: DBPassword,
 	}
 
-	var buffer bytes.Buffer
+	var b bytes.Buffer
 
-	encoder := toml.NewEncoder(&buffer)
+	e := toml.NewEncoder(&b)
 
-	err := encoder.Encode(inputs)
+	err := e.Encode(c)
 
 	if nil != err {
 		return err
 	}
 
-	return ioutil.WriteFile("config.toml", buffer.Bytes(), 0644)
+	return ioutil.WriteFile(filename, b.Bytes(), 0644)
 }
 
-func ReadTOML(filename string) *Config {
-	var config *Config
-	if _, err := toml.DecodeFile(filename, &config); err != nil {
+func Read(filename string) {
+	var c *cfg
+
+	if _, err := toml.DecodeFile(filename, &c); err != nil {
 		fmt.Println("Error reading %s:", filename)
 		fmt.Println("%s", err.Error())
 		os.Exit(1)
 	}
-	return config
+
+	Key = c.key
+	Secret = c.secret
+	Addr = c.addr
+	CertFile = c.certFile
+	KeyFile = c.keyFile
+	DBUsername = c.dbuname
+	DBPassword = c.dbpasswd
 }

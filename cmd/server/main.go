@@ -45,7 +45,7 @@ func register(mux *http.ServeMux, dir string) {
 func main() {
 	fmt.Println("Starting server...")
 
-	config := config.ReadTOML(configFilename)
+	config.Read(configFilename)
 
 	// Create new settings
 	settings := &api.APISettings{
@@ -55,8 +55,8 @@ func main() {
 			Locale: battlenet.Locale.AmericanEnglish,
 			Region: battlenet.Regions.US,
 		},
-		Key:    config.Key,
-		Secret: config.Secret,
+		Key:    cfg.Key,
+		Secret: cfg.Secret,
 	}
 
 	guild := api.New(settings)
