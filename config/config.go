@@ -10,34 +10,49 @@ import (
 )
 
 var (
-	Key        string
-	Secret     string
-	Addr       string
-	CertFile   string
-	KeyFile    string
-	DBUsername string
-	DBPassword string
+	Key              string
+	Secret           string
+	Addr             string
+	CertFile         string
+	KeyFile          string
+	DBUsername       string
+	DBPassword       string
+	DBUnixsocketpath string
+	DBHost           string
+	DBPort           string
+	DBName           string
+	DBCharset        string
 )
 
 type cfg struct {
-	key      string
-	secret   string
-	addr     string
-	certFile string
-	keyFile  string
-	dbuname  string
-	dbpasswd string
+	key              string
+	secret           string
+	addr             string
+	certFile         string
+	keyFile          string
+	dbuname          string
+	dbpasswd         string
+	dbunixsocketpath string
+	dbhost           string
+	dbport           string
+	dbname           string
+	dbcharset        string
 }
 
 func Write(filename string) error {
 	c := &cfg{
-		key:      Key,
-		secret:   Secret,
-		addr:     Addr,
-		certFile: CertFile,
-		keyFile:  KeyFile,
-		dbuname:  DBUsername,
-		dbpasswd: DBPassword,
+		key:              Key,
+		secret:           Secret,
+		addr:             Addr,
+		certFile:         CertFile,
+		keyFile:          KeyFile,
+		dbuname:          DBUsername,
+		dbpasswd:         DBPassword,
+		dbunixsocketpath: DBUnixsocketpath,
+		dbhost:           DBHost,
+		dbport:           DBPort,
+		dbname:           DBName,
+		dbcharset:        DBCharset,
 	}
 
 	var b bytes.Buffer
@@ -69,4 +84,9 @@ func Read(filename string) {
 	KeyFile = c.keyFile
 	DBUsername = c.dbuname
 	DBPassword = c.dbpasswd
+	DBUnixsocketpath = c.dbunixsocketpath
+	DBHost = c.dbhost
+	DBPort = c.dbport
+	DBName = c.dbname
+	DBCharset = c.dbcharset
 }

@@ -6,6 +6,7 @@ import (
 	"time"
 
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/munsy/guild/pkg/models"
 )
 
 type MariaDB struct {
@@ -100,25 +101,24 @@ func (db *MariaDB) WriteNewsPost(title, body, author string) error {
 	return nil
 }
 
-type NewsPost struct {
-	ID     int
-	Title  string
-	Body   string
-	Date   time.Time
-	Author string
-}
-
-func (db *MariaDB) ReadNewsPosts() ([]NewsPost, error) {
+func (db *MariaDB) ReadNewsPosts() ([]models.NewsPost, error) {
 	var (
 		id     int
 		title  string
 		body   string
 		date   time.Time
 		author string
-		posts  []NewsPost
+		posts  []models.NewsPost
 	)
 
-	rows, err := db.Query("SELECT * from newsposts")
+	conn, err := sql.Open(db.DriverName(), db.ConnectionString())
+
+	if nil != err {
+		return err
+	}
+	defer conn.Close()
+
+	rows, err := conn.Query("SELECT * from newsposts")
 
 	if err != nil {
 		return nil, err
@@ -132,7 +132,7 @@ func (db *MariaDB) ReadNewsPosts() ([]NewsPost, error) {
 			return nil, err
 		}
 
-		post := &NewsPost{
+		post := &models.NewsPost{
 			ID:     id,
 			Title:  title,
 			Body:   body,
