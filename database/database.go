@@ -1,4 +1,4 @@
-package config
+package database
 
 /*
 ===================================================================
@@ -18,7 +18,7 @@ package config
 -------------------------------------------------------------------
 */
 
-type DBconfig interface {
+type Database interface {
 	DriverName() string       // "mysql", "mssql", etc
 	ConnectionString() string // username:password@tcp(host:port)/database for mysql
 	Test() error              // See https://github.com/golang/go/wiki/SQLDrivers for a list of SQL drivers.
