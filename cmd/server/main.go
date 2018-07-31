@@ -55,8 +55,8 @@ func main() {
 			Locale: battlenet.Locale.AmericanEnglish,
 			Region: battlenet.Regions.US,
 		},
-		Key:    cfg.Key,
-		Secret: cfg.Secret,
+		Key:    config.Key,
+		Secret: config.Secret,
 	}
 
 	guild := api.New(settings)
@@ -80,14 +80,10 @@ func main() {
 		fmt.Println("TLS configuration not set. Falling back to HTTP...")
 		http.ListenAndServe(":80", mux)
 	} else {
-		Addr := ":443"
-		CertFile := ""
-		KeyFile := ""
-
-		fmt.Println("Redirecting HTTPS traffic to " + Addr)
+		fmt.Println("Redirecting HTTPS traffic to " + config.Addr)
 		go http.ListenAndServe(":80", http.HandlerFunc(redirect))
 
 		// Start the server through TLS/SSL.
-		log.Fatal(http.ListenAndServeTLS(Addr, CertFile, KeyFile, mux))
+		log.Fatal(http.ListenAndServeTLS(config.Addr, config.CertFile, config.KeyFile, mux))
 	}
 }

@@ -10,11 +10,13 @@ import (
 )
 
 var (
-	Key      string
-	Secret   string
-	Addr     string
-	CertFile string
-	KeyFile  string
+	Key        string
+	Secret     string
+	Addr       string
+	CertFile   string
+	KeyFile    string
+	DBUsername string
+	DBPassword string
 )
 
 type cfg struct {

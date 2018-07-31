@@ -1,9 +1,5 @@
 package config
 
-import (
-	"database/sql"
-)
-
 /*
 ===================================================================
 |Some of The Most Important SQL Commands                          |
