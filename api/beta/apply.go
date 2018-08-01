@@ -5,8 +5,8 @@ import (
 	"net/http"
 
 	"github.com/munsy/battlenet"
-	"github.com/munsy/guild/config"
-	"github.com/munsy/guild/database"
+	//"github.com/munsy/guild/config"
+	//"github.com/munsy/guild/database"
 	"github.com/munsy/guild/pkg/models"
 )
 
@@ -15,14 +15,14 @@ func (a *API) Apply(w http.ResponseWriter, r *http.Request) {
 	case "GET":
 		// Get user token
 		// If no token, show blizz auth
-		c := r.Cookie("token")
+		c, err := r.Cookie("token")
 
-		if "" == c.String() {
-			a.JSON(w, false)
+		if nil != err {
+			a.JSON(w, err)
 		}
 
 		// Get character data
-		client, err := battlenet.AccountClient(a.settings, c.String())
+		client, err := battlenet.AccountClient(a.settings, c.Value)
 
 		if nil != err {
 			a.JSON(w, err)

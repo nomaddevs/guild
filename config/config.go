@@ -45,7 +45,7 @@ func Write(filename string) error {
 	c := &cfg{
 		key:              Key,
 		secret:           Secret,
-		redirectURL 	  RedirectURL,
+		redirectURL:      RedirectURL,
 		addr:             Addr,
 		certFile:         CertFile,
 		keyFile:          KeyFile,

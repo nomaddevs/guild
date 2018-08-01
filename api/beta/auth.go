@@ -4,8 +4,9 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/munsy/battlenet"
+	//"github.com/munsy/battlenet"
 	"github.com/munsy/guild/config"
+	"golang.org/x/oauth2"
 )
 
 func (a *API) LoginRedirect(w http.ResponseWriter, r *http.Request) {
@@ -22,19 +23,25 @@ func (a *API) LoginCallback(w http.ResponseWriter, r *http.Request) {
 
 	r.ParseForm()
 
-	token, err := conf.Exchange(oauth2.NoContext, r.FormValue("code"))
+	token, err := config.Oauth2.Exchange(oauth2.NoContext, r.FormValue("code"))
 
 	if nil != err {
 		a.JSON(w, err)
 	}
 
-	println("LoginCallback() - Add " + token + " to cookie 'token'")
+	println("LoginCallback() - Add %v to cookie 'token'", token.AccessToken)
 	expiration := time.Now().Add(1 * time.Hour)
-	cookie := http.Cookie{Name: "token", Value: token, Expires: expiration}
+	cookie := http.Cookie{Name: "token", Value: token.AccessToken, Expires: expiration}
 	http.SetCookie(w, &cookie)
 
-	println("LoginCallback() - Redirect to " + r.Cookie("redirectURL"))
-	http.Redirect(w, r, r.Cookie("redirectURL"), http.StatusTemporaryRedirect)
+	c, err := r.Cookie("redirectURL")
+
+	if nil != err {
+		a.JSON(w, err)
+	}
+
+	println("LoginCallback() - Redirect to " + c.Value)
+	http.Redirect(w, r, c.Value, http.StatusTemporaryRedirect)
 }
 
 /* fix

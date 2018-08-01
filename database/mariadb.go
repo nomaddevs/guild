@@ -6,7 +6,6 @@ import (
 	"time"
 
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/munsy/guild/pkg/models"
 )
 
 type MariaDB struct {
@@ -82,7 +81,8 @@ func (db *MariaDB) Test() error {
 	return nil
 }
 
-func (db *MariaDB) WriteApplicant(a *models.Applicant) error {
+func (db *MariaDB) WriteApplicant(battletag, character, email, realName, location, age, gender, computerSpecs,
+	previousGuilds, reasonsLeavingGuilds, whyJoinThisGuild, references, finalRemarks string) error {
 	conn, err := sql.Open(db.DriverName(), db.ConnectionString())
 
 	if nil != err {
@@ -94,14 +94,14 @@ func (db *MariaDB) WriteApplicant(a *models.Applicant) error {
 	age, gender, computerspecs, previousguilds, reasonsleavingguilds, whyjointhisguild, 
 	wowreferences, finalremarks) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
 
-	in, err := db.Prepare(statement)
+	in, err := conn.Prepare(statement)
 	if err != nil {
 		return err
 	}
 	defer in.Close() // Close the statement when we leave main() / the program terminates
 
-	in.Exec(a.Battletag, a.Character, a.Email, a.RealName, a.Location, a.Age, a.Gender, a.ComputerSpecs,
-		a.PreviousGuilds, a.ReasonsLeavingGuilds, a.WhyJoinThisGuild, a.References, a.FinalRemarks)
+	in.Exec(battletag, character, email, realName, location, age, gender, computerSpecs,
+		previousGuilds, reasonsLeavingGuilds, whyJoinThisGuild, references, finalRemarks)
 
 	return nil
 }
@@ -114,7 +114,7 @@ func (db *MariaDB) WriteNewsPost(title, body, author string) error {
 	}
 	defer conn.Close()
 
-	in, err := db.Prepare("INSERT INTO newsposts(title, body, date, author) values (?, ?, ?, ?)") // ? = placeholder
+	in, err := conn.Prepare("INSERT INTO newsposts(title, body, date, author) values (?, ?, ?, ?)") // ? = placeholder
 	if err != nil {
 		return err
 	}
@@ -125,27 +125,32 @@ func (db *MariaDB) WriteNewsPost(title, body, author string) error {
 	return nil
 }
 
-func (db *MariaDB) ReadNewsPosts() ([]models.NewsPost, error) {
+func (db *MariaDB) ReadNewsPosts() ([]int, []string, []string, []time.Time, []string, error) {
 	var (
 		id     int
 		title  string
 		body   string
 		date   time.Time
 		author string
-		posts  []models.NewsPost
+
+		ids     []int
+		titles  []string
+		bodys   []string
+		dates   []time.Time
+		authors []string
 	)
 
 	conn, err := sql.Open(db.DriverName(), db.ConnectionString())
 
 	if nil != err {
-		return err
+		return nil, nil, nil, nil, nil, err
 	}
 	defer conn.Close()
 
 	rows, err := conn.Query("SELECT * from newsposts")
 
 	if err != nil {
-		return nil, err
+		return nil, nil, nil, nil, nil, err
 	}
 	defer rows.Close()
 
@@ -153,27 +158,23 @@ func (db *MariaDB) ReadNewsPosts() ([]models.NewsPost, error) {
 		err := rows.Scan(&id, &title, &body, &date, &author)
 
 		if err != nil {
-			return nil, err
+			return nil, nil, nil, nil, nil, err
 		}
 
-		post := &models.NewsPost{
-			ID:     id,
-			Title:  title,
-			Body:   body,
-			Date:   date,
-			Author: author,
-		}
-
-		posts = append(posts, post)
+		ids = append(ids, id)
+		titles = append(titles, title)
+		bodys = append(bodys, body)
+		dates = append(dates, date)
+		authors = append(authors, author)
 	}
 
 	err = rows.Err()
 
 	if err != nil {
-		return nil, err
+		return nil, nil, nil, nil, nil, err
 	}
 
-	return posts, nil
+	return ids, titles, bodys, dates, authors, nil
 }
 
 /*

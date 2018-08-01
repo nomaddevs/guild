@@ -1,6 +1,7 @@
 package models
 
 import (
+	"github.com/munsy/guild/config"
 	"github.com/munsy/guild/database"
 )
 
@@ -31,5 +32,8 @@ func (a *Applicant) Save() error {
 		Charset:        config.DBCharset,
 	}
 
-	return db.WriteApplicant(a)
+	return db.WriteApplicant(a.Battletag, a.Character,
+		a.Email, a.RealName, a.Location, a.Age, a.Gender,
+		a.ComputerSpecs, a.PreviousGuilds, a.ReasonsLeavingGuilds,
+		a.WhyJoinThisGuild, a.References, a.FinalRemarks)
 }
