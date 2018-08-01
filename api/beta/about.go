@@ -6,6 +6,6 @@ import (
 )
 
 // About page
-func handleAbout(w http.ResponseWriter, r *http.Request) {
+func (a *API) About(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintln(w, "Sorry, nothing here!")
 }

@@ -6,6 +6,6 @@ import (
 )
 
 // Media page
-func handleMedia(w http.ResponseWriter, r *http.Request) {
+func (a *API) Media(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintln(w, "Sorry, nothing here!")
 }
