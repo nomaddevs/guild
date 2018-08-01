@@ -12,16 +12,16 @@ func (a *API) RealmStatus(w http.ResponseWriter, r *http.Request) {
 	client, err := battlenet.WoWClient(a.settings, a.key)
 
 	if nil != err {
-		fmt.Fprintln(w, "ERROR GETTING WOWCLIENT:\n"+err.Error())
-		fmt.Println(w, "ERROR GETTING WOWCLIENT:\n"+err.Error())
+		fmt.Println("ERROR GETTING WOWCLIENT:\n" + err.Error())
+		a.JSON(w, err)
 		return
 	}
 
 	response, err := client.RealmStatus()
 
 	if nil != err {
-		fmt.Fprintln(w, "ERROR GETTING REALM STATUS:\n"+err.Error())
-		fmt.Println(w, err.Error())
+		fmt.Println("ERROR GETTING REALM STATUS:\n" + err.Error())
+		a.JSON(w, err)
 		return
 	}
 
@@ -30,6 +30,6 @@ func (a *API) RealmStatus(w http.ResponseWriter, r *http.Request) {
 		a.JSON(w, response.Data)
 		break
 	default:
-		fmt.Fprintln(w, "Sorry, nothing here!")
+		a.JSON(w, "Sorry, nothing here!")
 	}
 }
