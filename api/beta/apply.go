@@ -19,6 +19,7 @@ func (a *API) Apply(w http.ResponseWriter, r *http.Request) {
 
 		if nil != err {
 			a.JSON(w, err)
+			break
 		}
 
 		// Get character data
@@ -26,6 +27,7 @@ func (a *API) Apply(w http.ResponseWriter, r *http.Request) {
 
 		if nil != err {
 			a.JSON(w, err)
+			break
 		}
 
 		// Send character data for them to choose
@@ -33,6 +35,7 @@ func (a *API) Apply(w http.ResponseWriter, r *http.Request) {
 
 		if nil != err {
 			a.JSON(w, err)
+			break
 		}
 
 		a.JSON(w, response.Data)
@@ -58,10 +61,10 @@ func (a *API) Apply(w http.ResponseWriter, r *http.Request) {
 
 		if nil != err {
 			a.JSON(w, err)
+			break
 		}
 
 		a.JSON(w, true)
-
 		break
 	default:
 		fmt.Fprintln(w, "Sorry, nothing here!")

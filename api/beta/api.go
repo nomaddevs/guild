@@ -43,6 +43,5 @@ func (a *API) Load(mux *http.ServeMux) {
 
 func (a *API) JSON(w http.ResponseWriter, v interface{}) {
 	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusCreated)
 	json.NewEncoder(w).Encode(v)
 }
