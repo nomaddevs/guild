@@ -21,7 +21,7 @@ type NewsPost struct {
 
 // News creates a single news post or returns a set of posts, depending on the http method.
 func News(w http.ResponseWriter, r *http.Request) {
-	db := &MariaDB{
+	db := &database.MariaDB{
 		Username:       config.DBUsername,
 		Unixsocketpath: config.DBUnixsocketpath,
 		Password:       config.DBPassword,
@@ -36,33 +36,26 @@ func News(w http.ResponseWriter, r *http.Request) {
 		data, err := db.ReadNewsPosts()
 
 		if nil != err {
-			fmt.Println("[SERVER][GET] - Error from api.beta.News()")
 			a.JSON(w, err)
 		}
-
-		fmt.Println("[SERVER][GET] - Succeeded from api.beta.News()")
 
 		a.JSON(w, data)
 
 		break
 	case "POST":
-		title := r.FormValue("title")
-		body := r.FormValue("body")
-		author := r.FormValue("author")
+		title := r.FormValue("post_title")
+		body := r.FormValue("post_body")
+		author := r.FormValue("post_author")
 
 		err := db.WriteNewsPost(title, body, author)
 
 		if nil != err {
-			fmt.Println("[SERVER][POST] - Error from api.beta.News()")
 			a.JSON(w, err)
 		}
-
-		fmt.Println("[SERVER][POST] - Succeeded from api.beta.News()")
 
 		data, err := db.ReadNewsPosts()
 
 		if nil != err {
-			fmt.Println("[SERVER][GET] - Error from api.beta.News()")
 			a.JSON(w, err)
 		}
 

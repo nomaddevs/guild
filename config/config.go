@@ -12,6 +12,7 @@ import (
 var (
 	Key              string
 	Secret           string
+	RedirectURL      string
 	Addr             string
 	CertFile         string
 	KeyFile          string
@@ -27,6 +28,7 @@ var (
 type cfg struct {
 	key              string
 	secret           string
+	redirectURL      string
 	addr             string
 	certFile         string
 	keyFile          string
@@ -43,6 +45,7 @@ func Write(filename string) error {
 	c := &cfg{
 		key:              Key,
 		secret:           Secret,
+		redirectURL 	  RedirectURL,
 		addr:             Addr,
 		certFile:         CertFile,
 		keyFile:          KeyFile,
@@ -79,6 +82,7 @@ func Read(filename string) {
 
 	Key = c.key
 	Secret = c.secret
+	RedirectURL = c.redirectURL
 	Addr = c.addr
 	CertFile = c.certFile
 	KeyFile = c.keyFile

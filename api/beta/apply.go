@@ -3,11 +3,43 @@ package beta
 import (
 	"fmt"
 	"net/http"
+
+	"github.com/munsy/battlenet"
+	"github.com/munsy/guild/config"
+	"github.com/munsy/guild/database"
+	"github.com/munsy/guild/pkg/models"
 )
 
-func handleApply(w http.ResponseWriter, r *http.Request) {
-	/*
-		app := &models.AppInfo{
+func (a *API) Apply(w http.ResponseWriter, r *http.Request) {
+	switch r.Method {
+	case "GET":
+		// Get user token
+		// If no token, show blizz auth
+		c := r.Cookie("token")
+
+		if "" == c.String() {
+			a.JSON(w, false)
+		}
+
+		// Get character data
+		client, err := battlenet.AccountClient(a.settings, c.String())
+
+		if nil != err {
+			a.JSON(w, err)
+		}
+
+		// Send character data for them to choose
+		response, err := client.WoWOauthProfile()
+
+		if nil != err {
+			a.JSON(w, err)
+		}
+
+		a.JSON(w, response.Data)
+		break
+	case "POST":
+		app := &models.Applicant{
+			Battletag:            r.FormValue("app_battletag"),
 			Character:            r.FormValue("app_character"),
 			Email:                r.FormValue("app_email"),
 			RealName:             r.FormValue("app_realname"),
@@ -21,6 +53,17 @@ func handleApply(w http.ResponseWriter, r *http.Request) {
 			References:           r.FormValue("app_references"),
 			FinalRemarks:         r.FormValue("app_finalremarks"),
 		}
-	*/
-	fmt.Fprintln(w, "Sorry, nothing here!")
+
+		err := app.Save()
+
+		if nil != err {
+			a.JSON(w, err)
+		}
+
+		a.JSON(w, true)
+
+		break
+	default:
+		fmt.Fprintln(w, "Sorry, nothing here!")
+	}
 }

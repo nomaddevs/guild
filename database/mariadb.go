@@ -82,6 +82,30 @@ func (db *MariaDB) Test() error {
 	return nil
 }
 
+func (db *MariaDB) WriteApplicant(a *models.Applicant) error {
+	conn, err := sql.Open(db.DriverName(), db.ConnectionString())
+
+	if nil != err {
+		return err
+	}
+	defer conn.Close()
+
+	statement := `INSERT INTO applications(battletag, wowcharacter, email, realname, location,
+	age, gender, computerspecs, previousguilds, reasonsleavingguilds, whyjointhisguild, 
+	wowreferences, finalremarks) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+
+	in, err := db.Prepare(statement)
+	if err != nil {
+		return err
+	}
+	defer in.Close() // Close the statement when we leave main() / the program terminates
+
+	in.Exec(a.Battletag, a.Character, a.Email, a.RealName, a.Location, a.Age, a.Gender, a.ComputerSpecs,
+		a.PreviousGuilds, a.ReasonsLeavingGuilds, a.WhyJoinThisGuild, a.References, a.FinalRemarks)
+
+	return nil
+}
+
 func (db *MariaDB) WriteNewsPost(title, body, author string) error {
 	conn, err := sql.Open(db.DriverName(), db.ConnectionString())
 
@@ -92,7 +116,7 @@ func (db *MariaDB) WriteNewsPost(title, body, author string) error {
 
 	in, err := db.Prepare("INSERT INTO newsposts(title, body, date, author) values (?, ?, ?, ?)") // ? = placeholder
 	if err != nil {
-		panic(err.Error()) // proper error handling instead of panic in your app
+		return err
 	}
 	defer in.Close() // Close the statement when we leave main() / the program terminates
 
