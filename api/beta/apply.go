@@ -5,8 +5,7 @@ import (
 	"net/http"
 
 	"github.com/munsy/battlenet"
-	//"github.com/munsy/guild/config"
-	//"github.com/munsy/guild/database"
+	"github.com/munsy/guild/errors"
 	"github.com/munsy/guild/pkg/models"
 )
 
@@ -18,24 +17,26 @@ func (a *API) Apply(w http.ResponseWriter, r *http.Request) {
 		c, err := r.Cookie("token")
 
 		if nil != err {
-			a.JSON(w, err)
-			break
+			http.Error(w, errors.ErrNotLoggedIn.Error(), http.StatusUnauthorized)
+			return
 		}
 
 		// Get character data
 		client, err := battlenet.AccountClient(a.settings, c.Value)
 
 		if nil != err {
-			a.JSON(w, err)
-			break
+			fmt.Printf("client error: %s", err.Error())
+			http.Error(w, err.Error(), http.StatusServiceUnavailable)
+			return
 		}
 
 		// Send character data for them to choose
 		response, err := client.WoWOauthProfile()
 
 		if nil != err {
-			a.JSON(w, err)
-			break
+			fmt.Printf("response error: %s", err.Error())
+			http.Error(w, err.Error(), http.StatusServiceUnavailable)
+			return
 		}
 
 		a.JSON(w, response.Data)

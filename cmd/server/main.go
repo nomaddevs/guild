@@ -13,10 +13,9 @@ import (
 
 const configFilename = "config.toml"
 
-var runTLS = config.Addr != "" && config.CertFile != "" && config.KeyFile != ""
 var staticRoutes = [5]string{"bootstrap", "css", "html", "images", "js"}
-
 var guild *api.GuildAPI
+var runTLS bool
 
 func redirect(w http.ResponseWriter, req *http.Request) {
 	// remove/add non default ports from req.Host
@@ -44,9 +43,9 @@ func register(mux *http.ServeMux, dir string) {
 }
 
 func init() {
-	config.Debug = true
 	config.Read(configFilename)
-	config.Dump()
+
+	runTLS = config.Addr != "" && config.CertFile != "" && config.KeyFile != ""
 
 	settings := &api.APISettings{
 		BlizzardCallbackURL: config.RedirectURL,
@@ -65,8 +64,10 @@ func init() {
 func main() {
 	fmt.Println("Starting server...")
 
+	// Load API
 	mux := guild.Load()
 
+	// Load static routes
 	for i := 0; i < len(staticRoutes); i++ {
 		register(mux, staticRoutes[i])
 	}
