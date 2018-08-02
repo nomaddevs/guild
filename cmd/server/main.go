@@ -47,9 +47,8 @@ func main() {
 
 	config.Read(configFilename)
 
-	// Create new settings
 	settings := &api.APISettings{
-		BlizzardCallbackURL: "https://www.munsy.net/callback",
+		BlizzardCallbackURL: config.RedirectURL,
 		BlizzardSettings: &battlenet.Settings{
 			Client: &http.Client{Timeout: (10 * time.Second)},
 			Locale: battlenet.Locale.AmericanEnglish,
