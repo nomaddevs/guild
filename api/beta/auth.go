@@ -27,7 +27,7 @@ func (a *API) LoginCallback(w http.ResponseWriter, r *http.Request) {
 
 	if nil != err {
 		a.JSON(w, err)
-		break
+		return
 	}
 
 	println("LoginCallback() - Add %v to cookie 'token'", token.AccessToken)
@@ -39,7 +39,7 @@ func (a *API) LoginCallback(w http.ResponseWriter, r *http.Request) {
 
 	if nil != err {
 		a.JSON(w, err)
-		break
+		return
 	}
 
 	println("LoginCallback() - Redirect to " + c.Value)

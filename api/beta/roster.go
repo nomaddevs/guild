@@ -13,14 +13,14 @@ func (a *API) Roster(w http.ResponseWriter, r *http.Request) {
 
 	if nil != err {
 		a.JSON(w, err)
-		break
+		return
 	}
 
 	response, err := wow.RealmStatus()
 
 	if nil != err {
 		a.JSON(w, err)
-		break
+		return
 	}
 
 	switch r.Method {

@@ -10,6 +10,7 @@ import (
 )
 
 var (
+	Debug            bool
 	Key              string
 	Secret           string
 	RedirectURL      string
@@ -26,36 +27,36 @@ var (
 )
 
 type cfg struct {
-	key              string
-	secret           string
-	redirectURL      string
-	addr             string
-	certFile         string
-	keyFile          string
-	dbuname          string
-	dbpasswd         string
-	dbunixsocketpath string
-	dbhost           string
-	dbport           string
-	dbname           string
-	dbcharset        string
+	Key              string
+	Secret           string
+	RedirectURL      string
+	Addr             string
+	CertFile         string
+	KeyFile          string
+	DBUsername       string
+	DBPassword       string
+	DBUnixsocketpath string
+	DBHost           string
+	DBPort           string
+	DBName           string
+	DBCharset        string
 }
 
 func Write(filename string) error {
 	c := &cfg{
-		key:              Key,
-		secret:           Secret,
-		redirectURL:      RedirectURL,
-		addr:             Addr,
-		certFile:         CertFile,
-		keyFile:          KeyFile,
-		dbuname:          DBUsername,
-		dbpasswd:         DBPassword,
-		dbunixsocketpath: DBUnixsocketpath,
-		dbhost:           DBHost,
-		dbport:           DBPort,
-		dbname:           DBName,
-		dbcharset:        DBCharset,
+		Key:              Key,
+		Secret:           Secret,
+		RedirectURL:      RedirectURL,
+		Addr:             Addr,
+		CertFile:         CertFile,
+		KeyFile:          KeyFile,
+		DBUsername:       DBUsername,
+		DBPassword:       DBPassword,
+		DBUnixsocketpath: DBUnixsocketpath,
+		DBHost:           DBHost,
+		DBPort:           DBPort,
+		DBName:           DBName,
+		DBCharset:        DBCharset,
 	}
 
 	var b bytes.Buffer
@@ -72,7 +73,7 @@ func Write(filename string) error {
 }
 
 func Read(filename string) {
-	var c *cfg
+	var c cfg
 
 	if _, err := toml.DecodeFile(filename, &c); err != nil {
 		fmt.Println("Error reading %s:", filename)
@@ -80,17 +81,35 @@ func Read(filename string) {
 		os.Exit(1)
 	}
 
-	Key = c.key
-	Secret = c.secret
-	RedirectURL = c.redirectURL
-	Addr = c.addr
-	CertFile = c.certFile
-	KeyFile = c.keyFile
-	DBUsername = c.dbuname
-	DBPassword = c.dbpasswd
-	DBUnixsocketpath = c.dbunixsocketpath
-	DBHost = c.dbhost
-	DBPort = c.dbport
-	DBName = c.dbname
-	DBCharset = c.dbcharset
+	Key = c.Key
+	Secret = c.Secret
+	RedirectURL = c.RedirectURL
+	Addr = c.Addr
+	CertFile = c.CertFile
+	KeyFile = c.KeyFile
+	DBUsername = c.DBUsername
+	DBPassword = c.DBPassword
+	DBUnixsocketpath = c.DBUnixsocketpath
+	DBHost = c.DBHost
+	DBPort = c.DBPort
+	DBName = c.DBName
+	DBCharset = c.DBCharset
+}
+
+func Dump() {
+	if Debug {
+		fmt.Printf("Key: %s\n", Key)
+		fmt.Printf("Secret: %s\n", Secret)
+		fmt.Printf("RedirectURL: %s\n", RedirectURL)
+		fmt.Printf("Addr: %s\n", Addr)
+		fmt.Printf("CertFile: %s\n", CertFile)
+		fmt.Printf("KeyFile: %s\n", KeyFile)
+		fmt.Printf("DBUsername: %s\n", DBUsername)
+		fmt.Printf("DBPassword: %s\n", DBPassword)
+		fmt.Printf("DBUnixsocketpath: %s\n", DBUnixsocketpath)
+		fmt.Printf("DBHost: %s\n", DBHost)
+		fmt.Printf("DBPort: %s\n", DBPort)
+		fmt.Printf("DBName: %s\n", DBName)
+		fmt.Printf("DBCharset: %s\n", DBCharset)
+	}
 }
