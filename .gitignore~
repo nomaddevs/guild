@@ -3,8 +3,6 @@ cmd/server/server.exe
 cmd/server/sever
 cmd/cli/cli.exe
 cmd/cli/cli
-cmd/install/install
-cmd/install/install.exe
 web/web
 web/web.exe
 config.toml

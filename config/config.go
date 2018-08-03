@@ -11,6 +11,7 @@ import (
 
 var (
 	Debug            bool
+	TOMLFile         string
 	Key              string
 	Secret           string
 	RedirectURL      string
@@ -42,7 +43,7 @@ type cfg struct {
 	DBCharset        string
 }
 
-func Write(filename string) error {
+func Write() error {
 	c := &cfg{
 		Key:              Key,
 		Secret:           Secret,
@@ -69,14 +70,14 @@ func Write(filename string) error {
 		return err
 	}
 
-	return ioutil.WriteFile(filename, b.Bytes(), 0644)
+	return ioutil.WriteFile(TOMLFile, b.Bytes(), 0644)
 }
 
-func Read(filename string) {
+func Read() {
 	var c cfg
 
-	if _, err := toml.DecodeFile(filename, &c); err != nil {
-		fmt.Println("Error reading %s:", filename)
+	if _, err := toml.DecodeFile(TOMLFile, &c); err != nil {
+		fmt.Println("Error reading %s:", TOMLFile)
 		fmt.Println("%s", err.Error())
 		os.Exit(1)
 	}

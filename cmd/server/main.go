@@ -11,8 +11,6 @@ import (
 	"github.com/munsy/guild/config"
 )
 
-const configFilename = "config.toml"
-
 var staticRoutes = [5]string{"bootstrap", "css", "html", "images", "js"}
 var guild *api.GuildAPI
 var runTLS bool
@@ -43,7 +41,7 @@ func register(mux *http.ServeMux, dir string) {
 }
 
 func init() {
-	config.Read(configFilename)
+	config.Read()
 
 	runTLS = config.Addr != "" && config.CertFile != "" && config.KeyFile != ""
 
