@@ -1,10 +1,10 @@
 package beta
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/munsy/battlenet"
+	"github.com/munsy/guild/errors"
 )
 
 // Roster page
@@ -12,14 +12,26 @@ func (a *API) Roster(w http.ResponseWriter, r *http.Request) {
 	wow, err := battlenet.WoWClient(a.settings, a.key)
 
 	if nil != err {
-		a.JSON(w, err)
+		e := &errors.Error{
+			Message: err.Error(),
+			Package: "api.beta",
+			Type:    "API",
+			Method:  "Roster",
+		}
+		a.Error(w, e)
 		return
 	}
 
 	response, err := wow.RealmStatus()
 
 	if nil != err {
-		a.JSON(w, err)
+		e := &errors.Error{
+			Message: err.Error(),
+			Package: "api.beta",
+			Type:    "API",
+			Method:  "Roster",
+		}
+		a.Error(w, e)
 		return
 	}
 
@@ -28,6 +40,13 @@ func (a *API) Roster(w http.ResponseWriter, r *http.Request) {
 		a.JSON(w, response.Data)
 		break
 	default:
-		fmt.Fprintln(w, "Sorry, nothing here!")
+		e := &errors.Error{
+			Message: "default hit",
+			Package: "api.beta",
+			Type:    "API",
+			Method:  "Roster",
+		}
+		a.Error(w, e)
+		return
 	}
 }

@@ -1,7 +1,6 @@
 package beta
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/munsy/battlenet"
@@ -17,7 +16,13 @@ func (a *API) Apply(w http.ResponseWriter, r *http.Request) {
 		c, err := r.Cookie("token")
 
 		if nil != err {
-			http.Error(w, errors.ErrNotLoggedIn.Error(), http.StatusUnauthorized)
+			e := &errors.Error{
+				Message: err.Error(),
+				Package: "api.beta",
+				Type:    "API",
+				Method:  "Apply",
+			}
+			a.Error(w, e)
 			return
 		}
 
@@ -25,8 +30,13 @@ func (a *API) Apply(w http.ResponseWriter, r *http.Request) {
 		client, err := battlenet.AccountClient(a.settings, c.Value)
 
 		if nil != err {
-			fmt.Printf("client error: %s", err.Error())
-			http.Error(w, err.Error(), http.StatusServiceUnavailable)
+			e := &errors.Error{
+				Message: err.Error(),
+				Package: "api.beta",
+				Type:    "API",
+				Method:  "Apply",
+			}
+			a.Error(w, e)
 			return
 		}
 
@@ -34,8 +44,13 @@ func (a *API) Apply(w http.ResponseWriter, r *http.Request) {
 		response, err := client.WoWOauthProfile()
 
 		if nil != err {
-			fmt.Printf("response error: %s", err.Error())
-			http.Error(w, err.Error(), http.StatusServiceUnavailable)
+			e := &errors.Error{
+				Message: err.Error(),
+				Package: "api.beta",
+				Type:    "API",
+				Method:  "Apply",
+			}
+			a.Error(w, e)
 			return
 		}
 
@@ -61,13 +76,26 @@ func (a *API) Apply(w http.ResponseWriter, r *http.Request) {
 		err := app.Save()
 
 		if nil != err {
-			a.JSON(w, err)
-			break
+			e := &errors.Error{
+				Message: err.Error(),
+				Package: "api.beta",
+				Type:    "API",
+				Method:  "Apply",
+			}
+			a.Error(w, e)
+			return
 		}
 
 		a.JSON(w, true)
 		break
 	default:
-		fmt.Fprintln(w, "Sorry, nothing here!")
+		e := &errors.Error{
+			Message: "default hit",
+			Package: "api.beta",
+			Type:    "API",
+			Method:  "Apply",
+		}
+		a.Error(w, e)
+		return
 	}
 }

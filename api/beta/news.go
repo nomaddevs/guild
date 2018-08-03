@@ -1,11 +1,9 @@
 package beta
 
 import (
-	"fmt"
 	"net/http"
 
-	//"github.com/munsy/guild/config"
-	//"github.com/munsy/guild/database"
+	"github.com/munsy/guild/errors"
 	"github.com/munsy/guild/pkg/models"
 )
 
@@ -18,8 +16,14 @@ func (a *API) News(w http.ResponseWriter, r *http.Request) {
 		err := nps.Read()
 
 		if nil != err {
-			a.JSON(w, err)
-			break
+			e := &errors.Error{
+				Message: err.Error(),
+				Package: "api.beta",
+				Type:    "API",
+				Method:  "News",
+			}
+			a.Error(w, e)
+			return
 		}
 
 		a.JSON(w, nps)
@@ -38,8 +42,14 @@ func (a *API) News(w http.ResponseWriter, r *http.Request) {
 		err := np.Save()
 
 		if nil != err {
-			a.JSON(w, err)
-			break
+			e := &errors.Error{
+				Message: err.Error(),
+				Package: "api.beta",
+				Type:    "API",
+				Method:  "News",
+			}
+			a.Error(w, e)
+			return
 		}
 
 		var nps models.NewsPosts
@@ -47,13 +57,26 @@ func (a *API) News(w http.ResponseWriter, r *http.Request) {
 		err = nps.Read()
 
 		if nil != err {
-			a.JSON(w, err)
-			break
+			e := &errors.Error{
+				Message: err.Error(),
+				Package: "api.beta",
+				Type:    "API",
+				Method:  "News",
+			}
+			a.Error(w, e)
+			return
 		}
 
 		a.JSON(w, nps)
 		break
 	default:
-		fmt.Fprintln(w, "Sorry, nothing here!")
+		e := &errors.Error{
+			Message: "default hit",
+			Package: "api.beta",
+			Type:    "API",
+			Method:  "News",
+		}
+		a.Error(w, e)
+		return
 	}
 }

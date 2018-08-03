@@ -1,10 +1,10 @@
 package beta
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/munsy/battlenet"
+	"github.com/munsy/guild/errors"
 )
 
 // RealmStatus handles realm status data
@@ -12,16 +12,26 @@ func (a *API) RealmStatus(w http.ResponseWriter, r *http.Request) {
 	client, err := battlenet.WoWClient(a.settings, a.key)
 
 	if nil != err {
-		fmt.Println("ERROR GETTING WOWCLIENT:\n" + err.Error())
-		a.JSON(w, err)
+		e := &errors.Error{
+			Message: err.Error(),
+			Package: "api.beta",
+			Type:    "API",
+			Method:  "RealmStatus",
+		}
+		a.Error(w, e)
 		return
 	}
 
 	response, err := client.RealmStatus()
 
 	if nil != err {
-		fmt.Println("ERROR GETTING REALM STATUS:\n" + err.Error())
-		a.JSON(w, err)
+		e := &errors.Error{
+			Message: err.Error(),
+			Package: "api.beta",
+			Type:    "API",
+			Method:  "RealmStatus",
+		}
+		a.Error(w, e)
 		return
 	}
 
@@ -30,6 +40,13 @@ func (a *API) RealmStatus(w http.ResponseWriter, r *http.Request) {
 		a.JSON(w, response.Data)
 		break
 	default:
-		a.JSON(w, "Sorry, nothing here!")
+		e := &errors.Error{
+			Message: "default hit",
+			Package: "api.beta",
+			Type:    "API",
+			Method:  "RealmStatus",
+		}
+		a.Error(w, e)
+		return
 	}
 }

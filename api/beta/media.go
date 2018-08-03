@@ -1,11 +1,18 @@
 package beta
 
 import (
-	"fmt"
 	"net/http"
+
+	"github.com/munsy/guild/errors"
 )
 
 // Media page
 func (a *API) Media(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintln(w, "Sorry, nothing here!")
+	e := &errors.Error{
+		Message: "not implemented",
+		Package: "api.beta",
+		Type:    "API",
+		Method:  "Media",
+	}
+	a.Error(w, e)
 }

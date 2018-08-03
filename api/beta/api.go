@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/munsy/battlenet"
+	"github.com/munsy/guild/errors"
 )
 
 type API struct {
@@ -43,5 +44,12 @@ func (a *API) Load(mux *http.ServeMux) {
 
 func (a *API) JSON(w http.ResponseWriter, v interface{}) {
 	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(v)
+}
+
+func (a *API) Error(w http.ResponseWriter, err *errors.Error) {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusInternalServerError)
+	json.NewEncoder(w).Encode(err)
 }
