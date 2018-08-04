@@ -3,6 +3,7 @@ package database
 import (
 	"database/sql"
 	"errors"
+	"fmt"
 	"time"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -197,7 +198,7 @@ func (db *MariaDB) Install() error {
 	return nil
 }
 
-func (db *MariaDB) createTableApplications() {
+func (db *MariaDB) createTableApplications() error {
 	conn, err := sql.Open(db.DriverName(), db.ConnectionString())
 
 	if nil != err {
@@ -233,7 +234,7 @@ func (db *MariaDB) createTableApplications() {
 	return nil
 }
 
-func (db *MariaDB) createTableNewsPosts() {
+func (db *MariaDB) createTableNewsPosts() error {
 	conn, err := sql.Open(db.DriverName(), db.ConnectionString())
 
 	if nil != err {
@@ -261,7 +262,7 @@ func (db *MariaDB) createTableNewsPosts() {
 	return nil
 }
 
-func (db *MariaDB) createTableNewsPostComments() {
+func (db *MariaDB) createTableNewsPostComments() error {
 	conn, err := sql.Open(db.DriverName(), db.ConnectionString())
 
 	if nil != err {
