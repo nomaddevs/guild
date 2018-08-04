@@ -1,4 +1,4 @@
-var app = angular.module('guild', ["ngRoute"]);
+var app = angular.module('guild', ['ngRoute', 'ngCookies']);
 
 
 app.config(function($routeProvider) {
@@ -23,7 +23,7 @@ app.config(function($routeProvider) {
 	});
 });
 
-app.controller("guildController", ['$scope', '$http', '$location', function($scope, $http, $location) {
+app.controller("guildController", ['$scope', '$http', '$cookies', '$location', function($scope, $http, $cookies, $location) {
 	$scope.User = {
 		BattleTag: "",
 		LoggedIn: false,
@@ -42,9 +42,14 @@ app.controller("guildController", ['$scope', '$http', '$location', function($sco
 		});
 	};
 
-	$scope.Login = function() {
-		$window.locataion.href = "/login";
+	var login = function() {
+		var token = $cookies.get("token");
+		alert("token = " + token);
+		if(token != "") {
+			$scope.User.LoggedIn = true;
+		}
 	};
+	login();
 }]);
 
 app.directive('guildHeader', function(){
