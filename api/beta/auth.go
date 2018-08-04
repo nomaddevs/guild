@@ -45,7 +45,7 @@ func (a *API) LoginCallback(w http.ResponseWriter, r *http.Request) {
 			Message: err.Error(),
 			Package: "api.beta",
 			Type:    "API",
-			Method:  "LoginCallback",
+			Method:  "LoginCallback Line 48",
 		}
 		a.Error(w, e)
 		return
@@ -62,7 +62,7 @@ func (a *API) LoginCallback(w http.ResponseWriter, r *http.Request) {
 			Message: err.Error(),
 			Package: "api.beta",
 			Type:    "API",
-			Method:  "LoginCallback",
+			Method:  "LoginCallback Line 65",
 		}
 		a.Error(w, e)
 		return
