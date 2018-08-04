@@ -85,15 +85,6 @@ func main() {
 	// Register all static routes, including index
 	register(mux)
 
-	// Any other request, we should render our SPA's only html file,
-	// Allowing angular to do the routing on anything else other then the api
-	// and the files it needs for itself to work.
-	// Order here is critical. This html should contain the base tag like
-	// <base href="/"> *href here should match the HandleFunc path below
-	// mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-	// 	http.ServeFile(w, r, "../../web/html/index.html")
-	// })
-
 	if !runTLS {
 		fmt.Println("TLS configuration not set. Falling back to HTTP...")
 		http.ListenAndServe(":80", mux)
