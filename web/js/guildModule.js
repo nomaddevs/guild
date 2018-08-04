@@ -47,14 +47,14 @@ app.controller("guildController", ['$scope', '$http', '$cookies', '$location', f
 		
 		if(!angular.isUndefined(token)) {
 			$http.get("/api/beta/user")
-			.success(function(data) {
-				console.log(data);
+            .success(function (data) {
+                console.log(data);
 				$scope.User.BattleTag = data.Battletag;
 				$scope.User.LoggedIn = true;
-			})
-			.error(function(data) {
-				$scope.User.LoggedIn = false;
-			});
+            })
+            .error(function (data, status, header, config) {
+                $scope.User.LoggedIn = false;
+            });
 		}
 	};
 
