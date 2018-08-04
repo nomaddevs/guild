@@ -3,16 +3,21 @@ package config
 import (
 	"errors"
 	"fmt"
-
-	"github.com/munsy/guild/config"
+	"strings"
 )
 
 func Install() bool {
+	// Read in values to see if any exist
+	err := Read()
+	if nil != err {
+		fmt.Printf("Error trying to read %s.\n", TOMLFile)
+		return false
+	}
 
 	if "" != Key {
 		fmt.Printf("Key is not set. Would you like to set it now (y/n, default y)? ")
 		var answer string
-		_, err := fmt.Scanln(&answer)
+		_, err = fmt.Scanln(&answer)
 		if nil != err {
 			fmt.Printf("Error trying to set Key.\n")
 			return false
@@ -32,7 +37,7 @@ func Install() bool {
 	if "" != Secret {
 		fmt.Printf("Secret is not set. Would you like to set it now (y/n, default y)? ")
 		var answer string
-		_, err := fmt.Scanln(&answer)
+		_, err = fmt.Scanln(&answer)
 		if nil != err {
 			fmt.Printf("Error trying to set Secret.\n")
 			return false
@@ -52,7 +57,7 @@ func Install() bool {
 	if "" != RedirectURL {
 		fmt.Printf("RedirectURL is not set. Would you like to set it now (y/n, default y)? ")
 		var answer string
-		_, err := fmt.Scanln(&answer)
+		_, err = fmt.Scanln(&answer)
 		if nil != err {
 			fmt.Printf("Error trying to set RedirectURL.\n")
 			return false
@@ -72,7 +77,7 @@ func Install() bool {
 	if "" != Addr {
 		fmt.Printf("Addr is not set. Would you like to set it now (y/n, default n)? ")
 		var answer string
-		_, err := fmt.Scanln(&answer)
+		_, err = fmt.Scanln(&answer)
 		if nil != err {
 			fmt.Printf("Error trying to set Addr.\n")
 			return false
@@ -92,7 +97,7 @@ func Install() bool {
 	if "" != CertFile {
 		fmt.Printf("CertFile is not set. Would you like to set it now (y/n, default n)? ")
 		var answer string
-		_, err := fmt.Scanln(&answer)
+		_, err = fmt.Scanln(&answer)
 		if nil != err {
 			fmt.Printf("Error trying to set CertFile.\n")
 			return false
@@ -112,7 +117,7 @@ func Install() bool {
 	if "" != KeyFile {
 		fmt.Printf("KeyFile is not set. Would you like to set it now (y/n, default n)? ")
 		var answer string
-		_, err := fmt.Scanln(&answer)
+		_, err = fmt.Scanln(&answer)
 		if nil != err {
 			fmt.Printf("Error trying to set KeyFile.\n")
 			return false
@@ -132,7 +137,7 @@ func Install() bool {
 	if "" != DBUsername {
 		fmt.Printf("DBUsername is not set. Would you like to set it now (y/n, default y)? ")
 		var answer string
-		_, err := fmt.Scanln(&answer)
+		_, err = fmt.Scanln(&answer)
 		if nil != err {
 			fmt.Printf("Error trying to set DBUsername.\n")
 			return false
@@ -152,7 +157,7 @@ func Install() bool {
 	if "" != DBPassword {
 		fmt.Printf("DBPassword is not set. Would you like to set it now (y/n, default y)? ")
 		var answer string
-		_, err := fmt.Scanln(&answer)
+		_, err = fmt.Scanln(&answer)
 		if nil != err {
 			fmt.Printf("Error trying to set DBPassword.\n")
 			return false
@@ -172,7 +177,7 @@ func Install() bool {
 	if "" != DBUnixsocketpath {
 		fmt.Printf("DBUnixsocketpath is not set. Would you like to set it now (y/n, default n)? ")
 		var answer string
-		_, err := fmt.Scanln(&answer)
+		_, err = fmt.Scanln(&answer)
 		if nil != err {
 			fmt.Printf("Error trying to set DBUnixsocketpath.\n")
 			return false
@@ -192,7 +197,7 @@ func Install() bool {
 	if "" != DBHost {
 		fmt.Printf("DBHost is not set. Would you like to set it now (y/n, default y)? ")
 		var answer string
-		_, err := fmt.Scanln(&answer)
+		_, err = fmt.Scanln(&answer)
 		if nil != err {
 			fmt.Printf("Error trying to set DBHost.\n")
 			return false
@@ -212,7 +217,7 @@ func Install() bool {
 	if "" != DBPort {
 		fmt.Printf("DBPort is not set. Would you like to set it now (y/n, default y)? ")
 		var answer string
-		_, err := fmt.Scanln(&answer)
+		_, err = fmt.Scanln(&answer)
 		if nil != err {
 			fmt.Printf("Error trying to set DBPort.\n")
 			return false
@@ -234,7 +239,7 @@ func Install() bool {
 	if "" != DBName {
 		fmt.Printf("DBName is not set. Would you like to set it now (y/n, default y)? ")
 		var answer string
-		_, err := fmt.Scanln(&answer)
+		_, err = fmt.Scanln(&answer)
 		if nil != err {
 			fmt.Printf("Error trying to set DBName.\n")
 			return false
@@ -254,7 +259,7 @@ func Install() bool {
 	if "" != DBCharset {
 		fmt.Printf("DBCharset is not set. Would you like to set it now (y/n, default n)? ")
 		var answer string
-		_, err := fmt.Scanln(&answer)
+		_, err = fmt.Scanln(&answer)
 		if nil != err {
 			fmt.Printf("Error trying to set DBCharset.\n")
 			return false
@@ -272,9 +277,9 @@ func Install() bool {
 		}
 	}
 
-	fmt.Printf("Creating %s...\n")
+	fmt.Printf("Setting up %s...\n", TOMLFile)
 
-	err := Write()
+	err = Write()
 
 	if nil != err {
 		fmt.Printf("Error creating %s: %s\n", TOMLFile, err.Error())

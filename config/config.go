@@ -11,7 +11,7 @@ import (
 
 var (
 	Debug            bool
-	TOMLFile         string
+	TOMLFile         = "../../config.toml"
 	Key              string
 	Secret           string
 	RedirectURL      string
@@ -73,13 +73,14 @@ func Write() error {
 	return ioutil.WriteFile(TOMLFile, b.Bytes(), 0644)
 }
 
-func Read() {
+func Read() error {
+	dir, _ := os.Getwd()
+	fmt.Println(dir)
+
 	var c cfg
 
 	if _, err := toml.DecodeFile(TOMLFile, &c); err != nil {
-		fmt.Println("Error reading %s:", TOMLFile)
-		fmt.Println("%s", err.Error())
-		os.Exit(1)
+		return err
 	}
 
 	Key = c.Key
@@ -95,6 +96,8 @@ func Read() {
 	DBPort = c.DBPort
 	DBName = c.DBName
 	DBCharset = c.DBCharset
+
+	return nil
 }
 
 func Dump() {
