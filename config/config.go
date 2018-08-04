@@ -4,14 +4,14 @@ import (
 	"bytes"
 	"fmt"
 	"io/ioutil"
-	"os"
 
 	"github.com/BurntSushi/toml"
 )
 
 var (
+	TOMLFile = "../../config.toml"
+
 	Debug            bool
-	TOMLFile         = "../../config.toml"
 	Key              string
 	Secret           string
 	RedirectURL      string
@@ -74,9 +74,6 @@ func Write() error {
 }
 
 func Read() error {
-	dir, _ := os.Getwd()
-	fmt.Println(dir)
-
 	var c cfg
 
 	if _, err := toml.DecodeFile(TOMLFile, &c); err != nil {
@@ -101,19 +98,17 @@ func Read() error {
 }
 
 func Dump() {
-	if Debug {
-		fmt.Printf("Key: %s\n", Key)
-		fmt.Printf("Secret: %s\n", Secret)
-		fmt.Printf("RedirectURL: %s\n", RedirectURL)
-		fmt.Printf("Addr: %s\n", Addr)
-		fmt.Printf("CertFile: %s\n", CertFile)
-		fmt.Printf("KeyFile: %s\n", KeyFile)
-		fmt.Printf("DBUsername: %s\n", DBUsername)
-		fmt.Printf("DBPassword: %s\n", DBPassword)
-		fmt.Printf("DBUnixsocketpath: %s\n", DBUnixsocketpath)
-		fmt.Printf("DBHost: %s\n", DBHost)
-		fmt.Printf("DBPort: %s\n", DBPort)
-		fmt.Printf("DBName: %s\n", DBName)
-		fmt.Printf("DBCharset: %s\n", DBCharset)
-	}
+	fmt.Printf("Key: %s\n", Key)
+	fmt.Printf("Secret: %s\n", Secret)
+	fmt.Printf("RedirectURL: %s\n", RedirectURL)
+	fmt.Printf("Addr: %s\n", Addr)
+	fmt.Printf("CertFile: %s\n", CertFile)
+	fmt.Printf("KeyFile: %s\n", KeyFile)
+	fmt.Printf("DBUsername: %s\n", DBUsername)
+	fmt.Printf("DBPassword: %s\n", DBPassword)
+	fmt.Printf("DBUnixsocketpath: %s\n", DBUnixsocketpath)
+	fmt.Printf("DBHost: %s\n", DBHost)
+	fmt.Printf("DBPort: %s\n", DBPort)
+	fmt.Printf("DBName: %s\n", DBName)
+	fmt.Printf("DBCharset: %s\n", DBCharset)
 }

@@ -14,7 +14,10 @@ func Install() bool {
 		return false
 	}
 
-	if "" != Key {
+	fmt.Println("[DEBUG] Values:")
+	Dump()
+
+	if "" == Key {
 		fmt.Printf("Key is not set. Would you like to set it now (y/n, default y)? ")
 		var answer string
 		_, err = fmt.Scanln(&answer)
@@ -34,7 +37,7 @@ func Install() bool {
 			Key = answer
 		}
 	}
-	if "" != Secret {
+	if "" == Secret {
 		fmt.Printf("Secret is not set. Would you like to set it now (y/n, default y)? ")
 		var answer string
 		_, err = fmt.Scanln(&answer)
@@ -54,7 +57,7 @@ func Install() bool {
 			Secret = answer
 		}
 	}
-	if "" != RedirectURL {
+	if "" == RedirectURL {
 		fmt.Printf("RedirectURL is not set. Would you like to set it now (y/n, default y)? ")
 		var answer string
 		_, err = fmt.Scanln(&answer)
@@ -74,7 +77,7 @@ func Install() bool {
 			RedirectURL = answer
 		}
 	}
-	if "" != Addr {
+	if "" == Addr {
 		fmt.Printf("Addr is not set. Would you like to set it now (y/n, default n)? ")
 		var answer string
 		_, err = fmt.Scanln(&answer)
@@ -94,7 +97,7 @@ func Install() bool {
 			Addr = answer
 		}
 	}
-	if "" != CertFile {
+	if "" == CertFile {
 		fmt.Printf("CertFile is not set. Would you like to set it now (y/n, default n)? ")
 		var answer string
 		_, err = fmt.Scanln(&answer)
@@ -114,7 +117,7 @@ func Install() bool {
 			CertFile = answer
 		}
 	}
-	if "" != KeyFile {
+	if "" == KeyFile {
 		fmt.Printf("KeyFile is not set. Would you like to set it now (y/n, default n)? ")
 		var answer string
 		_, err = fmt.Scanln(&answer)
@@ -134,7 +137,7 @@ func Install() bool {
 			KeyFile = answer
 		}
 	}
-	if "" != DBUsername {
+	if "" == DBUsername {
 		fmt.Printf("DBUsername is not set. Would you like to set it now (y/n, default y)? ")
 		var answer string
 		_, err = fmt.Scanln(&answer)
@@ -154,7 +157,7 @@ func Install() bool {
 			DBUsername = answer
 		}
 	}
-	if "" != DBPassword {
+	if "" == DBPassword {
 		fmt.Printf("DBPassword is not set. Would you like to set it now (y/n, default y)? ")
 		var answer string
 		_, err = fmt.Scanln(&answer)
@@ -174,7 +177,7 @@ func Install() bool {
 			DBPassword = answer
 		}
 	}
-	if "" != DBUnixsocketpath {
+	if "" == DBUnixsocketpath {
 		fmt.Printf("DBUnixsocketpath is not set. Would you like to set it now (y/n, default n)? ")
 		var answer string
 		_, err = fmt.Scanln(&answer)
@@ -194,7 +197,7 @@ func Install() bool {
 			DBUnixsocketpath = answer
 		}
 	}
-	if "" != DBHost {
+	if "" == DBHost {
 		fmt.Printf("DBHost is not set. Would you like to set it now (y/n, default y)? ")
 		var answer string
 		_, err = fmt.Scanln(&answer)
@@ -214,7 +217,7 @@ func Install() bool {
 			DBHost = answer
 		}
 	}
-	if "" != DBPort {
+	if "" == DBPort {
 		fmt.Printf("DBPort is not set. Would you like to set it now (y/n, default y)? ")
 		var answer string
 		_, err = fmt.Scanln(&answer)
@@ -236,7 +239,7 @@ func Install() bool {
 			}
 		}
 	}
-	if "" != DBName {
+	if "" == DBName {
 		fmt.Printf("DBName is not set. Would you like to set it now (y/n, default y)? ")
 		var answer string
 		_, err = fmt.Scanln(&answer)
@@ -256,7 +259,7 @@ func Install() bool {
 			DBName = answer
 		}
 	}
-	if "" != DBCharset {
+	if "" == DBCharset {
 		fmt.Printf("DBCharset is not set. Would you like to set it now (y/n, default n)? ")
 		var answer string
 		_, err = fmt.Scanln(&answer)
