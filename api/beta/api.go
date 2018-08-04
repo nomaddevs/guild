@@ -37,11 +37,10 @@ func (a *API) Load(mux *http.ServeMux) {
 	mux.HandleFunc(EndpointProgression, a.Progression)
 	mux.HandleFunc(EndpointMythicPlus, a.MythicPlus)
 
-	// Login
+	// Login and user data
 	mux.HandleFunc(EndpointLogin, a.LoginRedirect)
 	mux.HandleFunc(EndpointCallback, a.LoginCallback)
-
-	// return mux, nil
+	mux.HandleFunc(EndpointUser, a.User)
 }
 
 func (a *API) JSON(w http.ResponseWriter, v interface{}) {

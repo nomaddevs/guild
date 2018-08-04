@@ -17,4 +17,5 @@ var (
 	EndpointRecruitment = EndpointRoot + "recruitment" //	/api/beta/recruitment
 	EndpointProgression = EndpointRoot + "progression" //	/api/beta/progression
 	EndpointMythicPlus  = EndpointRoot + "mythicplus"  // 	/api/beta/mythicplus
+	EndpointUser        = EndpointRoot + "user"        // 	/api/beta/user
 )
