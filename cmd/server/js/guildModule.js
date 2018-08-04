@@ -23,7 +23,7 @@ app.config(function($routeProvider) {
 	});
 });
 
-app.controller("guildController", ['$scope', '$location', function($scope, $http, $location) {
+app.controller("guildController", ['$scope', '$http', '$location', function($scope, $http, $location) {
 	$scope.User = {
 		BattleTag: "",
 		LoggedIn: false,

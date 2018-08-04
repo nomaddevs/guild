@@ -13,11 +13,12 @@ var Oauth2 = &oauth2.Config{
 	Scopes:   []string{"wow.profile"},
 	Endpoint: battlenet.Endpoint(battlenet.Regions.US),
 }
+var authstate = "state"
 
 func (a *API) LoginRedirect(w http.ResponseWriter, r *http.Request) {
 	cookie := http.Cookie{
 		Name:    "redirectURL",
-		Value:   r.URL.RequestURI(),
+		Value:   r.Referer(),
 		Expires: time.Now().Add(1 * time.Hour),
 	}
 
@@ -25,27 +26,36 @@ func (a *API) LoginRedirect(w http.ResponseWriter, r *http.Request) {
 	Oauth2.ClientSecret = a.secret
 	Oauth2.RedirectURL = a.authRedirect
 
-	println("ClientID: " + Oauth2.ClientID)
-	println("ClientSecret: " + Oauth2.ClientSecret)
-	println("RedirectURL: " + Oauth2.RedirectURL)
-
 	http.SetCookie(w, &cookie)
 	http.Redirect(w, r, Oauth2.AuthCodeURL("state"), http.StatusTemporaryRedirect)
 }
 
 func (a *API) LoginCallback(w http.ResponseWriter, r *http.Request) {
-	println(r.Method)
-
 	r.ParseForm()
 
-	token, err := Oauth2.Exchange(oauth2.NoContext, r.FormValue("code"))
+	state := r.FormValue("state")
+
+	if state != authstate {
+		e := &errors.Error{
+                        Message: "invalid state",
+                        Package: "api.beta",
+                        Type:    "API",
+                        Method:  "LoginCallback Line 43",
+                }
+                a.Error(w, e)
+                return
+	}
+
+	code := r.FormValue("code")
+
+	token, err := Oauth2.Exchange(oauth2.NoContext, code)
 
 	if nil != err {
 		e := &errors.Error{
 			Message: err.Error(),
 			Package: "api.beta",
 			Type:    "API",
-			Method:  "LoginCallback Line 48",
+			Method:  "LoginCallback Line 60",
 		}
 		a.Error(w, e)
 		return
@@ -62,11 +72,13 @@ func (a *API) LoginCallback(w http.ResponseWriter, r *http.Request) {
 			Message: err.Error(),
 			Package: "api.beta",
 			Type:    "API",
-			Method:  "LoginCallback Line 65",
+			Method:  "LoginCallback Line 77",
 		}
 		a.Error(w, e)
 		return
 	}
 
-	http.Redirect(w, r, c.Value, http.StatusTemporaryRedirect)
+	println("redirect to: " + c.Value)
+
+	http.Redirect(w, r, c.Value, http.StatusPermanentRedirect)
 }

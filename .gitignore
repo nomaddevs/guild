@@ -1,6 +1,6 @@
 cmd/server/config.toml
 cmd/server/server.exe
-cmd/server/sever
+cmd/server/server
 cmd/cli/cli.exe
 cmd/cli/cli
 cmd/install/install
