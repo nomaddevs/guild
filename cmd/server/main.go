@@ -28,16 +28,23 @@ func redirect(w http.ResponseWriter, req *http.Request) {
 	http.Redirect(w, req, target, http.StatusTemporaryRedirect)
 }
 
-// Create room for static files serving
-func register(mux *http.ServeMux, dir string) {
-	ds := "./"
+// Load static routes
+func loadStatic(mux *http.ServeMux, dir string) {
+	web := "../../web/"
 	s := "/"
 
-	dsdir := ds + dir
+	webdir := web + dir
 	sdir := s + dir
 	sdirs := s + dir + s
 
-	mux.Handle(sdirs, http.StripPrefix(sdir, http.FileServer(http.Dir(dsdir))))
+	mux.Handle(sdirs, http.StripPrefix(sdir, http.FileServer(http.Dir(webdir))))
+}
+
+// Register all static routes
+func register(mux *http.ServeMux) {
+	for i := 0; i < len(staticRoutes); i++ {
+		loadStatic(mux, staticRoutes[i])
+	}
 }
 
 func init() {
@@ -66,10 +73,8 @@ func main() {
 	// Load API
 	mux := guild.Load()
 
-	// Load static routes
-	for i := 0; i < len(staticRoutes); i++ {
-		register(mux, staticRoutes[i])
-	}
+	// Register all static routes
+	register(mux)
 
 	// Any other request, we should render our SPA's only html file,
 	// Allowing angular to do the routing on anything else other then the api
@@ -77,7 +82,7 @@ func main() {
 	// Order here is critical. This html should contain the base tag like
 	// <base href="/"> *href here should match the HandleFunc path below
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, "html/index.html")
+		http.ServeFile(w, r, "../../web/html/index.html")
 	})
 
 	if !runTLS {

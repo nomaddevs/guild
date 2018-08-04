@@ -23,15 +23,27 @@ app.config(function($routeProvider) {
 	});
 });
 
-
-app.controller("guildController",['$scope', '$location', function($scope, $location) {
+app.controller("guildController", ['$scope', '$http', '$location', function($scope, $http, $location) {
 	$scope.User = {
 		BattleTag: "",
 		LoggedIn: false,
 	};
 
+	$scope.Roster = []
+
 	$scope.ChangeView = function(view) {
 	 	$location.path(view);
+	};
+
+	$scope.LoadRoster = function() {
+		$http.get("/api/beta/roster")
+		.then(function(response) {
+			$scope.Roster = response.data;
+		});
+	};
+
+	$scope.Login = function() {
+		$window.locataion.href = "/login";
 	};
 }]);
 
