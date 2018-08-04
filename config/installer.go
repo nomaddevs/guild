@@ -1,9 +1,10 @@
 package config
 
 import (
-	"errors"
 	"fmt"
 	"strings"
+
+	"github.com/munsy/guild/database"
 )
 
 func Install() bool {
@@ -14,15 +15,12 @@ func Install() bool {
 		return false
 	}
 
-	fmt.Println("[DEBUG] Values:")
-	Dump()
-
 	if "" == Key {
 		fmt.Printf("Key is not set. Would you like to set it now (y/n, default y)? ")
 		var answer string
 		_, err = fmt.Scanln(&answer)
 		if nil != err {
-			fmt.Printf("Error trying to set Key.\n")
+			fmt.Printf("Error trying to set Key: %s\n", err.Error())
 			return false
 		}
 
@@ -31,7 +29,7 @@ func Install() bool {
 			fmt.Printf("New value for Key: ")
 			_, err = fmt.Scanln(&answer)
 			if nil != err {
-				fmt.Printf("Error trying to set Key.\n")
+				fmt.Printf("Error trying to set Key: %s\n", err.Error())
 				return false
 			}
 			Key = answer
@@ -42,7 +40,7 @@ func Install() bool {
 		var answer string
 		_, err = fmt.Scanln(&answer)
 		if nil != err {
-			fmt.Printf("Error trying to set Secret.\n")
+			fmt.Printf("Error trying to set Secret: %s\n", err.Error())
 			return false
 		}
 
@@ -51,7 +49,7 @@ func Install() bool {
 			fmt.Printf("New value for Secret: ")
 			_, err = fmt.Scanln(&answer)
 			if nil != err {
-				fmt.Printf("Error trying to set Secret.\n")
+				fmt.Printf("Error trying to set Secret: %s\n", err.Error())
 				return false
 			}
 			Secret = answer
@@ -62,7 +60,7 @@ func Install() bool {
 		var answer string
 		_, err = fmt.Scanln(&answer)
 		if nil != err {
-			fmt.Printf("Error trying to set RedirectURL.\n")
+			fmt.Printf("Error trying to set RedirectURL: %s\n", err.Error())
 			return false
 		}
 
@@ -71,7 +69,7 @@ func Install() bool {
 			fmt.Printf("New value for RedirectURL: ")
 			_, err = fmt.Scanln(&answer)
 			if nil != err {
-				fmt.Printf("Error trying to set RedirectURL.\n")
+				fmt.Printf("Error trying to set RedirectURL: %s\n", err.Error())
 				return false
 			}
 			RedirectURL = answer
@@ -82,7 +80,7 @@ func Install() bool {
 		var answer string
 		_, err = fmt.Scanln(&answer)
 		if nil != err {
-			fmt.Printf("Error trying to set Addr.\n")
+			fmt.Printf("Error trying to set Addr: %s\n", err.Error())
 			return false
 		}
 
@@ -91,7 +89,7 @@ func Install() bool {
 			fmt.Printf("New value for Addr: ")
 			_, err = fmt.Scanln(&answer)
 			if nil != err {
-				fmt.Printf("Error trying to set Addr.\n")
+				fmt.Printf("Error trying to set Addr: %s\n", err.Error())
 				return false
 			}
 			Addr = answer
@@ -102,7 +100,7 @@ func Install() bool {
 		var answer string
 		_, err = fmt.Scanln(&answer)
 		if nil != err {
-			fmt.Printf("Error trying to set CertFile.\n")
+			fmt.Printf("Error trying to set CertFile: %s\n", err.Error())
 			return false
 		}
 
@@ -111,7 +109,7 @@ func Install() bool {
 			fmt.Printf("New value for CertFile: ")
 			_, err = fmt.Scanln(&answer)
 			if nil != err {
-				fmt.Printf("Error trying to set CertFile.\n")
+				fmt.Printf("Error trying to set CertFile: %s\n", err.Error())
 				return false
 			}
 			CertFile = answer
@@ -122,7 +120,7 @@ func Install() bool {
 		var answer string
 		_, err = fmt.Scanln(&answer)
 		if nil != err {
-			fmt.Printf("Error trying to set KeyFile.\n")
+			fmt.Printf("Error trying to set KeyFile: %s\n", err.Error())
 			return false
 		}
 
@@ -131,7 +129,7 @@ func Install() bool {
 			fmt.Printf("New value for KeyFile: ")
 			_, err = fmt.Scanln(&answer)
 			if nil != err {
-				fmt.Printf("Error trying to set KeyFile.\n")
+				fmt.Printf("Error trying to set KeyFile: %s\n", err.Error())
 				return false
 			}
 			KeyFile = answer
@@ -142,7 +140,7 @@ func Install() bool {
 		var answer string
 		_, err = fmt.Scanln(&answer)
 		if nil != err {
-			fmt.Printf("Error trying to set DBUsername.\n")
+			fmt.Printf("Error trying to set DBUsername: %s\n", err.Error())
 			return false
 		}
 
@@ -151,7 +149,7 @@ func Install() bool {
 			fmt.Printf("New value for DBUsername: ")
 			_, err = fmt.Scanln(&answer)
 			if nil != err {
-				fmt.Printf("Error trying to set DBUsername.\n")
+				fmt.Printf("Error trying to set DBUsername: %s\n", err.Error())
 				return false
 			}
 			DBUsername = answer
@@ -162,7 +160,7 @@ func Install() bool {
 		var answer string
 		_, err = fmt.Scanln(&answer)
 		if nil != err {
-			fmt.Printf("Error trying to set DBPassword.\n")
+			fmt.Printf("Error trying to set DBPassword: %s\n", err.Error())
 			return false
 		}
 
@@ -171,7 +169,7 @@ func Install() bool {
 			fmt.Printf("New value for DBPassword: ")
 			_, err = fmt.Scanln(&answer)
 			if nil != err {
-				fmt.Printf("Error trying to set DBPassword.\n")
+				fmt.Printf("Error trying to set DBPassword: %s\n", err.Error())
 				return false
 			}
 			DBPassword = answer
@@ -182,7 +180,7 @@ func Install() bool {
 		var answer string
 		_, err = fmt.Scanln(&answer)
 		if nil != err {
-			fmt.Printf("Error trying to set DBUnixsocketpath.\n")
+			fmt.Printf("Error trying to set DBUnixsocketpath: %s\n", err.Error())
 			return false
 		}
 
@@ -191,7 +189,7 @@ func Install() bool {
 			fmt.Printf("New value for DBUnixsocketpath: ")
 			_, err = fmt.Scanln(&answer)
 			if nil != err {
-				fmt.Printf("Error trying to set DBUnixsocketpath.\n")
+				fmt.Printf("Error trying to set DBUnixsocketpath: %s\n", err.Error())
 				return false
 			}
 			DBUnixsocketpath = answer
@@ -202,7 +200,7 @@ func Install() bool {
 		var answer string
 		_, err = fmt.Scanln(&answer)
 		if nil != err {
-			fmt.Printf("Error trying to set DBHost.\n")
+			fmt.Printf("Error trying to set DBHost: %s\n", err.Error())
 			return false
 		}
 
@@ -211,7 +209,7 @@ func Install() bool {
 			fmt.Printf("New value for DBHost: ")
 			_, err = fmt.Scanln(&answer)
 			if nil != err {
-				fmt.Printf("Error trying to set DBHost.\n")
+				fmt.Printf("Error trying to set DBHost: %s\n", err.Error())
 				return false
 			}
 			DBHost = answer
@@ -222,7 +220,7 @@ func Install() bool {
 		var answer string
 		_, err = fmt.Scanln(&answer)
 		if nil != err {
-			fmt.Printf("Error trying to set DBPort.\n")
+			fmt.Printf("Error trying to set DBPort: %s\n", err.Error())
 			return false
 		}
 
@@ -231,7 +229,7 @@ func Install() bool {
 			fmt.Printf("New value for DBPort (default 3306): ")
 			_, err = fmt.Scanln(&answer)
 			if nil != err {
-				fmt.Printf("Error trying to set DBPort.\n")
+				fmt.Printf("Error trying to set DBPort: %s\n", err.Error())
 				return false
 			}
 			if answer == "" {
@@ -244,7 +242,7 @@ func Install() bool {
 		var answer string
 		_, err = fmt.Scanln(&answer)
 		if nil != err {
-			fmt.Printf("Error trying to set DBName.\n")
+			fmt.Printf("Error trying to set DBName: %s\n", err.Error())
 			return false
 		}
 
@@ -253,7 +251,7 @@ func Install() bool {
 			fmt.Printf("New value for DBName: ")
 			_, err = fmt.Scanln(&answer)
 			if nil != err {
-				fmt.Printf("Error trying to set DBName.\n")
+				fmt.Printf("Error trying to set DBName: %s\n", err.Error())
 				return false
 			}
 			DBName = answer
@@ -264,7 +262,7 @@ func Install() bool {
 		var answer string
 		_, err = fmt.Scanln(&answer)
 		if nil != err {
-			fmt.Printf("Error trying to set DBCharset.\n")
+			fmt.Printf("Error trying to set DBCharset: %s\n", err.Error())
 			return false
 		}
 
@@ -273,7 +271,7 @@ func Install() bool {
 			fmt.Printf("New value for DBCharset: ")
 			_, err = fmt.Scanln(&answer)
 			if nil != err {
-				fmt.Printf("Error trying to set DBCharset.\n")
+				fmt.Printf("Error trying to set DBCharset: %s\n", err.Error())
 				return false
 			}
 			DBCharset = answer
@@ -306,5 +304,15 @@ func Install() bool {
 }
 
 func installDB() error {
-	return errors.New("database installer logic not implemented")
+	db := &database.MariaDB{
+		Username:       DBUsername,
+		Unixsocketpath: DBUnixsocketpath,
+		Password:       DBPassword,
+		Host:           DBHost,
+		Port:           DBPort,
+		Database:       DBName,
+		Charset:        DBCharset,
+	}
+
+	return db.Install()
 }
