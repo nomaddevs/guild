@@ -44,9 +44,10 @@ app.controller("guildController", ['$scope', '$http', '$cookies', '$location', f
 
 	var login = function() {
 		var token = $cookies.get("token");
-		alert("token = " + token);
-		if(token != "") {
+		
+		if(!angular.isUndefined(token)) {
 			$scope.User.LoggedIn = true;
+			alert("user is logged in");
 		}
 	};
 	login();
