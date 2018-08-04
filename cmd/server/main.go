@@ -52,8 +52,9 @@ func init() {
 			Locale: battlenet.Locale.AmericanEnglish,
 			Region: battlenet.Regions.US,
 		},
-		Key:    config.Key,
-		Secret: config.Secret,
+		Key:          config.Key,
+		Secret:       config.Secret,
+		AuthRedirect: config.RedirectURL,
 	}
 
 	guild = api.New(settings)

@@ -14,7 +14,7 @@ type GuildAPI struct {
 func New(a *APISettings) *GuildAPI {
 	return &GuildAPI{
 		Settings: a,
-		Beta:     beta.New(a.BlizzardSettings, a.BlizzardCallbackURL, a.Key, a.Secret),
+		Beta:     beta.New(a.BlizzardSettings, a.BlizzardCallbackURL, a.Key, a.Secret, a.AuthRedirect),
 	}
 }
 

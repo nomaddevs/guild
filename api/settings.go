@@ -9,4 +9,5 @@ type APISettings struct {
 	BlizzardSettings    *battlenet.Settings
 	Key                 string
 	Secret              string
+	AuthRedirect        string
 }

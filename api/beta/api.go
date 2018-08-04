@@ -9,18 +9,20 @@ import (
 )
 
 type API struct {
-	settings *battlenet.Settings
-	url      string
-	key      string
-	secret   string
+	settings     *battlenet.Settings
+	url          string
+	key          string
+	secret       string
+	authRedirect string
 }
 
-func New(s *battlenet.Settings, url, key, secret string) *API {
+func New(s *battlenet.Settings, url, key, secret, authRedirect string) *API {
 	return &API{
-		settings: s,
-		url:      url,
-		key:      key,
-		secret:   secret,
+		settings:     s,
+		url:          url,
+		key:          key,
+		secret:       secret,
+		authRedirect: authRedirect,
 	}
 }
 

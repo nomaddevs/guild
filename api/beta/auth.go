@@ -4,11 +4,15 @@ import (
 	"net/http"
 	"time"
 
-	//"github.com/munsy/battlenet"
-	"github.com/munsy/guild/config"
+	"github.com/munsy/battlenet"
 	"github.com/munsy/guild/errors"
 	"golang.org/x/oauth2"
 )
+
+var Oauth2 = &oauth2.Config{
+	Scopes:   []string{"wow.profile"},
+	Endpoint: battlenet.Endpoint(battlenet.Regions.US),
+}
 
 func (a *API) LoginRedirect(w http.ResponseWriter, r *http.Request) {
 	cookie := http.Cookie{
@@ -17,12 +21,16 @@ func (a *API) LoginRedirect(w http.ResponseWriter, r *http.Request) {
 		Expires: time.Now().Add(1 * time.Hour),
 	}
 
-	println("ClientID: " + config.Oauth2.ClientID)
-	println("ClientSecret: " + config.Oauth2.ClientSecret)
-	println("RedirectURL: " + config.Oauth2.RedirectURL)
+	Oauth2.ClientID = a.key
+	Oauth2.ClientSecret = a.secret
+	Oauth2.RedirectURL = a.authRedirect
+
+	println("ClientID: " + Oauth2.ClientID)
+	println("ClientSecret: " + Oauth2.ClientSecret)
+	println("RedirectURL: " + Oauth2.RedirectURL)
 
 	http.SetCookie(w, &cookie)
-	http.Redirect(w, r, config.Oauth2.AuthCodeURL("state"), http.StatusTemporaryRedirect)
+	http.Redirect(w, r, Oauth2.AuthCodeURL("state"), http.StatusTemporaryRedirect)
 }
 
 func (a *API) LoginCallback(w http.ResponseWriter, r *http.Request) {
@@ -30,7 +38,7 @@ func (a *API) LoginCallback(w http.ResponseWriter, r *http.Request) {
 
 	r.ParseForm()
 
-	token, err := config.Oauth2.Exchange(oauth2.NoContext, r.FormValue("code"))
+	token, err := Oauth2.Exchange(oauth2.NoContext, r.FormValue("code"))
 
 	if nil != err {
 		e := &errors.Error{
