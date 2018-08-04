@@ -17,6 +17,10 @@ func (a *API) LoginRedirect(w http.ResponseWriter, r *http.Request) {
 		Expires: time.Now().Add(1 * time.Hour),
 	}
 
+	println("ClientID: " + config.Oauth2.ClientID)
+	println("ClientSecret: " + config.Oauth2.ClientSecret)
+	println("RedirectURL: " + config.Oauth2.RedirectURL)
+
 	http.SetCookie(w, &cookie)
 	http.Redirect(w, r, config.Oauth2.AuthCodeURL("state"), http.StatusTemporaryRedirect)
 }
