@@ -57,6 +57,7 @@ func (a *API) Apply(w http.ResponseWriter, r *http.Request) {
 		break
 	case "POST":
 		app := &models.Applicant{
+			BattleID:             r.FormValue("app_battleid"),
 			Battletag:            r.FormValue("app_battletag"),
 			Character:            r.FormValue("app_character"),
 			Email:                r.FormValue("app_email"),

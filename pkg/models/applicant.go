@@ -6,6 +6,7 @@ import (
 )
 
 type Applicant struct {
+	BattleID             int
 	Battletag            string
 	Character            string
 	Email                string
@@ -32,7 +33,7 @@ func (a *Applicant) Save() error {
 		Charset:        config.DBCharset,
 	}
 
-	return db.WriteApplicant(a.Battletag, a.Character,
+	return db.WriteApplicant(a.BattleID, a.Battletag, a.Character,
 		a.Email, a.RealName, a.Location, a.Age, a.Gender,
 		a.ComputerSpecs, a.PreviousGuilds, a.ReasonsLeavingGuilds,
 		a.WhyJoinThisGuild, a.References, a.FinalRemarks)

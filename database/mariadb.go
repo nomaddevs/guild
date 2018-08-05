@@ -82,7 +82,7 @@ func (db *MariaDB) Test() error {
 	return nil
 }
 
-func (db *MariaDB) WriteApplicant(battletag, character, email, realName, location, age, gender, computerSpecs,
+func (db *MariaDB) WriteApplicant(battleid int, battletag, character, email, realName, location, age, gender, computerSpecs,
 	previousGuilds, reasonsLeavingGuilds, whyJoinThisGuild, references, finalRemarks string) error {
 	conn, err := sql.Open(db.DriverName(), db.ConnectionString())
 
@@ -91,17 +91,17 @@ func (db *MariaDB) WriteApplicant(battletag, character, email, realName, locatio
 	}
 	defer conn.Close()
 
-	statement := `INSERT INTO applications(battletag, wowcharacter, email, realname, location,
+	statement := `INSERT INTO applications(id, battletag, wowcharacter, email, realname, location,
 	age, gender, computerspecs, previousguilds, reasonsleavingguilds, whyjointhisguild, 
-	wowreferences, finalremarks) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+	wowreferences, finalremarks) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
 
 	in, err := conn.Prepare(statement)
 	if err != nil {
 		return err
 	}
-	defer in.Close() // Close the statement when we leave main() / the program terminates
+	defer in.Close()
 
-	in.Exec(battletag, character, email, realName, location, age, gender, computerSpecs,
+	in.Exec(battleid, battletag, character, email, realName, location, age, gender, computerSpecs,
 		previousGuilds, reasonsLeavingGuilds, whyJoinThisGuild, references, finalRemarks)
 
 	return nil
@@ -237,7 +237,8 @@ func (db *MariaDB) createTableApplications() error {
 	defer conn.Close()
 
 	statement := `CREATE TABLE applications(
-		id BIGINT NOT NULL AUTO_INCREMENT, 
+		id BIGINT NOT NULL, 
+		battletag varchar(50) NOT NULL,
 		wowcharacter varchar(50) NOT NULL, 
 		email varchar(50) NOT NULL, 
 		realname varchar(50) NOT NULL, 
@@ -331,7 +332,7 @@ CREATE DATABASE guild;
 
 USE guild;
 
-CREATE TABLE applications(id BIGINT NOT NULL AUTO_INCREMENT, wowcharacter varchar(50) NOT NULL, email varchar(50) NOT NULL, realname varchar(50) NOT NULL, location varchar(100) NOT NULL, age TINYINT NOT NULL, gender varchar(20) NOT NULL, computerspecs varchar(500) NOT NULL, previousguilds varchar(500) NOT NULL, reasonsleavingguilds varchar(500) NOT NULL, whyjointhisguild varchar(500) NOT NULL, wowreferences varchar(500) NOT NULL, finalremarks varchar(500) NOT NULL, PRIMARY KEY (id)) ENGINE = InnoDB;
+CREATE TABLE applications(id BIGINT NOT NULL, battletag varchar(50) NOT NULL,wowcharacter varchar(50) NOT NULL, email varchar(50) NOT NULL, realname varchar(50) NOT NULL, location varchar(100) NOT NULL, age TINYINT NOT NULL, gender varchar(20) NOT NULL, computerspecs varchar(500) NOT NULL, previousguilds varchar(500) NOT NULL, reasonsleavingguilds varchar(500) NOT NULL, whyjointhisguild varchar(500) NOT NULL, wowreferences varchar(500) NOT NULL, finalremarks varchar(500) NOT NULL, PRIMARY KEY (id)) ENGINE = InnoDB;
 
 CREATE TABLE newsposts(id BIGINT NOT NULL AUTO_INCREMENT, title VARCHAR(128) NOT NULL, body MEDIUMBLOB NOT NULL, date DATETIME NOT NULL, author VARCHAR(64) NOT NULL, PRIMARY KEY (id)) ENGINE = InnoDB;
 
