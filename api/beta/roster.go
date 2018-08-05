@@ -24,6 +24,8 @@ func (a *API) Roster(w http.ResponseWriter, r *http.Request) {
 
 	response, err := wow.GuildProfile("thrall", "nobelfsallowed")
 
+	println(response.Endpoint)
+
 	if nil != err {
 		e := &errors.Error{
 			Message: err.Error(),
