@@ -1,9 +1,9 @@
 <div class="container">
   <div class="panel panel-default">
     <div class="panel-body">
-    Realm: [RealmPlaceholder]<br>
-    Battlegroup: [BattlegroupPlaceholder]<br>
-    Achievement Points: [AchievementPointPlaceholder]<br>
+    Realm: {{Guild.realm}}<br>
+    Battlegroup: {{Guild.battlegroup}}<br>
+    Achievement Points: {{Guild.achievementPoints}}<br>
     </div>
   </div>
 
@@ -26,7 +26,7 @@
           <tr ng-repeat="member in Guild.members">
             <th><img src="https://render-us.worldofwarcraft.com/character/{{member.character.thumbnail}}"></th>
             <th>{{member.character.name}}</th>
-            <th>{{member.name}}</th>
+            <th>{{member.rank}}</th>
             <th>{{member.character.class}}</th>
             <th>{{member.character.race}}</th>
           </tr>
