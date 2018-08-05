@@ -27,6 +27,7 @@ app.controller("guildController", ['$scope', '$http', '$cookies', '$location', f
 	$scope.Guild = [];
 	
 	$scope.User = {
+		ID: -1,
 		BattleTag: "",
 		LoggedIn: false,
 		Applied: false,
@@ -52,6 +53,8 @@ app.controller("guildController", ['$scope', '$http', '$cookies', '$location', f
 	*/
 
 	$scope.Apply = function() {
+		$scope.Application.BattleID = $scope.User.ID;
+		$scope.Application.BattleTag = $scope.User.BattleTag;
 		console.log($scope.Application);
 		
 		$http({

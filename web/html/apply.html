@@ -25,7 +25,7 @@
           </thead>
 	        <tbody>
             <tr ng-repeat="character in User.Characters">
-              <td><input type="radio" ng-model="Application.Character"></td>
+              <td><input type="radio" ng-model="Application.Character" value="{{character.name}} {{character.realm}} {{character.battlegroup}}"></td>
               <td><img src="https://render-us.worldofwarcraft.com/character/{{character.thumbnail}}"></td>
               <td>{{character.name}}</td>
               <td>{{character.realm}}</td>
