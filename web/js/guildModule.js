@@ -38,8 +38,12 @@ app.controller("guildController", ['$scope', '$http', '$cookies', '$location', f
 	$scope.LoadRoster = function() {
 		$http.get("/api/beta/roster")
 		.then(function(response) {
+			alert("success");
 			$scope.Roster = response.data;
 			console.log($scope.Roster);
+		}, function (response) {
+			alert("error");
+			console.log(response.data);
 		});
 	};
 
@@ -49,8 +53,8 @@ app.controller("guildController", ['$scope', '$http', '$cookies', '$location', f
 			if(!angular.isUndefined(token)) {
 				$http.get("/api/beta/user")
 				.then(function (response) {
-    					$scope.User.BattleTag = response.data.battletag;
-    					$scope.User.LoggedIn = true;
+    				$scope.User.BattleTag = response.data.battletag;
+    				$scope.User.LoggedIn = true;
 				}, function (response) {
 					$scope.User.LoggedIn = false;
 				});
