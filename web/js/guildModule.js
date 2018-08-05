@@ -39,22 +39,22 @@ app.controller("guildController", ['$scope', '$http', '$cookies', '$location', f
 		$http.get("/api/beta/roster")
 		.then(function(response) {
 			$scope.Roster = response.data;
+			console.log($scope.Roster);
 		});
 	};
 
 	var login = function() {
-		var token = $cookies.get("token");
-		
-		if(!angular.isUndefined(token)) {
-			$http.get("/api/beta/user")
-            .then(function (response) {
-				$scope.User.BattleTag = response.data.battletag;
-				$scope.User.LoggedIn = true;
-                console.log($scope.User);
-            }, function (response) {
-                $scope.User.LoggedIn = false;
-            	console.log($scope.User);
-            });
+		if(!$scope.User.LoggedIn) {
+			var token = $cookies.get("token");
+			if(!angular.isUndefined(token)) {
+				$http.get("/api/beta/user")
+				.then(function (response) {
+    					$scope.User.BattleTag = response.data.battletag;
+    					$scope.User.LoggedIn = true;
+				}, function (response) {
+					$scope.User.LoggedIn = false;
+				});
+			}
 		}
 	};
 
