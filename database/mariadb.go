@@ -107,6 +107,36 @@ func (db *MariaDB) WriteApplicant(battletag, character, email, realName, locatio
 	return nil
 }
 
+func (db *MariaDB) GetApplicant(id int) (bool, error) {
+	conn, err := sql.Open(db.DriverName(), db.ConnectionString())
+
+	if nil != err {
+		return false, err
+	}
+	defer conn.Close()
+
+	rows, err := conn.Query("SELECT * FROM applications WHERE id = ?")
+
+	if nil != err {
+		return false, err
+	}
+	defer rows.Close()
+
+	count := 0
+
+	for rows.Next() {
+		count++
+	}
+
+	err = rows.Err()
+
+	if err != nil {
+		return -1, err
+	}
+
+	return count > 0, nil
+}
+
 func (db *MariaDB) WriteNewsPost(title, body, author string) error {
 	conn, err := sql.Open(db.DriverName(), db.ConnectionString())
 

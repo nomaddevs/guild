@@ -39,7 +39,7 @@ func (a *API) User(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		response, err := client.BattleID()
+		bid, err := client.BattleID()
 
 		if nil != err {
 			e := &errors.Error{
@@ -52,7 +52,13 @@ func (a *API) User(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		a.JSON(w, response.Data)
+		u := &models.User{
+			ID:        bid.ID,
+			BattleTag: bid.BattleTag,
+			Applied:   models.Applied(bid.ID),
+		}
+
+		a.JSON(w, u)
 		break
 	default:
 		e := &errors.Error{

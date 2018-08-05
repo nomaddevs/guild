@@ -15,6 +15,7 @@ var Oauth2 = &oauth2.Config{
 }
 var authstate = "state"
 
+// LoginRedirect redirects the user to Battle.net to authenticate.
 func (a *API) LoginRedirect(w http.ResponseWriter, r *http.Request) {
 	Oauth2.ClientID = a.key
 	Oauth2.ClientSecret = a.secret
@@ -23,6 +24,7 @@ func (a *API) LoginRedirect(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, Oauth2.AuthCodeURL("state"), http.StatusTemporaryRedirect)
 }
 
+// LoginCallback provides a callback route from Battle.net authentication.
 func (a *API) LoginCallback(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 
@@ -56,6 +58,19 @@ func (a *API) LoginCallback(w http.ResponseWriter, r *http.Request) {
 
 	expiration := time.Now().Add(1 * time.Hour)
 	cookie := http.Cookie{Name: "token", Value: token.AccessToken, Expires: expiration}
+	http.SetCookie(w, &cookie)
+
+	http.Redirect(w, r, "/", http.StatusPermanentRedirect)
+}
+
+// Logout logs the user out.
+func (a *API) Logout(w http.ResponseWriter, r *http.Request) {
+	cookie := http.Cookie{
+		Name:    "token",
+		Value:   "",
+		Expires: time.Now().Add(-1 * time.Hour),
+		MaxAge:  -1,
+	}
 	http.SetCookie(w, &cookie)
 
 	http.Redirect(w, r, "/", http.StatusPermanentRedirect)

@@ -26,7 +26,6 @@ func (a *API) Apply(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		// Get character data
 		client, err := battlenet.AccountClient(a.settings, c.Value)
 
 		if nil != err {
@@ -40,7 +39,7 @@ func (a *API) Apply(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		// Send character data for them to choose
+		// Send character data for them to choose from for app process
 		response, err := client.WoWOauthProfile()
 
 		if nil != err {
