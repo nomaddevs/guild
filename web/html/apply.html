@@ -1,10 +1,11 @@
 <div class="container">
 <!-- SHOW THIS IF THE USER IS NOT LOGGED IN -->
-  <div class="well well-sm"><center>Click <a href="/login">here</a> to authenticate via the Battle.net API.<br>(You'll need to navigate to this page again)</center></div>
+  <div class="well well-sm" ng-if="!User.LoggedIn"><center>Click <a href="/login">here</a> to authenticate via the Battle.net API.<br>(You'll need to navigate to this page again)</center></div>
 <!-- /SHOW THIS IF THE USER IS NOT LOGGED IN -->
 
 <!-- SHOW THIS IF THE USER IS LOGGED IN BUT HASN'T APPLIED YET -->
 <!-- START OF CHARACTER LISTING  -->
+  <div ng-if="User.LoggedIn && !User.Applied">
   <form action="/apply" method="POST">
     <div class="panel panel-default">
       <div class="panel-heading"><h3>Your Level 110 Characters</h3></div>
@@ -22,12 +23,12 @@
             </tr>
           </thead>
 	  <tbody>
-            <tr>
+            <tr ng-repeat="character in User.Characters">
               <td><input type="radio" name="app_character"></td>
-              <td><img src="https://render-us.worldofwarcraft.com/character/{{.Thumbnail}}"></td>
-              <td>{{.Name}}</td>
-              <td>{{.Realm}}</td>
-              <td>{{.Battlegroup}}</td>
+              <td><img src="https://render-us.worldofwarcraft.com/character/{{character.thumbnail}}"></td>
+              <td>{{character.name}}</td>
+              <td>{{character.realm}}</td>
+              <td>{{character.battlegroup}}</td>
             </tr>
           </tbody>
         </table>
@@ -94,27 +95,29 @@
       </div>
     </div>
   </form>
+  </div>
 </div>
 <!-- /SHOW THIS IF THE USER IS LOGGED IN BUT HASN'T APPLIED YET -->
 
 <!-- SHOW THIS IF THE USER SUCCESSFULLY APPLIED -->
-<div class="container">
+<div ng-if="User.LoggedIn && User.Applied">
 
 <div class="row">
-
-
   <div class="col-md-8">
     <div class="panel panel-default">
       <div class="panel-heading">
 	<h5>yay</h5>
       </div>
       <div class="panel-body">
-	<center>you did it good job lol</center>
+	<center>Congratulations on applying. <br>
+		Don't whisper us in-game with inquiries about your app. <br>
+		We'll contact you if we're interested. <br>
+	</center>
       </div>
-      <div class="panel-footer"><a href="/">now fuck off</a></div>
+      <div class="panel-footer"><a href="/">sweet</a></div>
     </div>
   </div>
-</form>
+
 
 </div>
 
