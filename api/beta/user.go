@@ -5,6 +5,7 @@ import (
 
 	"github.com/munsy/battlenet"
 	"github.com/munsy/guild/errors"
+	"github.com/munsy/guild/pkg/models"
 )
 
 // User handles data for the logged in user.
@@ -25,7 +26,7 @@ func (a *API) User(w http.ResponseWriter, r *http.Request) {
 			a.Error(w, e)
 			return
 		}
-
+		println("1")
 		client, err := battlenet.AccountClient(a.settings, token.Value)
 
 		if nil != err {
@@ -39,7 +40,8 @@ func (a *API) User(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		bid, err := client.BattleID()
+		response, err := client.BattleID()
+                println("2")
 
 		if nil != err {
 			e := &errors.Error{
@@ -52,10 +54,26 @@ func (a *API) User(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
+		bid := response.Data
+
+		applied, err := models.Applied(bid.ID)
+
+		if nil != err {
+			e := &errors.Error{
+                                Message: err.Error(),
+                                Package: "api.beta",
+                                Type:    "API",
+                                Method:  "User",
+                        }
+                        a.Error(w, e)
+                        return
+		}
+                println("3")
+
 		u := &models.User{
 			ID:        bid.ID,
 			BattleTag: bid.BattleTag,
-			Applied:   models.Applied(bid.ID),
+			Applied:   applied,
 		}
 
 		a.JSON(w, u)

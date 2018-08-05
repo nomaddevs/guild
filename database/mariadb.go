@@ -131,7 +131,7 @@ func (db *MariaDB) GetApplicant(id int) (bool, error) {
 	err = rows.Err()
 
 	if err != nil {
-		return -1, err
+		return false, err
 	}
 
 	return count > 0, nil
