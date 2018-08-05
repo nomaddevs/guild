@@ -38,11 +38,9 @@ app.controller("guildController", ['$scope', '$http', '$cookies', '$location', f
 	$scope.LoadRoster = function() {
 		$http.get("/api/beta/roster")
 		.then(function(response) {
-			alert("success");
 			$scope.Roster = response.data;
 			console.log($scope.Roster);
 		}, function (response) {
-			alert("error");
 			console.log(response.data);
 		});
 	};
@@ -61,7 +59,7 @@ app.controller("guildController", ['$scope', '$http', '$cookies', '$location', f
 			}
 		}
 	};
-
+	$scope.LoadRoster();
 	login();
 }]);
 
