@@ -2,6 +2,7 @@ package beta
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/munsy/battlenet"
 	"github.com/munsy/guild/errors"
@@ -56,24 +57,37 @@ func (a *API) Apply(w http.ResponseWriter, r *http.Request) {
 		a.JSON(w, response.Data)
 		break
 	case "POST":
-		app := &models.Applicant{
-			//BattleID:             r.FormValue("app_battleid"),
-			Battletag:            r.FormValue("app_battletag"),
-			Character:            r.FormValue("app_character"),
-			Email:                r.FormValue("app_email"),
-			RealName:             r.FormValue("app_realname"),
-			Location:             r.FormValue("app_location"),
-			Age:                  r.FormValue("app_age"),
-			Gender:               r.FormValue("app_gender"),
-			ComputerSpecs:        r.FormValue("app_computerspecs"),
-			PreviousGuilds:       r.FormValue("app_previousguilds"),
-			ReasonsLeavingGuilds: r.FormValue("app_reasonsleavingguilds"),
-			WhyJoinThisGuild:     r.FormValue("app_whyjointhisguild"),
-			References:           r.FormValue("app_references"),
-			FinalRemarks:         r.FormValue("app_finalremarks"),
+		appbid, err := strconv.Atoi(r.FormValue("Battleid"))
+
+		if nil != err {
+			e := &errors.Error{
+				Message: err.Error(),
+				Package: "api.beta",
+				Type:    "API",
+				Method:  "Apply",
+			}
+			a.Error(w, e)
+			return
 		}
 
-		err := app.Save()
+		app := &models.Applicant{
+			Age:                  r.FormValue("Age"),
+			BattleID:             appbid,
+			Battletag:            r.FormValue("Battletag"),
+			ComputerSpecs:        r.FormValue("ComputerSpecs"),
+			Character:            r.FormValue("Character"),
+			Email:                r.FormValue("Email"),
+			FinalRemarks:         r.FormValue("FinalRemarks"),
+			Gender:               r.FormValue("Gender"),
+			Location:             r.FormValue("Location"),
+			PreviousGuilds:       r.FormValue("PreviousGuilds"),
+			RealName:             r.FormValue("RealName"),
+			ReasonsLeavingGuilds: r.FormValue("ReasonsLeavingGuilds"),
+			References:           r.FormValue("References"),
+			WhyJoinThisGuild:     r.FormValue("WhyJoinThisGuild"),
+		}
+
+		err = app.Save()
 
 		if nil != err {
 			e := &errors.Error{
