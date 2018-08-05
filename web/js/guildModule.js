@@ -24,6 +24,8 @@ app.config(function($routeProvider) {
 });
 
 app.controller("guildController", ['$scope', '$http', '$cookies', '$location', function($scope, $http, $cookies, $location) {
+	$scope.Guild = [];
+	
 	$scope.User = {
 		BattleTag: "",
 		LoggedIn: false,
@@ -31,7 +33,39 @@ app.controller("guildController", ['$scope', '$http', '$cookies', '$location', f
 		Characters: [],
 	};
 
-	$scope.Guild = [];
+	$scope.Application = {};
+/*		BattleID: $scope.User.ID,
+		Battletag: $scope.User.BattleTag,
+		Character: {},
+		Email: "",
+		RealName: "",
+		Location: "",
+		Age: "",
+		Gender: "",
+		ComputerSpecs: "",
+		PreviousGuilds: "",
+		ReasonsLeavingGuilds: "",
+		WhyJoinThisGuild: "",
+		References: "",
+		FinalRemarks: "",
+	}
+	*/
+
+	$scope.Apply = function() {
+		console.log($scope.Application);
+		
+		$http({
+            method : 'POST',
+            url : '/api/beta/apply',
+            data : $scope.Application,
+        })
+        .then(function(response) {
+        	$scope.User.Applied = true;
+        	console.log(response.data);
+        }, function(response) {
+        	console.log(response.data);
+        });
+	}
 
 	$scope.ChangeView = function(view) {
 	 	$location.path(view);

@@ -6,7 +6,8 @@
 <!-- SHOW THIS IF THE USER IS LOGGED IN BUT HASN'T APPLIED YET -->
 <!-- START OF CHARACTER LISTING  -->
   <div ng-if="User.LoggedIn && !User.Applied">
-  <form action="/apply" method="POST">
+  <!--form action="/apply" method="POST"-->
+  <form ng-submit="Apply()">
     <div class="panel panel-default">
       <div class="panel-heading"><h3>Your Level 110 Characters</h3></div>
 
@@ -22,9 +23,9 @@
               <th>BattleGroup</th>
             </tr>
           </thead>
-	  <tbody>
+	        <tbody>
             <tr ng-repeat="character in User.Characters">
-              <td><input type="radio" name="app_character"></td>
+              <td><input type="radio" ng-model="Application.Character"></td>
               <td><img src="https://render-us.worldofwarcraft.com/character/{{character.thumbnail}}"></td>
               <td>{{character.name}}</td>
               <td>{{character.realm}}</td>
@@ -39,19 +40,19 @@
       <div class="panel-heading"><h3>Personal Information</h3></div>
       <div class="panel-body">
         <div class="form-group">
-          <input type="email" class="form-control" id="email" name="app_email" placeholder="Email">
+          <input type="email" class="form-control" id="email" ng-model="Application.Email" placeholder="Email">
         </div>
         <div class="form-group">
-          <input type="text" class="form-control" id="realname" name="app_realname" placeholder="Real Name (Can enter first name only)">
+          <input type="text" class="form-control" id="realname" ng-model="Application.RealName" placeholder="Real Name (Can enter first name only)">
         </div>
         <div class="form-group">
-          <input type="text" class="form-control" id="location" name="app_location" placeholder="Location">
+          <input type="text" class="form-control" id="location" ng-model="Application.Location" placeholder="Location">
         </div>
         <div class="form-group">
-          <input type="text" class="form-control" id="age" name="app_age" placeholder="Age">
+          <input type="text" class="form-control" id="age" ng-model="Application.Age" placeholder="Age">
         </div>
         <div class="form-group">
-          <input type="text" class="form-control" id="gender" name="app_gender" placeholder="Gender">
+          <input type="text" class="form-control" id="gender" ng-model="Application.Gender" placeholder="Gender">
         </div>
       </div>
     </div>
@@ -61,19 +62,19 @@
       <div class="panel-body">
         <div class="form-group">
           <label for="comment">Computer Specs:</label>
-          <textarea class="form-control" rows="5" id="computerspecs" name="app_computerspecs" placeholder="Describe your processor, graphics card, etc."></textarea>
+          <textarea class="form-control" rows="5" id="computerspecs" ng-model="Application.ComputerSpecs" placeholder="Describe your processor, graphics card, etc."></textarea>
         </div>
         <div class="form-group">
           <label for="comment">Previous Guilds:</label>
-          <textarea class="form-control" rows="5" id="previousguilds" name="app_previousguilds" placeholder="Guilds you've played with before, and servers they reside in."></textarea>
+          <textarea class="form-control" rows="5" id="previousguilds" ng-model="Application.PreviousGuilds" placeholder="Guilds you've played with before, and servers they reside in."></textarea>
         </div>
         <div class="form-group">
           <label for="comment">Reasons for Leaving:</label>
-          <textarea class="form-control" rows="5" id="leavingreasons" name="app_reasonsleavingguilds" placeholder="Why did you leave your previous guilds?"></textarea>
+          <textarea class="form-control" rows="5" id="leavingreasons" ng-model="Application.ReasonsLeavingGuilds" placeholder="Why did you leave your previous guilds?"></textarea>
         </div>
         <div class="form-group">
           <label for="comment">Reason(s) for Joining NoBelfsAllowed:</label>
-          <textarea class="form-control" rows="5" id="whyjoin" name="app_whyjointhisguild" placeholder="Why do you want to join NoBelfsAllowed and not another guild?"></textarea>
+          <textarea class="form-control" rows="5" id="whyjoin" ng-model="Application.WhyJoinThisGuild" placeholder="Why do you want to join NoBelfsAllowed and not another guild?"></textarea>
         </div>
       </div>
     </div>
@@ -83,11 +84,11 @@
       <div class="panel-body">
         <div class="form-group">
           <label for="comment">References:</label>
-          <input type="text" class="form-control" id="references" name="app_references" placeholder="People we can contact to research you.">
+          <input type="text" class="form-control" id="references" ng-model="Application.References" placeholder="People we can contact to research you.">
         </div>
         <div class="form-group">
           <label for="comment">Final Remarks:</label>
-          <textarea class="form-control" rows="5" id="finalremarks" name="app_finalremarks" placeholder="Links to VODs of boss kills, your personal Twitch.tv stream, or other things that might make you look good."></textarea>
+          <textarea class="form-control" rows="5" id="finalremarks" ng-model="Application.FinalRemarks" placeholder="Links to VODs of boss kills, your personal Twitch.tv stream, or other things that might make you look good."></textarea>
         </div>
       </div>
       <div class="panel-footer">
