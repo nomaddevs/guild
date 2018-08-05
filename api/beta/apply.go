@@ -57,6 +57,8 @@ func (a *API) Apply(w http.ResponseWriter, r *http.Request) {
 		a.JSON(w, response.Data)
 		break
 	case "POST":
+		r.ParseForm()
+
 		appbid, err := strconv.Atoi(r.FormValue("Battleid"))
 
 		if nil != err {
