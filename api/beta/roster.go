@@ -22,7 +22,7 @@ func (a *API) Roster(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	response, err := wow.RealmStatus()
+	response, err := wow.GuildProfile("thrall", "nobelfsallowed")
 
 	if nil != err {
 		e := &errors.Error{
