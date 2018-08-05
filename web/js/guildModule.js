@@ -29,7 +29,7 @@ app.controller("guildController", ['$scope', '$http', '$cookies', '$location', f
 		LoggedIn: false,
 	};
 
-	$scope.Roster = []
+	$scope.Guild = []
 
 	$scope.ChangeView = function(view) {
 	 	$location.path(view);
@@ -38,8 +38,8 @@ app.controller("guildController", ['$scope', '$http', '$cookies', '$location', f
 	$scope.LoadRoster = function() {
 		$http.get("/api/beta/roster")
 		.then(function(response) {
-			$scope.Roster = response.data;
-			console.log($scope.Roster);
+			$scope.Guild = response.data;
+			console.log($scope.Guild);
 		}, function (response) {
 			console.log(response.data);
 		});
