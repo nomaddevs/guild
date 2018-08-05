@@ -52,28 +52,24 @@ app.controller("guildController", ['$scope', '$http', '$cookies', '$location', f
 			var token = $cookies.get("token");
 			if(!angular.isUndefined(token)) {
 				$http.get("/api/beta/user")
-				.then(function(response) {
+				.then(function(response) {	
     				$scope.User.LoggedIn = true;
-    				$scope.User.ID = response.data.id;
-    				$scope.User.BattleTag = response.data.battletag;
-    				$scope.User.Applied = response.data.applied;
-    				$scope.User.Characters = response.data.characters.filter(function(c) {
-					return c.level >= 110;
-				});
+    				$scope.User.ID = response.data.ID;
+    				$scope.User.BattleTag = response.data.BattleTag;
+    				$scope.User.Applied = response.data.Applied;
 				}, function (response) {
 					$scope.User.LoggedIn = false;
 				});
-/*
+
 				$http.get("/api/beta/apply")
 				.then(function(response) {
 				$scope.User.Characters = response.data.characters.filter(function(c) {
 					return c.level >= 110;
 				});
-				console.log(response.data);
+				console.log($scope.User);
 				}, function(response) {
 					console.log(response);
 				});
-*/
 			}
 		}
 	};
