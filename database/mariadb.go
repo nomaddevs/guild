@@ -115,7 +115,7 @@ func (db *MariaDB) GetApplicant(id int) (bool, error) {
 	}
 	defer conn.Close()
 
-	rows, err := conn.Query("SELECT * FROM applications WHERE id = ?")
+	rows, err := conn.Query("SELECT * FROM applications WHERE id = ?", id)
 
 	if nil != err {
 		return false, err

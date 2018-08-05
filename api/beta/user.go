@@ -17,6 +17,7 @@ func (a *API) User(w http.ResponseWriter, r *http.Request) {
 		token, err := r.Cookie("token")
 
 		if nil != err {
+                        println(err.Error())
 			e := &errors.Error{
 				Message: err.Error(),
 				Package: "api.beta",
@@ -26,10 +27,11 @@ func (a *API) User(w http.ResponseWriter, r *http.Request) {
 			a.Error(w, e)
 			return
 		}
-		println("1")
+
 		client, err := battlenet.AccountClient(a.settings, token.Value)
 
 		if nil != err {
+                        println(err.Error())
 			e := &errors.Error{
 				Message: err.Error(),
 				Package: "api.beta",
@@ -39,11 +41,12 @@ func (a *API) User(w http.ResponseWriter, r *http.Request) {
 			a.Error(w, e)
 			return
 		}
-		println("2")
+
 
 		response, err := client.BattleID()
 
 		if nil != err {
+                        println(err.Error())
 			e := &errors.Error{
 				Message: err.Error(),
 				Package: "api.beta",
@@ -53,13 +56,14 @@ func (a *API) User(w http.ResponseWriter, r *http.Request) {
 			a.Error(w, e)
 			return
 		}
-		println("3")
+
 
 		bid := response.Data
 
 		applied, err := models.Applied(bid.ID)
 
 		if nil != err {
+			println(err.Error())
 			e := &errors.Error{
 				Message: err.Error(),
 				Package: "api.beta",
@@ -69,7 +73,7 @@ func (a *API) User(w http.ResponseWriter, r *http.Request) {
 			a.Error(w, e)
 			return
 		}
-		println("4")
+
 
 		u := &models.User{
 			ID:        bid.ID,
