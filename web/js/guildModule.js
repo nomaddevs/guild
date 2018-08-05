@@ -29,7 +29,7 @@ app.controller("guildController", ['$scope', '$http', '$cookies', '$location', f
 		LoggedIn: false,
 	};
 
-	$scope.Guild = []
+	$scope.Guild = [];
 
 	$scope.ChangeView = function(view) {
 	 	$location.path(view);
