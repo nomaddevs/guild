@@ -39,9 +39,9 @@ func (a *API) User(w http.ResponseWriter, r *http.Request) {
 			a.Error(w, e)
 			return
 		}
+		println("2")
 
 		response, err := client.BattleID()
-                println("2")
 
 		if nil != err {
 			e := &errors.Error{
@@ -53,6 +53,7 @@ func (a *API) User(w http.ResponseWriter, r *http.Request) {
 			a.Error(w, e)
 			return
 		}
+		println("3")
 
 		bid := response.Data
 
@@ -60,15 +61,15 @@ func (a *API) User(w http.ResponseWriter, r *http.Request) {
 
 		if nil != err {
 			e := &errors.Error{
-                                Message: err.Error(),
-                                Package: "api.beta",
-                                Type:    "API",
-                                Method:  "User",
-                        }
-                        a.Error(w, e)
-                        return
+				Message: err.Error(),
+				Package: "api.beta",
+				Type:    "API",
+				Method:  "User",
+			}
+			a.Error(w, e)
+			return
 		}
-                println("3")
+		println("4")
 
 		u := &models.User{
 			ID:        bid.ID,
