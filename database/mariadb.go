@@ -325,6 +325,166 @@ func (db *MariaDB) createTableNewsPostComments() error {
 	return nil
 }
 
+func (db *MariaDB) ViewApplicant(id int) ([]int, []string, []string, []string, []string, []string, []string, []string, []string,
+	[]string, []string, []string, []string, []string, error) {
+	var (
+		a int
+		b string
+		c string
+		d string
+		e string
+		f string
+		g string
+		h string
+		i string
+		j string
+		k string
+		l string
+		m string
+		n string
+
+		as []int
+		bs []string
+		cs []string
+		ds []string
+		es []string
+		fs []string
+		gs []string
+		hs []string
+		is []string
+		js []string
+		ks []string
+		ls []string
+		ms []string
+		ns []string
+	)
+
+	conn, err := sql.Open(db.DriverName(), db.ConnectionString())
+
+	if err != nil {
+		return nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, err
+	}
+	defer conn.Close()
+
+	rows, err := conn.Query("SELECT * FROM applications WHERE id = ?", id)
+
+	if err != nil {
+		return nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, err
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		err := rows.Scan(&a, &b, &c, &d, &e, &f, &g, &h, &i, &j, &k, &l, &m, &n)
+
+		if err != nil {
+			return nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, err
+		}
+
+		as = append(as, a)
+		bs = append(bs, b)
+		cs = append(cs, c)
+		ds = append(ds, d)
+		es = append(es, e)
+		fs = append(fs, f)
+		gs = append(gs, g)
+		hs = append(hs, h)
+		is = append(is, i)
+		js = append(js, j)
+		ks = append(ks, k)
+		ls = append(ls, l)
+		ms = append(ms, m)
+		ns = append(ns, n)
+	}
+
+	err = rows.Err()
+
+	if err != nil {
+		return nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, err
+	}
+
+	return as, bs, cs, ds, es, fs, gs, hs, is, js, ks, ls, ms, ns, nil
+}
+
+func (db *MariaDB) ViewAllApplicants() ([]int, []string, []string, []string, []string, []string, []string, []string, []string,
+	[]string, []string, []string, []string, []string, error) {
+	var (
+		a int
+		b string
+		c string
+		d string
+		e string
+		f string
+		g string
+		h string
+		i string
+		j string
+		k string
+		l string
+		m string
+		n string
+
+		as []int
+		bs []string
+		cs []string
+		ds []string
+		es []string
+		fs []string
+		gs []string
+		hs []string
+		is []string
+		js []string
+		ks []string
+		ls []string
+		ms []string
+		ns []string
+	)
+
+	conn, err := sql.Open(db.DriverName(), db.ConnectionString())
+
+	if err != nil {
+		return nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, err
+	}
+	defer conn.Close()
+
+	rows, err := conn.Query("SELECT * FROM applications")
+
+	if err != nil {
+		return nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, err
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		err := rows.Scan(&a, &b, &c, &d, &e, &f, &g, &h, &i, &j, &k, &l, &m, &n)
+
+		if err != nil {
+			return nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, err
+		}
+
+		as = append(as, a)
+		bs = append(bs, b)
+		cs = append(cs, c)
+		ds = append(ds, d)
+		es = append(es, e)
+		fs = append(fs, f)
+		gs = append(gs, g)
+		hs = append(hs, h)
+		is = append(is, i)
+		js = append(js, j)
+		ks = append(ks, k)
+		ls = append(ls, l)
+		ms = append(ms, m)
+		ns = append(ns, n)
+	}
+
+	err = rows.Err()
+
+	if err != nil {
+		return nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, err
+	}
+
+	return as, bs, cs, ds, es, fs, gs, hs, is, js, ks, ls, ms, ns, nil
+}
+
 /*
 SQL Queries
 
