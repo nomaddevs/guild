@@ -5,6 +5,7 @@ import (
 	"strconv"
 
 	"github.com/munsy/guild/pkg/applicants"
+	"github.com/munsy/guild/config"
 )
 
 func viewApplicant() {
@@ -52,13 +53,17 @@ func viewApplicants() {
 		return
 	}
 
-	fmt.Printf("%20s%20s%20s%20s\n", "ID", "BattleTag", "Character", "Email")
-	fmt.Println("----------------------------------------------------------")
+	fmt.Printf("%s%24s%29s%30s\n", "ID", "BattleTag", "Character", "Email")
+	fmt.Println("----------------------------------------------------------------------------------------------------------")
 
 	for i := 0; i < len(apps); i++ {
 		app := apps[i]
-		fmt.Printf("%20s%20s%20s%20s\n", app.BattleID, app.Battletag, app.Character, app.Email)
+		fmt.Printf("%d%20s%40s%38s\n", app.BattleID, app.Battletag, app.Character, app.Email)
 	}
+}
+
+func init() {
+	config.Read()
 }
 
 func main() {
