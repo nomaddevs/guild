@@ -1,4 +1,6 @@
 cmd/server/config.toml
+cmd/applicants/applicants.exe
+cmd/applicants/applicants
 cmd/server/server.exe
 cmd/server/server
 cmd/cli/cli.exe
