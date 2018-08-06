@@ -4,23 +4,11 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"net/http"
-	"fmt"
-	"reflect"
 
 	"github.com/munsy/battlenet"
 	"github.com/munsy/guild/errors"
 	"github.com/munsy/guild/pkg/models"
 )
-
-func printResult(v interface{}) {
-	fields := reflect.ValueOf(v).Elem()
-	fieldTypes := fields.Type()
-
-	for i := 0; i < fields.NumField(); i++ {
-		field := fields.Field(i)
-		fmt.Printf("%s: %v\n", fieldTypes.Field(i).Name, field.Interface())
-	}
-}
 
 func (a *API) Apply(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
@@ -98,23 +86,6 @@ func (a *API) Apply(w http.ResponseWriter, r *http.Request) {
                         return
                 }
 
-		printResult(app)
-/*		app := &models.Applicant{
-			Age:                  r.FormValue("Age"),
-			BattleID:             appbid,
-			Battletag:            r.FormValue("Battletag"),
-			ComputerSpecs:        r.FormValue("ComputerSpecs"),
-			Character:            r.FormValue("Character"),
-			Email:                r.FormValue("Email"),
-			FinalRemarks:         r.FormValue("FinalRemarks"),
-			Gender:               r.FormValue("Gender"),
-			Location:             r.FormValue("Location"),
-			PreviousGuilds:       r.FormValue("PreviousGuilds"),
-			RealName:             r.FormValue("RealName"),
-			ReasonsLeavingGuilds: r.FormValue("ReasonsLeavingGuilds"),
-			References:           r.FormValue("References"),
-			WhyJoinThisGuild:     r.FormValue("WhyJoinThisGuild"),
-		} */
 		err = app.Save()
 
 		if nil != err {

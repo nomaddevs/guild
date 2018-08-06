@@ -93,7 +93,7 @@ func (db *MariaDB) WriteApplicant(battleid int, battletag, character, email, rea
 
 	statement := `INSERT INTO applications(id, battletag, wowcharacter, email, realname, location,
 	age, gender, computerspecs, previousguilds, reasonsleavingguilds, whyjointhisguild, 
-	wowreferences, finalremarks) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+	wowreferences, finalremarks) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
 
 	in, err := conn.Prepare(statement)
 	if err != nil {
