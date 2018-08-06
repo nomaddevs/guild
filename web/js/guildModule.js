@@ -35,35 +35,23 @@ app.controller("guildController", ['$scope', '$http', '$cookies', '$location', f
 	};
 
 	$scope.Application = {};
-/*		BattleID: $scope.User.ID,
-		Battletag: $scope.User.BattleTag,
-		Character: {},
-		Email: "",
-		RealName: "",
-		Location: "",
-		Age: "",
-		Gender: "",
-		ComputerSpecs: "",
-		PreviousGuilds: "",
-		ReasonsLeavingGuilds: "",
-		WhyJoinThisGuild: "",
-		References: "",
-		FinalRemarks: "",
-	}
-	*/
 
 	$scope.Apply = function() {
 		$scope.Application.BattleID = $scope.User.ID;
 		$scope.Application.BattleTag = $scope.User.BattleTag;
 		console.log($scope.Application);
-		
-		$http({
+
+		$http.post({
+	    headers: {
+		'Content-Type': 'application/json',
+	    },
             method : 'POST',
             url : '/api/beta/apply',
             data : $scope.Application,
         })
         .then(function(response) {
         	$scope.User.Applied = true;
+		alert("you did it");
         	console.log(response.data);
         }, function(response) {
         	console.log(response.data);
