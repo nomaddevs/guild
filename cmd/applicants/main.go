@@ -11,7 +11,7 @@ import (
 func viewApplicant() {
 	fmt.Printf("Enter applicant by ID: ")
 	var s string
-	fmt.Scanln(s)
+	fmt.Scanln(&s)
 
 	id, err := strconv.Atoi(s)
 
@@ -24,6 +24,11 @@ func viewApplicant() {
 
 	if nil != err {
 		fmt.Println("Couldn't convert entry to ID number: " + err.Error())
+		return
+	}
+
+	if 0 == len(apps) {
+		fmt.Println("No entries found.")
 		return
 	}
 
@@ -89,11 +94,9 @@ func main() {
 	case 0:
 		return
 	case 1:
-		fmt.Println("case 1")
 		viewApplicants()
 		break
 	case 2:
-		fmt.Println("case 2")
 		viewApplicant()
 		break
 	case 3:
