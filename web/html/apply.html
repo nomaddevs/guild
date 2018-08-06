@@ -5,58 +5,56 @@
 
 <!-- SHOW THIS IF THE USER IS LOGGED IN BUT HASN'T APPLIED YET -->
 <!-- START OF CHARACTER LISTING  -->
-  <div ng-if="User.LoggedIn && !User.Applied">
-  <!--form action="/apply" method="POST"-->
-  <form ng-submit="Apply()">
-    <div class="panel panel-default">
-      <div class="panel-heading"><h3>Your Level 110 Characters</h3></div>
+    <div ng-if="User.LoggedIn && !User.Applied">
+    <!--form action="/apply" method="POST"-->
+      <form ng-submit="Apply()">
+        <div class="panel panel-default">
+          <div class="panel-heading"><h3>Your Level 110 Characters</h3></div>
 
-      <div class="panel-body">
-        <small>Select one:</small>
-        <table class="table">
-          <thead>
-            <tr>
-              <th>&nbsp;</th>
-              <th>&nbsp;</th>
-              <th>Name</th>
-              <th>Realm</th>
-              <th>BattleGroup</th>
-            </tr>
-          </thead>
+            <div class="panel-body">
+              <small>Select one:</small>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
+                    <th>Name</th>
+                    <th>Realm</th>
+                    <th>BattleGroup</th>
+                  </tr>
+                </thead>
 	        <tbody>
-            <tr ng-repeat="character in User.Characters">
-              <td><input type="radio" ng-model="Application.Character" value="{{character.name}} {{character.realm}} {{character.battlegroup}}"></td>
-              <td><img src="https://render-us.worldofwarcraft.com/character/{{character.thumbnail}}"></td>
-              <td>{{character.name}}</td>
-              <td>{{character.realm}}</td>
-              <td>{{character.battlegroup}}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-    
-    <div class="panel panel-default">
-      <div class="panel-heading"><h3>Personal Information</h3></div>
-      <div class="panel-body">
-        <div class="form-group">
-          <input type="email" class="form-control" id="email" ng-model="Application.Email" placeholder="Email">
-        </div>
-        <div class="form-group">
-          <input type="text" class="form-control" id="realname" ng-model="Application.RealName" placeholder="Real Name (Can enter first name only)">
-        </div>
-        <div class="form-group">
-          <input type="text" class="form-control" id="location" ng-model="Application.Location" placeholder="Location">
-        </div>
-        <div class="form-group">
-          <input type="text" class="form-control" id="age" ng-model="Application.Age" placeholder="Age">
-        </div>
-        <div class="form-group">
-          <input type="text" class="form-control" id="gender" ng-model="Application.Gender" placeholder="Gender">
-        </div>
-      </div>
-    </div>
-
+                  <tr ng-repeat="character in User.Characters">
+                    <td><input type="radio" ng-model="Application.Character" value="{{character.name}} {{character.realm}} {{character.battlegroup}}"></td>
+                    <td><img src="https://render-us.worldofwarcraft.com/character/{{character.thumbnail}}"></td>
+                    <td>{{character.name}}</td>
+                    <td>{{character.realm}}</td>
+                    <td>{{character.battlegroup}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="panel panel-default">
+            <div class="panel-heading"><h3>Personal Information</h3></div>
+              <div class="panel-body">
+                <div class="form-group">
+                  <input type="email" class="form-control" id="email" ng-model="Application.Email" placeholder="Email">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="realname" ng-model="Application.RealName" placeholder="Real Name (Can enter first name only)">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="location" ng-model="Application.Location" placeholder="Location">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="age" ng-model="Application.Age" placeholder="Age">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="gender" ng-model="Application.Gender" placeholder="Gender">
+                </div>
+              </div>
+           </div>
     <div class="panel panel-default">
       <div class="panel-heading"><h3>Questionnaire</h3></div>
       <div class="panel-body">
@@ -102,26 +100,22 @@
 
 <!-- SHOW THIS IF THE USER SUCCESSFULLY APPLIED -->
 <div ng-if="User.LoggedIn && User.Applied">
-
-<div class="row">
-  <div class="col-md-8">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-	<h5>yay</h5>
-      </div>
-      <div class="panel-body">
-	<center>Congratulations on applying. <br>
+  <div class="row">
+    <div class="col-md-8">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+	  <h5>yay</h5>
+        </div>
+        <div class="panel-body">
+	  <center>Congratulations on applying. <br>
 		Don't whisper us in-game with inquiries about your app. <br>
 		We'll contact you if we're interested. <br>
-	</center>
+	  </center>
+        </div>
+        <div class="panel-footer"><a href="/">sweet</a></div>
       </div>
-      <div class="panel-footer"><a href="/">sweet</a></div>
     </div>
   </div>
-
-
-</div>
-
 </div>
 
 <!-- /SHOW THIS IF THE USER SUCCESSFULLY APPLIED -->
