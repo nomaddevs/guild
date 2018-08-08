@@ -5,12 +5,13 @@ import (
 	"strconv"
 
 	"github.com/munsy/guild/pkg/applicants"
+	"github.com/munsy/guild/config"
 )
 
 func viewApplicant() {
 	fmt.Printf("Enter applicant by ID: ")
 	var s string
-	fmt.Scanln(s)
+	fmt.Scanln(&s)
 
 	id, err := strconv.Atoi(s)
 
@@ -23,6 +24,11 @@ func viewApplicant() {
 
 	if nil != err {
 		fmt.Println("Couldn't convert entry to ID number: " + err.Error())
+		return
+	}
+
+	if 0 == len(apps) {
+		fmt.Println("No entries found.")
 		return
 	}
 
@@ -52,13 +58,17 @@ func viewApplicants() {
 		return
 	}
 
-	fmt.Printf("%20s%20s%20s%20s\n", "ID", "BattleTag", "Character", "Email")
-	fmt.Println("----------------------------------------------------------")
+	fmt.Printf("%s%24s%29s%30s\n", "ID", "BattleTag", "Character", "Email")
+	fmt.Println("----------------------------------------------------------------------------------------------------------")
 
 	for i := 0; i < len(apps); i++ {
 		app := apps[i]
-		fmt.Printf("%20s%20s%20s%20s\n", app.BattleID, app.Battletag, app.Character, app.Email)
+		fmt.Printf("%d%20s%40s%38s\n", app.BattleID, app.Battletag, app.Character, app.Email)
 	}
+}
+
+func init() {
+	config.Read()
 }
 
 func main() {
@@ -84,11 +94,9 @@ func main() {
 	case 0:
 		return
 	case 1:
-		fmt.Println("case 1")
 		viewApplicants()
 		break
 	case 2:
-		fmt.Println("case 2")
 		viewApplicant()
 		break
 	case 3:
