@@ -82,6 +82,7 @@ app.controller("guildController", ['$scope', '$http', '$cookies', '$location', f
     				$scope.User.ID = response.data.ID;
     				$scope.User.BattleTag = response.data.BattleTag;
     				$scope.User.Applied = response.data.Applied;
+    				$scope.User.IsAdmin = response.data.Controlls == null;
 				}, function (response) {
 					$scope.User.LoggedIn = false;
 				});
