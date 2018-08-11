@@ -22,6 +22,14 @@ type Applicant struct {
 	FinalRemarks         string
 }
 
+func (a *Applicant) Accept(id int) error {
+	return nil
+}
+
+func (a *Applicant) Reject(id int) error {
+	return nil
+}
+
 func (a *Applicant) Save() error {
 	db := &database.MariaDB{
 		Username:       config.DBUsername,

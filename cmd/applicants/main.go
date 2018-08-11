@@ -4,11 +4,11 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/munsy/guild/pkg/applicants"
 	"github.com/munsy/guild/config"
+	"github.com/munsy/guild/pkg/applicants"
 )
 
-func viewApplicant() {
+func viewApplicant() (bool, int) {
 	fmt.Printf("Enter applicant by ID: ")
 	var s string
 	fmt.Scanln(&s)
@@ -17,19 +17,19 @@ func viewApplicant() {
 
 	if nil != err {
 		fmt.Println("Couldn't convert entry to ID number: " + err.Error())
-		return
+		return false, -1
 	}
 
 	apps, err := applicants.View(id)
 
 	if nil != err {
 		fmt.Println("Couldn't convert entry to ID number: " + err.Error())
-		return
+		return false, -1
 	}
 
 	if 0 == len(apps) {
 		fmt.Println("No entries found.")
-		return
+		return false, -1
 	}
 
 	for i := 0; i < len(apps); i++ {
@@ -48,6 +48,7 @@ func viewApplicant() {
 		fmt.Println("WhyJoinThisGuild: " + app.WhyJoinThisGuild)
 		fmt.Println("References: " + app.References)
 	}
+	return true, id
 }
 
 func viewApplicants() {
@@ -64,6 +65,39 @@ func viewApplicants() {
 	for i := 0; i < len(apps); i++ {
 		app := apps[i]
 		fmt.Printf("%d%20s%40s%38s\n", app.BattleID, app.Battletag, app.Character, app.Email)
+	}
+}
+
+func applicantVerdict() error {
+	if ok, id := viewApplicant(); ok {
+		fmt.Println("1) Accept")
+		fmt.Println("2) Reject")
+		fmt.Println("3) Cancel")
+	}
+
+	fmt.Printf("> ")
+	var s string
+	fmt.Scanln(&s)
+
+	ans, err := strconv.Atoi(s)
+
+	if nil != err {
+		fmt.Println("Couldn't convert entry to option: " + err.Error())
+		return false
+	}
+
+	switch ans {
+	case 1:
+		fmt.Println("OK. Accepting applicant.")
+		return applicants.Accept(id)
+	case 2:
+		fmt.Println("OK. Rejecting applicant.")
+		return applicants.Reject(id)
+	case 3:
+		return nil
+	default:
+		fmt.Println("Invalid entry")
+		return nil
 	}
 }
 
@@ -100,7 +134,7 @@ func main() {
 		viewApplicant()
 		break
 	case 3:
-		fmt.Println("case 3")
+		applicantVerdict()
 		break
 	case 4:
 		fmt.Println("case 4")
