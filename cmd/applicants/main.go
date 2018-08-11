@@ -68,7 +68,7 @@ func viewApplicants() {
 	}
 }
 
-func applicantVerdict() error {
+func applicantVerdict() {
 	if ok, id := viewApplicant(); ok {
 		fmt.Println("1) Accept")
 		fmt.Println("2) Reject")
@@ -83,21 +83,48 @@ func applicantVerdict() error {
 
 	if nil != err {
 		fmt.Println("Couldn't convert entry to option: " + err.Error())
-		return false
+		return
 	}
 
 	switch ans {
 	case 1:
 		fmt.Println("OK. Accepting applicant.")
-		return applicants.Accept(id)
+		applicants.Accept(id)
+		return
 	case 2:
 		fmt.Println("OK. Rejecting applicant.")
-		return applicants.Reject(id)
+		applicants.Reject(id)
+		return
 	case 3:
-		return nil
+		return
 	default:
 		fmt.Println("Invalid entry")
 		return nil
+	}
+}
+
+func purgeApplicant() {
+	fmt.Printf("Enter applicant by ID: ")
+	var s string
+	fmt.Scanln(&s)
+
+	id, err := strconv.Atoi(s)
+
+	if nil != err {
+		fmt.Println("Couldn't convert entry to ID number: " + err.Error())
+		return
+	}
+
+	apps, err := applicants.Purge(id)
+
+	if nil != err {
+		fmt.Println("Couldn't convert entry to ID number: " + err.Error())
+		return
+	}
+
+	if 0 == len(apps) {
+		fmt.Println("No entries found.")
+		return
 	}
 }
 
@@ -137,7 +164,7 @@ func main() {
 		applicantVerdict()
 		break
 	case 4:
-		fmt.Println("case 4")
+		purgeApplicant()
 		break
 	default:
 		fmt.Println("invalid")

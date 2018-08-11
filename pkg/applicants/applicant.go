@@ -30,6 +30,10 @@ func (a *Applicant) Reject(id int) error {
 	return nil
 }
 
+func (a *Applicant) Purge(id int) error {
+	return nil
+}
+
 func (a *Applicant) Save() error {
 	db := &database.MariaDB{
 		Username:       config.DBUsername,

@@ -91,7 +91,7 @@ func (db *MariaDB) WriteApplicant(battleid int, battletag, character, email, rea
 	}
 	defer conn.Close()
 
-	statement := `INSERT INTO applications(id, battletag, wowcharacter, email, realname, location,
+	statement := `INSERT INTO applications(battleid, battletag, wowcharacter, email, realname, location,
 	age, gender, computerspecs, previousguilds, reasonsleavingguilds, whyjointhisguild, 
 	wowreferences, finalremarks) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
 
@@ -237,7 +237,8 @@ func (db *MariaDB) createTableApplications() error {
 	defer conn.Close()
 
 	statement := `CREATE TABLE applications(
-		id BIGINT NOT NULL, 
+		id BIGINT NOT NULL AUTO_INCREMENT,
+		battleid BIGINT NOT NULL, 
 		battletag varchar(50) NOT NULL,
 		wowcharacter varchar(50) NOT NULL, 
 		email varchar(50) NOT NULL, 
@@ -492,7 +493,7 @@ CREATE DATABASE guild;
 
 USE guild;
 
-CREATE TABLE applications(id BIGINT NOT NULL, battletag varchar(50) NOT NULL,wowcharacter varchar(50) NOT NULL, email varchar(50) NOT NULL, realname varchar(50) NOT NULL, location varchar(100) NOT NULL, age TINYINT NOT NULL, gender varchar(20) NOT NULL, computerspecs varchar(500) NOT NULL, previousguilds varchar(500) NOT NULL, reasonsleavingguilds varchar(500) NOT NULL, whyjointhisguild varchar(500) NOT NULL, wowreferences varchar(500) NOT NULL, finalremarks varchar(500) NOT NULL, PRIMARY KEY (id)) ENGINE = InnoDB;
+CREATE TABLE applications(id BIGINT NOT NULL AUTO_INCREMENT, battleid BIGINT NOT NULL, battletag varchar(50) NOT NULL,wowcharacter varchar(50) NOT NULL, email varchar(50) NOT NULL, realname varchar(50) NOT NULL, location varchar(100) NOT NULL, age TINYINT NOT NULL, gender varchar(20) NOT NULL, computerspecs varchar(500) NOT NULL, previousguilds varchar(500) NOT NULL, reasonsleavingguilds varchar(500) NOT NULL, whyjointhisguild varchar(500) NOT NULL, wowreferences varchar(500) NOT NULL, finalremarks varchar(500) NOT NULL, PRIMARY KEY (id)) ENGINE = InnoDB;
 
 CREATE TABLE newsposts(id BIGINT NOT NULL AUTO_INCREMENT, title VARCHAR(128) NOT NULL, body MEDIUMBLOB NOT NULL, date DATETIME NOT NULL, author VARCHAR(64) NOT NULL, PRIMARY KEY (id)) ENGINE = InnoDB;
 
