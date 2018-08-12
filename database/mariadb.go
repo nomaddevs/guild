@@ -61,7 +61,6 @@ func (db *MariaDB) ConnectionString() string {
 }
 
 func (db *MariaDB) Test() error {
-	// Create the database handle, confirm driver is present
 	conn, err := sql.Open(db.DriverName(), db.ConnectionString())
 	if nil != err {
 		return err
@@ -91,9 +90,9 @@ func (db *MariaDB) WriteApplicant(battleid int, battletag, character, email, rea
 	}
 	defer conn.Close()
 
-	statement := `INSERT INTO applications(battleid, battletag, wowcharacter, email, realname, location,
+	statement := `INSERT INTO applications(battleid, status, battletag, wowcharacter, email, realname, location,
 	age, gender, computerspecs, previousguilds, reasonsleavingguilds, whyjointhisguild, 
-	wowreferences, finalremarks) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+	wowreferences, finalremarks) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
 
 	in, err := conn.Prepare(statement)
 	if err != nil {
@@ -101,7 +100,7 @@ func (db *MariaDB) WriteApplicant(battleid int, battletag, character, email, rea
 	}
 	defer in.Close()
 
-	in.Exec(battleid, battletag, character, email, realName, location, age, gender, computerSpecs,
+	in.Exec(battleid, 2, battletag, character, email, realName, location, age, gender, computerSpecs,
 		previousGuilds, reasonsLeavingGuilds, whyJoinThisGuild, references, finalRemarks)
 
 	return nil
@@ -137,6 +136,46 @@ func (db *MariaDB) GetApplicant(id int) (bool, error) {
 	return count > 0, nil
 }
 
+// AcceptApplicant accepts an applicant by setting their status to 1(Accepted).
+func (db *MariaDB) AcceptApplicant(id int) error {
+	conn, err := sql.Open(db.DriverName(), db.ConnectionString())
+
+	if nil != err {
+		return err
+	}
+	defer conn.Close()
+
+	in, err := conn.Prepare("UPDATE applications SET status = 1 WHERE id = ?")
+	if err != nil {
+		return err
+	}
+	defer in.Close()
+
+	in.Exec(id)
+
+	return nil
+}
+
+// RejectApplicant rejects an applicant by setting their status to 0(Rejected).
+func (db *MariaDB) RejectApplicant(id int) error {
+	conn, err := sql.Open(db.DriverName(), db.ConnectionString())
+
+	if nil != err {
+		return err
+	}
+	defer conn.Close()
+
+	in, err := conn.Prepare("UPDATE applications SET status = 0 WHERE id = ?")
+	if err != nil {
+		return err
+	}
+	defer in.Close()
+
+	in.Exec(id)
+
+	return nil
+}
+
 func (db *MariaDB) WriteNewsPost(title, body, author string) error {
 	conn, err := sql.Open(db.DriverName(), db.ConnectionString())
 
@@ -145,11 +184,11 @@ func (db *MariaDB) WriteNewsPost(title, body, author string) error {
 	}
 	defer conn.Close()
 
-	in, err := conn.Prepare("INSERT INTO newsposts(title, body, date, author) values (?, ?, ?, ?)") // ? = placeholder
+	in, err := conn.Prepare("INSERT INTO newsposts(title, body, date, author) values (?, ?, ?, ?)")
 	if err != nil {
 		return err
 	}
-	defer in.Close() // Close the statement when we leave main() / the program terminates
+	defer in.Close()
 
 	in.Exec(title, body, time.Now(), author)
 
@@ -238,9 +277,10 @@ func (db *MariaDB) createTableApplications() error {
 
 	statement := `CREATE TABLE applications(
 		id BIGINT NOT NULL AUTO_INCREMENT,
-		battleid BIGINT NOT NULL, 
+		status INT NOT NULL,
+		battleid BIGINT NOT NULL,
 		battletag varchar(50) NOT NULL,
-		wowcharacter varchar(50) NOT NULL, 
+		wowcharacter varchar(50) NOT NULL,
 		email varchar(50) NOT NULL, 
 		realname varchar(50) NOT NULL, 
 		location varchar(100) NOT NULL, 
@@ -259,7 +299,7 @@ func (db *MariaDB) createTableApplications() error {
 	if err != nil {
 		return err
 	}
-	defer in.Close() // Close the statement when we leave main() / the program terminates
+	defer in.Close()
 
 	in.Exec()
 
@@ -287,7 +327,7 @@ func (db *MariaDB) createTableNewsPosts() error {
 	if err != nil {
 		return err
 	}
-	defer in.Close() // Close the statement when we leave main() / the program terminates
+	defer in.Close()
 
 	in.Exec()
 
@@ -319,7 +359,7 @@ func (db *MariaDB) createTableNewsPostComments() error {
 	if err != nil {
 		return err
 	}
-	defer in.Close() // Close the statement when we leave main() / the program terminates
+	defer in.Close()
 
 	in.Exec()
 
