@@ -1,4 +1,4 @@
-package models
+package recruits
 
 import (
 	"github.com/munsy/guild/config"

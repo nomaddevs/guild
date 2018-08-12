@@ -48,6 +48,7 @@ func viewApplicant() (bool, int) {
 		fmt.Println("WhyJoinThisGuild: " + app.WhyJoinThisGuild)
 		fmt.Println("References: " + app.References)
 	}
+
 	return true, id
 }
 
@@ -89,17 +90,30 @@ func applicantVerdict() {
 	switch ans {
 	case 1:
 		fmt.Println("OK. Accepting applicant.")
-		applicants.Accept(id)
+		err = applicants.Accept(id)
+
+		if nil != err {
+			fmt.Println("Failed to accept applicant: " + err.Error())
+			return
+		}
+		fmt.Println("Applicant accepted.")
 		return
 	case 2:
 		fmt.Println("OK. Rejecting applicant.")
-		applicants.Reject(id)
+		err = applicants.Reject(id)
+
+		if nil != err {
+			fmt.Println("Failed to reject applicant: " + err.Error())
+			return
+		}
+		fmt.Println("Applicant rejected.")
 		return
 	case 3:
+		fmt.Println("Aborting...")
 		return
 	default:
-		fmt.Println("Invalid entry")
-		return nil
+		fmt.Println("Invalid entry.")
+		return
 	}
 }
 

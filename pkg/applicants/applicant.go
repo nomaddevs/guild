@@ -23,15 +23,45 @@ type Applicant struct {
 }
 
 func (a *Applicant) Accept(id int) error {
-	return nil
+	db := &database.MariaDB{
+		Username:       config.DBUsername,
+		Unixsocketpath: config.DBUnixsocketpath,
+		Password:       config.DBPassword,
+		Host:           config.DBHost,
+		Port:           config.DBPort,
+		Database:       config.DBName,
+		Charset:        config.DBCharset,
+	}
+
+	return db.AcceptApplicant(id)
 }
 
 func (a *Applicant) Reject(id int) error {
-	return nil
+	db := &database.MariaDB{
+		Username:       config.DBUsername,
+		Unixsocketpath: config.DBUnixsocketpath,
+		Password:       config.DBPassword,
+		Host:           config.DBHost,
+		Port:           config.DBPort,
+		Database:       config.DBName,
+		Charset:        config.DBCharset,
+	}
+
+	return db.RejectApplicant(id)
 }
 
-func (a *Applicant) Purge(id int) error {
-	return nil
+func (a *Applicant) Purge(battleid int) error {
+	db := &database.MariaDB{
+		Username:       config.DBUsername,
+		Unixsocketpath: config.DBUnixsocketpath,
+		Password:       config.DBPassword,
+		Host:           config.DBHost,
+		Port:           config.DBPort,
+		Database:       config.DBName,
+		Charset:        config.DBCharset,
+	}
+
+	return db.PurgeApplicant(battleid)
 }
 
 func (a *Applicant) Save() error {

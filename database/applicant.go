@@ -104,6 +104,26 @@ func (db *MariaDB) RejectApplicant(id int) error {
 	return nil
 }
 
+// PurgeApplicant purges an applicant from the database by BattleID.
+func (db *MariaDB) PurgeApplicant(battleid int) error {
+	conn, err := sql.Open(db.DriverName(), db.ConnectionString())
+
+	if nil != err {
+		return err
+	}
+	defer conn.Close()
+
+	in, err := conn.Prepare("DELETE FROM applications WHERE battleid = ?")
+	if err != nil {
+		return err
+	}
+	defer in.Close()
+
+	in.Exec(battleid)
+
+	return nil
+}
+
 func (db *MariaDB) ViewApplicant(id int) ([]int, []string, []string, []string, []string, []string, []string, []string, []string,
 	[]string, []string, []string, []string, []string, error) {
 	var (
