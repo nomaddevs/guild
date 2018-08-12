@@ -87,7 +87,9 @@ func getBattleID() int {
 }
 
 func applicantVerdict() {
-	if ok, id := viewApplicant(); ok {
+	ok, id := viewApplicant()
+
+	if ok {
 		fmt.Println("1) Accept")
 		fmt.Println("2) Reject")
 		fmt.Println("3) Cancel")
@@ -106,12 +108,6 @@ func applicantVerdict() {
 
 	switch ans {
 	case 1:
-		id := getBattleID()
-
-		if id == -1 {
-			return
-		}
-
 		fmt.Println("OK. Accepting applicant.")
 		err = applicants.Accept(id)
 
@@ -122,12 +118,6 @@ func applicantVerdict() {
 		fmt.Println("Applicant accepted.")
 		return
 	case 2:
-		id := getBattleID()
-
-		if id == -1 {
-			return
-		}
-
 		fmt.Println("OK. Rejecting applicant.")
 		err = applicants.Reject(id)
 
@@ -153,7 +143,7 @@ func purgeApplicant() {
 		return
 	}
 
-	err = applicants.Purge(id)
+	err := applicants.Purge(id)
 
 	if nil != err {
 		fmt.Println("Failed to purge applicant: " + err.Error())
