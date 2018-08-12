@@ -24,6 +24,79 @@ app.config(function($routeProvider) {
 });
 
 app.controller("guildController", ['$scope', '$http', '$cookies', '$location', function($scope, $http, $cookies, $location) {
+	var ItoClasses = function(int c) {
+		switch(c) {
+		case 0:
+			return "DeathKnight";
+		case 1:
+			return "DemonHunter";
+		case 2:
+			return "Druid";
+		case 3:
+			return "Hunter";
+		case 4:
+			return "Mage";
+		case 5:
+			return "Monk";
+		case 6:
+			return "Paladin";
+		case 7:
+			return "Priest";
+		case 8:
+			return "Rogue";
+		case 9:
+			return "Shaman";
+		case 10:
+			return "Warlock";
+		case 11:
+			return "Warrior";
+		default:
+			return "Unknown";
+		}
+	};
+
+	var ItoRanks = function(int c) {
+		switch(c) {
+		case 0:
+			return "Guild Master";
+		case 1:
+			return "Raid Leader";
+		case 2:
+			return "Officer";
+		case 3:
+			return "Member";
+		case 4:
+			return "Trial";
+		default:
+			return "Unknown";
+		}
+	}
+
+	var ItoRaces = function(int c) {
+		switch(c) {
+		case 2:
+			return "Orc";
+		case 5:
+			return "Undead";
+		case 6:
+			return "Tauren";
+		case 8:
+			return "Troll";
+		case 9:
+			return "Goblin";
+		case 10:
+			return "Blood Elf";
+		case 26:
+			return "Pandaren";
+		case 27:
+			return "Nightborne";
+		case 28:
+			return "Highmountain Tauren";
+		default:
+			return "Unknown";
+		}
+	}
+
 	$scope.Guild = [];
 	
 	$scope.User = {
@@ -65,6 +138,11 @@ app.controller("guildController", ['$scope', '$http', '$cookies', '$location', f
 	$scope.LoadRoster = function() {
 		$http.get("/api/beta/roster")
 		.then(function(response) {
+			for(var i = 0; i < response.data.members.length; i++) {
+				response.data.members[i].character.class = ItoClasses(response.data.members[i].character.class);
+				response.data.members[i].character.race = ItoRaces(response.data.members[i].character.race);
+				response.data.members[i].rank = ItoRanks(response.data.members[i].rank);
+			}
 			$scope.Guild = response.data;
 			console.log($scope.Guild);
 		}, function (response) {
