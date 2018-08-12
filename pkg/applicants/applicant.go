@@ -22,48 +22,6 @@ type Applicant struct {
 	FinalRemarks         string
 }
 
-func (a *Applicant) Accept(id int) error {
-	db := &database.MariaDB{
-		Username:       config.DBUsername,
-		Unixsocketpath: config.DBUnixsocketpath,
-		Password:       config.DBPassword,
-		Host:           config.DBHost,
-		Port:           config.DBPort,
-		Database:       config.DBName,
-		Charset:        config.DBCharset,
-	}
-
-	return db.AcceptApplicant(id)
-}
-
-func (a *Applicant) Reject(id int) error {
-	db := &database.MariaDB{
-		Username:       config.DBUsername,
-		Unixsocketpath: config.DBUnixsocketpath,
-		Password:       config.DBPassword,
-		Host:           config.DBHost,
-		Port:           config.DBPort,
-		Database:       config.DBName,
-		Charset:        config.DBCharset,
-	}
-
-	return db.RejectApplicant(id)
-}
-
-func (a *Applicant) Purge(battleid int) error {
-	db := &database.MariaDB{
-		Username:       config.DBUsername,
-		Unixsocketpath: config.DBUnixsocketpath,
-		Password:       config.DBPassword,
-		Host:           config.DBHost,
-		Port:           config.DBPort,
-		Database:       config.DBName,
-		Charset:        config.DBCharset,
-	}
-
-	return db.PurgeApplicant(battleid)
-}
-
 func (a *Applicant) Save() error {
 	db := &database.MariaDB{
 		Username:       config.DBUsername,
@@ -79,6 +37,48 @@ func (a *Applicant) Save() error {
 		a.Email, a.RealName, a.Location, a.Age, a.Gender,
 		a.ComputerSpecs, a.PreviousGuilds, a.ReasonsLeavingGuilds,
 		a.WhyJoinThisGuild, a.References, a.FinalRemarks)
+}
+
+func Accept(id int) error {
+	db := &database.MariaDB{
+		Username:       config.DBUsername,
+		Unixsocketpath: config.DBUnixsocketpath,
+		Password:       config.DBPassword,
+		Host:           config.DBHost,
+		Port:           config.DBPort,
+		Database:       config.DBName,
+		Charset:        config.DBCharset,
+	}
+
+	return db.AcceptApplicant(id)
+}
+
+func Reject(id int) error {
+	db := &database.MariaDB{
+		Username:       config.DBUsername,
+		Unixsocketpath: config.DBUnixsocketpath,
+		Password:       config.DBPassword,
+		Host:           config.DBHost,
+		Port:           config.DBPort,
+		Database:       config.DBName,
+		Charset:        config.DBCharset,
+	}
+
+	return db.RejectApplicant(id)
+}
+
+func Purge(battleid int) error {
+	db := &database.MariaDB{
+		Username:       config.DBUsername,
+		Unixsocketpath: config.DBUnixsocketpath,
+		Password:       config.DBPassword,
+		Host:           config.DBHost,
+		Port:           config.DBPort,
+		Database:       config.DBName,
+		Charset:        config.DBCharset,
+	}
+
+	return db.PurgeApplicant(battleid)
 }
 
 func View(id int) ([]Applicant, error) {

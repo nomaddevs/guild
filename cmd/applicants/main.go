@@ -69,6 +69,23 @@ func viewApplicants() {
 	}
 }
 
+func getBattleID() int {
+	fmt.Printf("Enter BattleID: ")
+
+	fmt.Printf("> ")
+	var s string
+	fmt.Scanln(&s)
+
+	bid, err := strconv.Atoi(s)
+
+	if nil != err {
+		fmt.Println("Couldn't convert entry to Battle ID: " + err.Error())
+		return -1
+	}
+
+	return bid
+}
+
 func applicantVerdict() {
 	if ok, id := viewApplicant(); ok {
 		fmt.Println("1) Accept")
@@ -89,6 +106,12 @@ func applicantVerdict() {
 
 	switch ans {
 	case 1:
+		id := getBattleID()
+
+		if id == -1 {
+			return
+		}
+
 		fmt.Println("OK. Accepting applicant.")
 		err = applicants.Accept(id)
 
@@ -99,6 +122,12 @@ func applicantVerdict() {
 		fmt.Println("Applicant accepted.")
 		return
 	case 2:
+		id := getBattleID()
+
+		if id == -1 {
+			return
+		}
+
 		fmt.Println("OK. Rejecting applicant.")
 		err = applicants.Reject(id)
 
@@ -118,28 +147,19 @@ func applicantVerdict() {
 }
 
 func purgeApplicant() {
-	fmt.Printf("Enter applicant by ID: ")
-	var s string
-	fmt.Scanln(&s)
+	id := getBattleID()
 
-	id, err := strconv.Atoi(s)
+	if id == -1 {
+		return
+	}
+
+	err = applicants.Purge(id)
 
 	if nil != err {
-		fmt.Println("Couldn't convert entry to ID number: " + err.Error())
+		fmt.Println("Failed to purge applicant: " + err.Error())
 		return
 	}
 
-	apps, err := applicants.Purge(id)
-
-	if nil != err {
-		fmt.Println("Couldn't convert entry to ID number: " + err.Error())
-		return
-	}
-
-	if 0 == len(apps) {
-		fmt.Println("No entries found.")
-		return
-	}
 }
 
 func init() {
