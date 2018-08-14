@@ -125,19 +125,129 @@ func (c Warrior) Need() bool {
 	return c.Desired-c.Filled != 0
 }
 
+type Class struct {
+	Name    string
+	Desired int
+	Filled  int
+	Pending int
+}
+
+func (c *Class) Need() bool {
+	return true
+}
+
+func (c *Class) SetFilled(n int) error {
+	return nil
+}
+
+func (c *Class) SetDesired(n int) error {
+	return nil
+}
+
+func (c *Class) SetPending(n int) error {
+	return nil
+}
+
 type Recruiting struct {
-	DeathKnight DeathKnight
-	DemonHunter DemonHunter
-	Druid       Druid
-	Hunter      Hunter
-	Mage        Mage
-	Monk        Monk
-	Paladin     Paladin
-	Priest      Priest
-	Rogue       Rogue
-	Shaman      Shaman
-	Warlock     Warlock
-	Warrior     Warrior
+	DeathKnight Class
+	DemonHunter Class
+	Druid       Class
+	Hunter      Class
+	Mage        Class
+	Monk        Class
+	Paladin     Class
+	Priest      Class
+	Rogue       Class
+	Shaman      Class
+	Warlock     Class
+	Warrior     Class
+}
+
+func NewRecruiting() *Recruiting {
+	db := &database.MariaDB{
+		Username:       config.DBUsername,
+		Unixsocketpath: config.DBUnixsocketpath,
+		Password:       config.DBPassword,
+		Host:           config.DBHost,
+		Port:           config.DBPort,
+		Database:       config.DBName,
+		Charset:        config.DBCharset,
+	}
+
+	return &Recruiting{
+		DeathKnight: &Class{
+			Name:    "Death Knight",
+			Desired: 0,
+			Filled:  0,
+			Pending: 0,
+		},
+		DemonHunter: &Class{
+			Name:    "Demon Hunter",
+			Desired: 0,
+			Filled:  0,
+			Pending: 0,
+		},
+		Druid: &Class{
+			Name:    "Druid",
+			Desired: 0,
+			Filled:  0,
+			Pending: 0,
+		},
+		Hunter: &Class{
+			Name:    "Hunter",
+			Desired: 0,
+			Filled:  0,
+			Pending: 0,
+		},
+		Mage: &Class{
+			Name:    "Mage",
+			Desired: 0,
+			Filled:  0,
+			Pending: 0,
+		},
+		Monk: &Class{
+			Name:    "Monk",
+			Desired: 0,
+			Filled:  0,
+			Pending: 0,
+		},
+		Paladin: &Class{
+			Name:    "Paladin",
+			Desired: 0,
+			Filled:  0,
+			Pending: 0,
+		},
+		Priest: &Class{
+			Name:    "Priest",
+			Desired: 0,
+			Filled:  0,
+			Pending: 0,
+		},
+		Rogue: &Class{
+			Name:    "Rogue",
+			Desired: 0,
+			Filled:  0,
+			Pending: 0,
+		},
+		Shaman: &Class{
+			Name:    "Shaman",
+			Desired: 0,
+			Filled:  0,
+			Pending: 0,
+		},
+		Warlock: &Class{
+			Name:    "Warlock",
+			Desired: 0,
+			Filled:  0,
+			Pending: 0,
+		},
+		Warrior: &Class{
+			Name:    "Warrior",
+			Desired: 0,
+			Filled:  0,
+			Pending: 0,
+		},
+	}
 }
 
 func Get() *Recruiting {
@@ -156,7 +266,7 @@ func Get() *Recruiting {
 	return nil
 }
 
-func Set(r *Recruiting) error {
+func SetDesired(r *Recruiting) error {
 	db := &database.MariaDB{
 		Username:       config.DBUsername,
 		Unixsocketpath: config.DBUnixsocketpath,
