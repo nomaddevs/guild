@@ -174,12 +174,25 @@ func NewRecruiting() *Recruiting {
 		Charset:        config.DBCharset,
 	}
 
+	dkVals := db.GetRecruiting(0) // int param = class id
+	dhVals := db.GetRecruiting(1)
+	druidVals := db.GetRecruiting(2)
+	hunterVals := db.GetRecruiting(3)
+	mageVals := db.GetRecruiting(4)
+	monkVals := db.GetRecruiting(5)
+	paladinVals := db.GetRecruiting(6)
+	priestVals := db.GetRecruiting(7)
+	rogueVals := db.GetRecruiting(8)
+	shamanVals := db.GetRecruiting(9)
+	lockVals := db.GetRecruiting(10)
+	warVals := db.GetRecruiting(11)
+
 	return &Recruiting{
 		DeathKnight: &Class{
 			Name:    "Death Knight",
-			Desired: 0,
-			Filled:  0,
-			Pending: 0,
+			Desired: dkVals.Desired,
+			Filled:  dkVals.Filled,
+			Pending: dkVals.Pending,
 		},
 		DemonHunter: &Class{
 			Name:    "Demon Hunter",
