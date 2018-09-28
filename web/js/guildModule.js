@@ -24,7 +24,7 @@ app.config(function($routeProvider) {
 });
 
 app.controller("guildController", ['$scope', '$http', '$cookies', '$location', function($scope, $http, $cookies, $location) {
-	var ItoClasses = function(int c) {
+	var ItoClasses = function(c) {
 		switch(c) {
 		case 0:
 			return "DeathKnight";
@@ -55,7 +55,7 @@ app.controller("guildController", ['$scope', '$http', '$cookies', '$location', f
 		}
 	};
 
-	var ItoRanks = function(int c) {
+	var ItoRanks = function(c) {
 		switch(c) {
 		case 0:
 			return "Guild Master";
@@ -72,7 +72,7 @@ app.controller("guildController", ['$scope', '$http', '$cookies', '$location', f
 		}
 	}
 
-	var ItoRaces = function(int c) {
+	var ItoRaces = function(c) {
 		switch(c) {
 		case 2:
 			return "Orc";

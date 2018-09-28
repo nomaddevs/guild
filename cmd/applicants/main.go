@@ -61,7 +61,7 @@ func viewApplicants() {
 	}
 
 	fmt.Printf("%s%24s%29s%30s\n", "ID", "BattleTag", "Character", "Email")
-	fmt.Println("----------------------------------------------------------------------------------------------------------")
+	fmt.Printf("%105s\n", "-")
 
 	for i := 0; i < len(apps); i++ {
 		app := apps[i]

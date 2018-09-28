@@ -7,7 +7,7 @@ import (
 
 	"github.com/munsy/battlenet"
 	"github.com/munsy/guild/errors"
-	"github.com/munsy/guild/pkg/models"
+	"github.com/munsy/guild/pkg/applicants"
 )
 
 func (a *API) Apply(w http.ResponseWriter, r *http.Request) {
@@ -71,7 +71,7 @@ func (a *API) Apply(w http.ResponseWriter, r *http.Request) {
                         return
                 }
 
-		app := &models.Applicant{}
+		app := &applicants.Applicant{}
 
 		err = json.Unmarshal([]byte(body), app)
 
