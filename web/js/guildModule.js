@@ -1,7 +1,7 @@
 var app = angular.module('guild', ['ngRoute', 'ngCookies']);
 
 
-app.config(function($routeProvider) {
+app.config(function($routeProvider, $locationProvider) {
 	$routeProvider
 	.when("/", {
 		templateUrl: "html/news.html"
@@ -21,6 +21,8 @@ app.config(function($routeProvider) {
 	.when("/apply", {
 		templateUrl: "html/apply.html"
 	});
+
+	$locationProvider.html5Mode(true);
 });
 
 app.controller("guildController", ['$scope', '$http', '$cookies', '$location', function($scope, $http, $cookies, $location) {
