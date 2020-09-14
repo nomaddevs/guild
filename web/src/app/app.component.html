@@ -1,227 +1,339 @@
 <div class="container-fluid">
-  <div class="row pt-1">
+  <div class="row py-1">
     <div class="col"></div>
     <div class="col pt-1 text-center">
       <img src="assets/logo.png">
-      <!--router-outlet></router-outlet-->
     </div>
     <div class="col"></div>
   </div>
   <div class="row py-1">
     <div class="col-md-2"></div>
     <div class="col text-center">
-      <h2>We're recruiting!</h2>
+      <button class="btn btn-sm btn-primary rounded-pill mx-1" type="button" (click)="about()"><!--data-toggle="collapse" data-target="#collapse-about" aria-expanded="false" aria-controls="collapse-about"-->
+        About
+      </button>
+      <button class="btn btn-sm btn-primary rounded-pill mx-1" type="button" (click)="recruitment()"><!--data-toggle="collapse" data-target="#collapse-recruitment" aria-expanded="true" aria-controls="collapse-recruitment"-->
+        Recruitment
+      </button>
+      <button class="btn btn-sm btn-primary rounded-pill mx-1" type="button" (click)="faq()"><!--data-toggle="collapse" data-target="#collapse-faq" aria-expanded="false" aria-controls="collapse-faq"-->
+        FAQ
+      </button>
     </div>
     <div class="col-md-2"></div>
   </div>
-  <div class="row py-1">
-    <div class="col-md-5"></div>
-    <div class="col text-left">
-      <div *ngIf="lfm.Need()">
-        <div class="row" *ngIf="lfm.GetClass('DeathKnight').Need()">
-          <div class="col">
-            <button type="button" class="btn btn-outline-dark border-0 rounded-circle m-1 p-1" *ngIf="lfm.GetClass('DeathKnight').Need()">
-              <img class="rounded-circle" src="assets/classes/icon-death-knight.png" width="42px" height="42px">
-            </button>
-            <button type="button" class="btn btn-outline-dark rounded-circle m-1 p-1" *ngIf="lfm.GetClass('DeathKnight').GetSpec('Blood').Need">
-              <img class="rounded-circle" src="assets/classes/deathknight-blood.jpg" width="24px" height="24px">
-            </button>
-            <button type="button" class="btn btn-outline-dark rounded-circle m-1 p-1" *ngIf="lfm.GetClass('DeathKnight').GetSpec('Frost').Need">
-              <img class="rounded-circle" src="assets/classes/deathknight-frost.jpg" width="24px" height="24px">
-            </button>
-            <button type="button" class="btn btn-outline-dark rounded-circle m-1 p-1" *ngIf="lfm.GetClass('DeathKnight').GetSpec('Unholy').Need">
-              <img class="rounded-circle" src="assets/classes/deathknight-unholy.jpg" width="24px" height="24px">
-            </button>
+  <!--router-outlet-->
+  <div class="collapse multi-collapse" id="collapse-about">
+    <div class="row py-1">
+      <div class="col-md-2"></div>
+      <div class="col text-center">
+        <h2>About</h2>
+      </div>
+      <div class="col-md-2"></div>
+    </div>
+  </div>
+  <div class="collapse multi-collapse" id="collapse-faq">
+    <div class="row py-1">
+      <div class="col-md-4"></div>
+      <div class="col text-center">
+        <h2>Frequently Asked Questions</h2>
+        <div class="row">
+          <div class="col text-left">
+            <h4>Q) What does your raid schedule look like?</h4>
+            <p>
+              <strong>A)</strong> We raid at the following times:<br>
+              <strong>Sunday</strong>: TBD<br>
+              <strong>Monday</strong>: TBD<br>
+              <strong>Tuesday</strong>: TBD<br>
+              <strong>Wednesday</strong>: TBD<br>
+              <strong>Thursday</strong>: TBD<br>
+              <strong>Friday</strong>: TBD<br>
+              <strong>Saturday</strong>: TBD<br>
+            </p>
           </div>
         </div>
-        <div class="row" *ngIf="lfm.GetClass('DemonHunter').Need()">
-          <div class="col">
-            <button type="button" class="btn btn-outline-dark border-0 rounded-circle m-1 p-1" *ngIf="lfm.GetClass('DemonHunter').Need()">
-              <img class="rounded-circle" src="assets/classes/icon-demon-hunter.png" width="42px" height="42px">
-            </button>
-            <button type="button" class="btn btn-outline-dark rounded-circle m-1 p-1" *ngIf="lfm.GetClass('DemonHunter').GetSpec('Vengeance').Need">
-              <img class="rounded-circle" src="assets/classes/demonhunter-vengeance.jpg" width="24px" height="24px">
-            </button>
-            <button type="button" class="btn btn-outline-dark rounded-circle m-1 p-1" *ngIf="lfm.GetClass('DemonHunter').GetSpec('Havoc').Need">
-              <img class="rounded-circle" src="assets/classes/demonhunter-havoc.jpg" width="24px" height="24px">
-            </button>
+        <div class="row">
+          <div class="col text-left">
+            <h4>Q) Do you have any ambitions towards raiding for the Cutting Edge achievement each tier?</h4>
+            <p>
+              <strong>A)</strong> Maybe some day, but not right now.
+            </p>
           </div>
         </div>
-        <div class="row" *ngIf="lfm.GetClass('Druid').Need()">
-          <div class="col">
-            <button type="button" class="btn btn-outline-dark border-0 rounded-circle m-1 p-1" *ngIf="lfm.GetClass('Druid').Need()">
-              <img class="rounded-circle" src="assets/classes/icon-druid.png" width="42px" height="42px">
-            </button>
-            <button type="button" class="btn btn-outline-dark rounded-circle m-1 p-1" *ngIf="lfm.GetClass('Druid').GetSpec('Balance').Need">
-              <img class="rounded-circle" src="assets/classes/druid-balance.jpg" width="24px" height="24px">
-            </button>
-            <button type="button" class="btn btn-outline-dark rounded-circle m-1 p-1" *ngIf="lfm.GetClass('Druid').GetSpec('Feral').Need">
-              <img class="rounded-circle" src="assets/classes/druid-feral.jpg" width="24px" height="24px">
-            </button>
-            <button type="button" class="btn btn-outline-dark rounded-circle m-1 p-1" *ngIf="lfm.GetClass('Druid').GetSpec('Guardian').Need">
-              <img class="rounded-circle" src="assets/classes/druid-guardian.jpg" width="24px" height="24px">
-            </button>
-            <button type="button" class="btn btn-outline-dark rounded-circle m-1 p-1" *ngIf="lfm.GetClass('Druid').GetSpec('Restoration').Need">
-              <img class="rounded-circle" src="assets/classes/druid-restoration.jpg" width="24px" height="24px">
-            </button>
+        <div class="row">
+          <div class="col text-left">
+            <h4>Q) OK, well, what about Ahead of the Curve?</h4>
+            <p>
+              <strong>A)</strong> We do intend on achieving AOTC during each raid tier. We believe that the current state of the game makes this easily attainable regardless of raid composition. Exceptional players should have no difficulty with this level of raiding, and newer players shouldn't have much trouble learning. The key is to be coachable!
+            </p>
           </div>
         </div>
-        <div class="row" *ngIf="lfm.GetClass('Hunter').Need()">
-          <div class="col">
-            <button type="button" class="btn btn-outline-dark border-0 rounded-circle m-1 p-1" *ngIf="lfm.GetClass('Hunter').Need()">
-              <img class="rounded-circle" src="assets/classes/icon-hunter.png" width="42px" height="42px">
-            </button>
-            <button type="button" class="btn btn-outline-dark rounded-circle m-1 p-1" *ngIf="lfm.GetClass('Hunter').GetSpec('Beast Mastery').Need">
-              <img class="rounded-circle" src="assets/classes/hunter-beastmastery.jpg" width="24px" height="24px">
-            </button>
-            <button type="button" class="btn btn-outline-dark rounded-circle m-1 p-1" *ngIf="lfm.GetClass('Hunter').GetSpec('Marksmanship').Need">
-              <img class="rounded-circle" src="assets/classes/hunter-marksmanship.jpg" width="24px" height="24px">
-            </button>
-            <button type="button" class="btn btn-outline-dark rounded-circle m-1 p-1" *ngIf="lfm.GetClass('Hunter').GetSpec('Survival').Need">
-              <img class="rounded-circle" src="assets/classes/hunter-survival.jpg" width="24px" height="24px">
-            </button>
+        <div class="row">
+          <div class="col text-left">
+            <h4>Q) Who is your guild master?</h4>
+            <p>
+              <strong>A)</strong> Munsy.
+            </p>
           </div>
         </div>
-        <div class="row" *ngIf="lfm.GetClass('Mage').Need()">
-          <div class="col">
-            <button type="button" class="btn btn-outline-dark border-0 rounded-circle m-1 p-1" *ngIf="lfm.GetClass('Mage').Need()">
-              <img class="rounded-circle" src="assets/classes/icon-mage.png" width="42px" height="42px">
-            </button>
-            <button type="button" class="btn btn-outline-dark rounded-circle m-1 p-1" *ngIf="lfm.GetClass('Mage').GetSpec('Arcane').Need">
-              <img class="rounded-circle" src="assets/classes/mage-arcane.jpg" width="24px" height="24px">
-            </button>
-            <button type="button" class="btn btn-outline-dark rounded-circle m-1 p-1" *ngIf="lfm.GetClass('Mage').GetSpec('Frost').Need">
-              <img class="rounded-circle" src="assets/classes/mage-frost.jpg" width="24px" height="24px">
-            </button>
-            <button type="button" class="btn btn-outline-dark rounded-circle m-1 p-1" *ngIf="lfm.GetClass('Mage').GetSpec('Fire').Need">
-              <img class="rounded-circle" src="assets/classes/mage-fire.jpg" width="24px" height="24px">
-            </button>
+        <div class="row">
+          <div class="col text-left">
+            <h4>Q) Who is your raid leader?</h4>
+            <p>
+              <strong>A)</strong> Blaph.
+            </p>
           </div>
         </div>
-        <div class="row" *ngIf="lfm.GetClass('Monk').Need()">
-          <div class="col">
-            <button type="button" class="btn btn-outline-dark border-0 rounded-circle m-1 p-1" *ngIf="lfm.GetClass('Monk').Need()">
-              <img class="rounded-circle" src="assets/classes/icon-monk.png" width="42px" height="42px">
-            </button>
-            <button type="button" class="btn btn-outline-dark rounded-circle m-1 p-1" *ngIf="lfm.GetClass('Monk').GetSpec('Brewmaster').Need">
-              <img class="rounded-circle" src="assets/classes/monk-brewmaster.jpg" width="24px" height="24px">
-            </button>
-            <button type="button" class="btn btn-outline-dark rounded-circle m-1 p-1" *ngIf="lfm.GetClass('Monk').GetSpec('Mistweaver').Need">
-              <img class="rounded-circle" src="assets/classes/monk-mistweaver.jpg" width="24px" height="24px">
-            </button>
-            <button type="button" class="btn btn-outline-dark rounded-circle m-1 p-1" *ngIf="lfm.GetClass('Monk').GetSpec('Windwalker').Need">
-              <img class="rounded-circle" src="assets/classes/monk-windwalker.jpg" width="24px" height="24px">
-            </button>
+        <div class="row">
+          <div class="col text-left">
+            <h4>Q) How many officers and/or class leaders do you have?</h4>
+            <p>
+              <strong>A)</strong> We have two officers: Blaph and Xavill. We don't have class leaders and probably never will.
+            </p>
           </div>
         </div>
-        <div class="row" *ngIf="lfm.GetClass('Paladin').Need()">
-          <div class="col">
-            <button type="button" class="btn btn-outline-dark border-0 rounded-circle m-1 p-1" *ngIf="lfm.GetClass('Paladin').Need()">
-              <img class="rounded-circle" src="assets/classes/icon-paladin.png" width="42px" height="42px">
-            </button>
-            <button type="button" class="btn btn-outline-dark rounded-circle m-1 p-1" *ngIf="lfm.GetClass('Paladin').GetSpec('Holy').Need">
-              <img class="rounded-circle" src="assets/classes/paladin-holy.jpg" width="24px" height="24px">
-            </button>
-            <button type="button" class="btn btn-outline-dark rounded-circle m-1 p-1" *ngIf="lfm.GetClass('Paladin').GetSpec('Protection').Need">
-              <img class="rounded-circle" src="assets/classes/paladin-protection.jpg" width="24px" height="24px">
-            </button>
-            <button type="button" class="btn btn-outline-dark rounded-circle m-1 p-1" *ngIf="lfm.GetClass('Paladin').GetSpec('Retribution').Need">
-              <img class="rounded-circle" src="assets/classes/paladin-retribution.jpg" width="24px" height="24px">
-            </button>
+        <div class="row">
+          <div class="col text-left">
+            <h4>Q) What is the atmosphere in your guild like?</h4>
+            <p>
+              <strong>A)</strong> We like to joke around during downtime, but we expect raiding time to be serious business, particularly when we're progressing through a new tier. It's important to keep in mind that we have a limited amount of time each week to try to get through an entire raid, and that any time we squander early on will have a non-trivial impact on how we perform during the rest of the tier. Once we have content on farm, then we can commence with memes and general mayhem. However, until that time comes, focus in raids will be our top priority.
+            </p>
           </div>
         </div>
-        <div class="row" *ngIf="lfm.GetClass('Priest').Need()">
-          <div class="col">
-            <button type="button" class="btn btn-outline-dark border-0 rounded-circle m-1 p-1" *ngIf="lfm.GetClass('Priest').Need()">
-              <img class="rounded-circle" src="assets/classes/icon-priest.png" width="42px" height="42px">
-            </button>
-            <button type="button" class="btn btn-outline-dark rounded-circle m-1 p-1" *ngIf="lfm.GetClass('Priest').GetSpec('Discipline').Need">
-              <img class="rounded-circle" src="assets/classes/priest-discipline.jpg" width="24px" height="24px">
-            </button>
-            <button type="button" class="btn btn-outline-dark rounded-circle m-1 p-1" *ngIf="lfm.GetClass('Priest').GetSpec('Holy').Need">
-              <img class="rounded-circle" src="assets/classes/priest-holy.jpg" width="24px" height="24px">
-            </button>
-            <button type="button" class="btn btn-outline-dark rounded-circle m-1 p-1" *ngIf="lfm.GetClass('Priest').GetSpec('Shadow').Need">
-              <img class="rounded-circle" src="assets/classes/priest-shadow.jpg" width="24px" height="24px">
-            </button>
-          </div>
-        </div>
-        <div class="row" *ngIf="lfm.GetClass('Rogue').Need()">
-          <div class="col">
-            <button type="button" class="btn btn-outline-dark border-0 rounded-circle m-1 p-1" *ngIf="lfm.GetClass('Rogue').Need()">
-              <img class="rounded-circle" src="assets/classes/icon-rogue.png" width="42px" height="42px">
-            </button>
-            <button type="button" class="btn btn-outline-dark rounded-circle m-1 p-1" *ngIf="lfm.GetClass('Rogue').GetSpec('Assassination').Need">
-              <img class="rounded-circle" src="assets/classes/rogue-assassination.jpg" width="24px" height="24px">
-            </button>
-            <button type="button" class="btn btn-outline-dark rounded-circle m-1 p-1" *ngIf="lfm.GetClass('Rogue').GetSpec('Outlaw').Need">
-              <img class="rounded-circle" src="assets/classes/rogue-outlaw.jpg" width="24px" height="24px">
-            </button>
-            <button type="button" class="btn btn-outline-dark rounded-circle m-1 p-1" *ngIf="lfm.GetClass('Rogue').GetSpec('Subtlety').Need">
-              <img class="rounded-circle" src="assets/classes/rogue-subtlety.jpg" width="24px" height="24px">
-            </button>
-          </div>
-        </div>
-        <div class="row" *ngIf="lfm.GetClass('Shaman').Need()">
-          <div class="col">
-            <button type="button" class="btn btn-outline-dark border-0 rounded-circle m-1 p-1" *ngIf="lfm.GetClass('Shaman').Need()">
-              <img class="rounded-circle" src="assets/classes/icon-shaman.png" width="42px" height="42px">
-            </button>
-            <button type="button" class="btn btn-outline-dark rounded-circle m-1 p-1" *ngIf="lfm.GetClass('Shaman').GetSpec('Elemental').Need">
-              <img class="rounded-circle" src="assets/classes/shaman-elemental.jpg" width="24px" height="24px">
-            </button>
-            <button type="button" class="btn btn-outline-dark rounded-circle m-1 p-1" *ngIf="lfm.GetClass('Shaman').GetSpec('Enhancement').Need">
-              <img class="rounded-circle" src="assets/classes/shaman-enhancement.jpg" width="24px" height="24px">
-            </button>
-            <button type="button" class="btn btn-outline-dark rounded-circle m-1 p-1" *ngIf="lfm.GetClass('Shaman').GetSpec('Restoration').Need">
-              <img class="rounded-circle" src="assets/classes/shaman-restoration.jpg" width="24px" height="24px">
-            </button>
-          </div>
-        </div>
-        <div class="row" *ngIf="lfm.GetClass('Warlock').Need()">
-          <div class="col">
-            <button type="button" class="btn btn-outline-dark border-0 rounded-circle m-1 p-1" *ngIf="lfm.GetClass('Warlock').Need()">
-              <img class="rounded-circle" src="assets/classes/icon-warlock.png" width="42px" height="42px">
-            </button>
-            <button type="button" class="btn btn-outline-dark rounded-circle m-1 p-1" *ngIf="lfm.GetClass('Warlock').GetSpec('Affliction').Need">
-              <img class="rounded-circle" src="assets/classes/warlock-affliction.jpg" width="24px" height="24px">
-            </button>
-            <button type="button" class="btn btn-outline-dark rounded-circle m-1 p-1" *ngIf="lfm.GetClass('Warlock').GetSpec('Demonology').Need">
-              <img class="rounded-circle" src="assets/classes/warlock-demonology.jpg" width="24px" height="24px">
-            </button>
-            <button type="button" class="btn btn-outline-dark rounded-circle m-1 p-1" *ngIf="lfm.GetClass('Warlock').GetSpec('Destruction').Need">
-              <img class="rounded-circle" src="assets/classes/warlock-destruction.jpg" width="24px" height="24px">
-            </button>
-          </div>
-        </div>
-        <div class="row" *ngIf="lfm.GetClass('Warrior').Need()">
-          <div class="col">
-            <button type="button" class="btn btn-outline-dark border-0 rounded-circle m-1 p-1" *ngIf="lfm.GetClass('Warrior').Need()">
-              <img class="rounded-circle" src="assets/classes/icon-warrior.png" width="42px" height="42px">
-            </button>
-            <button type="button" class="btn btn-outline-dark rounded-circle m-1 p-1" *ngIf="lfm.GetClass('Warrior').GetSpec('Arms').Need">
-              <img class="rounded-circle" src="assets/classes/warrior-arms.jpg" width="24px" height="24px">
-            </button>
-            <button type="button" class="btn btn-outline-dark rounded-circle m-1 p-1" *ngIf="lfm.GetClass('Warrior').GetSpec('Fury').Need">
-              <img class="rounded-circle" src="assets/classes/warrior-fury.jpg" width="24px" height="24px">
-            </button>
-            <button type="button" class="btn btn-outline-dark rounded-circle m-1 p-1" *ngIf="lfm.GetClass('Warrior').GetSpec('Protection').Need">
-              <img class="rounded-circle" src="assets/classes/warrior-protection.jpg" width="24px" height="24px">
-            </button>
+        <div class="row">
+          <div class="col text-left">
+            <h4>Q) I'm interested in applying to your guild! What does the ideal candidate look like in your mind?</h4>
+            <p>
+              <strong>A)</strong> The ideal candidate will be brought along to every raid and will be constantly sought after for mythic+ runs. They will have a sense of humor, as well as a strong desire to constantly learn and improve. We require a few addons for raiding, but you likely will already possess most, if not all of them.
+            </p>
           </div>
         </div>
       </div>
+      <div class="col-md-4"></div>
     </div>
   </div>
-  <div class="row py-4">
-    <div class="col-md-4"></div>
-    <div class="col text-center">
-      <a class="btn btn-primary rounded-pill mx-1 px-5" href="https://bit.ly/apply_to_the_nomads_guild" role="button" target="_blank" *ngIf="lfm.Need()">Apply Now!</a>
+  <div class="collapse show multi-collapse" id="collapse-recruitment">
+    <div class="row py-1">
+      <div class="col-md-2"></div>
+      <div class="col text-center">
+        <h2>We're recruiting!</h2>
+      </div>
+      <div class="col-md-2"></div>
     </div>
-    <div class="col-md-4"></div>
+    <div class="row py-1">
+      <div class="col-md-4"></div>
+      <div class="col text-left">
+        <div *ngIf="lfm.Need()">
+          <div class="row" *ngIf="lfm.GetClass('DeathKnight').Need()">
+            <div class="col">
+              <button type="button" class="btn btn-outline-dark border-0 rounded-circle mt-1 mr-1 p-1" *ngIf="lfm.GetClass('DeathKnight').Need()">
+                <img class="rounded-circle" src="assets/classes/icon-death-knight.png" width="42px" height="42px">
+              </button>
+              <button type="button" class="btn btn-outline-dark rounded-circle mt-1 mr-1 p-1" *ngIf="lfm.GetClass('DeathKnight').GetSpec('Blood').Need">
+                <img class="rounded-circle" src="assets/classes/deathknight-blood.jpg" width="24px" height="24px">
+              </button>
+              <button type="button" class="btn btn-outline-dark rounded-circle mt-1 mr-1 p-1" *ngIf="lfm.GetClass('DeathKnight').GetSpec('Frost').Need">
+                <img class="rounded-circle" src="assets/classes/deathknight-frost.jpg" width="24px" height="24px">
+              </button>
+              <button type="button" class="btn btn-outline-dark rounded-circle mt-1 mr-1 p-1" *ngIf="lfm.GetClass('DeathKnight').GetSpec('Unholy').Need">
+                <img class="rounded-circle" src="assets/classes/deathknight-unholy.jpg" width="24px" height="24px">
+              </button>
+            </div>
+          </div>
+          <div class="row" *ngIf="lfm.GetClass('DemonHunter').Need()">
+            <div class="col">
+              <button type="button" class="btn btn-outline-dark border-0 rounded-circle mt-1 mr-1 p-1" *ngIf="lfm.GetClass('DemonHunter').Need()">
+                <img class="rounded-circle" src="assets/classes/icon-demon-hunter.png" width="42px" height="42px">
+              </button>
+              <button type="button" class="btn btn-outline-dark rounded-circle mt-1 mr-1 p-1" *ngIf="lfm.GetClass('DemonHunter').GetSpec('Vengeance').Need">
+                <img class="rounded-circle" src="assets/classes/demonhunter-vengeance.jpg" width="24px" height="24px">
+              </button>
+              <button type="button" class="btn btn-outline-dark rounded-circle mt-1 mr-1 p-1" *ngIf="lfm.GetClass('DemonHunter').GetSpec('Havoc').Need">
+                <img class="rounded-circle" src="assets/classes/demonhunter-havoc.jpg" width="24px" height="24px">
+              </button>
+            </div>
+          </div>
+          <div class="row" *ngIf="lfm.GetClass('Druid').Need()">
+            <div class="col">
+              <button type="button" class="btn btn-outline-dark border-0 rounded-circle mt-1 mr-1 p-1" *ngIf="lfm.GetClass('Druid').Need()">
+                <img class="rounded-circle" src="assets/classes/icon-druid.png" width="42px" height="42px">
+              </button>
+              <button type="button" class="btn btn-outline-dark rounded-circle mt-1 mr-1 p-1" *ngIf="lfm.GetClass('Druid').GetSpec('Balance').Need">
+                <img class="rounded-circle" src="assets/classes/druid-balance.jpg" width="24px" height="24px">
+              </button>
+              <button type="button" class="btn btn-outline-dark rounded-circle mt-1 mr-1 p-1" *ngIf="lfm.GetClass('Druid').GetSpec('Feral').Need">
+                <img class="rounded-circle" src="assets/classes/druid-feral.jpg" width="24px" height="24px">
+              </button>
+              <button type="button" class="btn btn-outline-dark rounded-circle mt-1 mr-1 p-1" *ngIf="lfm.GetClass('Druid').GetSpec('Guardian').Need">
+                <img class="rounded-circle" src="assets/classes/druid-guardian.jpg" width="24px" height="24px">
+              </button>
+              <button type="button" class="btn btn-outline-dark rounded-circle mt-1 mr-1 p-1" *ngIf="lfm.GetClass('Druid').GetSpec('Restoration').Need">
+                <img class="rounded-circle" src="assets/classes/druid-restoration.jpg" width="24px" height="24px">
+              </button>
+            </div>
+          </div>
+          <div class="row" *ngIf="lfm.GetClass('Hunter').Need()">
+            <div class="col">
+              <button type="button" class="btn btn-outline-dark border-0 rounded-circle mt-1 mr-1 p-1" *ngIf="lfm.GetClass('Hunter').Need()">
+                <img class="rounded-circle" src="assets/classes/icon-hunter.png" width="42px" height="42px">
+              </button>
+              <button type="button" class="btn btn-outline-dark rounded-circle mt-1 mr-1 p-1" *ngIf="lfm.GetClass('Hunter').GetSpec('Beast Mastery').Need">
+                <img class="rounded-circle" src="assets/classes/hunter-beastmastery.jpg" width="24px" height="24px">
+              </button>
+              <button type="button" class="btn btn-outline-dark rounded-circle mt-1 mr-1 p-1" *ngIf="lfm.GetClass('Hunter').GetSpec('Marksmanship').Need">
+                <img class="rounded-circle" src="assets/classes/hunter-marksmanship.jpg" width="24px" height="24px">
+              </button>
+              <button type="button" class="btn btn-outline-dark rounded-circle mt-1 mr-1 p-1" *ngIf="lfm.GetClass('Hunter').GetSpec('Survival').Need">
+                <img class="rounded-circle" src="assets/classes/hunter-survival.jpg" width="24px" height="24px">
+              </button>
+            </div>
+          </div>
+          <div class="row" *ngIf="lfm.GetClass('Mage').Need()">
+            <div class="col">
+              <button type="button" class="btn btn-outline-dark border-0 rounded-circle mt-1 mr-1 p-1" *ngIf="lfm.GetClass('Mage').Need()">
+                <img class="rounded-circle" src="assets/classes/icon-mage.png" width="42px" height="42px">
+              </button>
+              <button type="button" class="btn btn-outline-dark rounded-circle mt-1 mr-1 p-1" *ngIf="lfm.GetClass('Mage').GetSpec('Arcane').Need">
+                <img class="rounded-circle" src="assets/classes/mage-arcane.jpg" width="24px" height="24px">
+              </button>
+              <button type="button" class="btn btn-outline-dark rounded-circle mt-1 mr-1 p-1" *ngIf="lfm.GetClass('Mage').GetSpec('Frost').Need">
+                <img class="rounded-circle" src="assets/classes/mage-frost.jpg" width="24px" height="24px">
+              </button>
+              <button type="button" class="btn btn-outline-dark rounded-circle mt-1 mr-1 p-1" *ngIf="lfm.GetClass('Mage').GetSpec('Fire').Need">
+                <img class="rounded-circle" src="assets/classes/mage-fire.jpg" width="24px" height="24px">
+              </button>
+            </div>
+          </div>
+          <div class="row" *ngIf="lfm.GetClass('Monk').Need()">
+            <div class="col">
+              <button type="button" class="btn btn-outline-dark border-0 rounded-circle mt-1 mr-1 p-1" *ngIf="lfm.GetClass('Monk').Need()">
+                <img class="rounded-circle" src="assets/classes/icon-monk.png" width="42px" height="42px">
+              </button>
+              <button type="button" class="btn btn-outline-dark rounded-circle mt-1 mr-1 p-1" *ngIf="lfm.GetClass('Monk').GetSpec('Brewmaster').Need">
+                <img class="rounded-circle" src="assets/classes/monk-brewmaster.jpg" width="24px" height="24px">
+              </button>
+              <button type="button" class="btn btn-outline-dark rounded-circle mt-1 mr-1 p-1" *ngIf="lfm.GetClass('Monk').GetSpec('Mistweaver').Need">
+                <img class="rounded-circle" src="assets/classes/monk-mistweaver.jpg" width="24px" height="24px">
+              </button>
+              <button type="button" class="btn btn-outline-dark rounded-circle mt-1 mr-1 p-1" *ngIf="lfm.GetClass('Monk').GetSpec('Windwalker').Need">
+                <img class="rounded-circle" src="assets/classes/monk-windwalker.jpg" width="24px" height="24px">
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="lfm.Need()">
+        <div class="col text-left">
+          <div class="row" *ngIf="lfm.GetClass('Paladin').Need()">
+            <div class="col">
+              <button type="button" class="btn btn-outline-dark border-0 rounded-circle mt-1 mr-1 p-1" *ngIf="lfm.GetClass('Paladin').Need()">
+                <img class="rounded-circle" src="assets/classes/icon-paladin.png" width="42px" height="42px">
+              </button>
+              <button type="button" class="btn btn-outline-dark rounded-circle mt-1 mr-1 p-1" *ngIf="lfm.GetClass('Paladin').GetSpec('Holy').Need">
+                <img class="rounded-circle" src="assets/classes/paladin-holy.jpg" width="24px" height="24px">
+              </button>
+              <button type="button" class="btn btn-outline-dark rounded-circle mt-1 mr-1 p-1" *ngIf="lfm.GetClass('Paladin').GetSpec('Protection').Need">
+                <img class="rounded-circle" src="assets/classes/paladin-protection.jpg" width="24px" height="24px">
+              </button>
+              <button type="button" class="btn btn-outline-dark rounded-circle mt-1 mr-1 p-1" *ngIf="lfm.GetClass('Paladin').GetSpec('Retribution').Need">
+                <img class="rounded-circle" src="assets/classes/paladin-retribution.jpg" width="24px" height="24px">
+              </button>
+            </div>
+          </div>
+          <div class="row" *ngIf="lfm.GetClass('Priest').Need()">
+            <div class="col">
+              <button type="button" class="btn btn-outline-dark border-0 rounded-circle mt-1 mr-1 p-1" *ngIf="lfm.GetClass('Priest').Need()">
+                <img class="rounded-circle" src="assets/classes/icon-priest.png" width="42px" height="42px">
+              </button>
+              <button type="button" class="btn btn-outline-dark rounded-circle mt-1 mr-1 p-1" *ngIf="lfm.GetClass('Priest').GetSpec('Discipline').Need">
+                <img class="rounded-circle" src="assets/classes/priest-discipline.jpg" width="24px" height="24px">
+              </button>
+              <button type="button" class="btn btn-outline-dark rounded-circle mt-1 mr-1 p-1" *ngIf="lfm.GetClass('Priest').GetSpec('Holy').Need">
+                <img class="rounded-circle" src="assets/classes/priest-holy.jpg" width="24px" height="24px">
+              </button>
+              <button type="button" class="btn btn-outline-dark rounded-circle mt-1 mr-1 p-1" *ngIf="lfm.GetClass('Priest').GetSpec('Shadow').Need">
+                <img class="rounded-circle" src="assets/classes/priest-shadow.jpg" width="24px" height="24px">
+              </button>
+            </div>
+          </div>
+          <div class="row" *ngIf="lfm.GetClass('Rogue').Need()">
+            <div class="col">
+              <button type="button" class="btn btn-outline-dark border-0 rounded-circle mt-1 mr-1 p-1" *ngIf="lfm.GetClass('Rogue').Need()">
+                <img class="rounded-circle" src="assets/classes/icon-rogue.png" width="42px" height="42px">
+              </button>
+              <button type="button" class="btn btn-outline-dark rounded-circle mt-1 mr-1 p-1" *ngIf="lfm.GetClass('Rogue').GetSpec('Assassination').Need">
+                <img class="rounded-circle" src="assets/classes/rogue-assassination.jpg" width="24px" height="24px">
+              </button>
+              <button type="button" class="btn btn-outline-dark rounded-circle mt-1 mr-1 p-1" *ngIf="lfm.GetClass('Rogue').GetSpec('Outlaw').Need">
+                <img class="rounded-circle" src="assets/classes/rogue-outlaw.jpg" width="24px" height="24px">
+              </button>
+              <button type="button" class="btn btn-outline-dark rounded-circle mt-1 mr-1 p-1" *ngIf="lfm.GetClass('Rogue').GetSpec('Subtlety').Need">
+                <img class="rounded-circle" src="assets/classes/rogue-subtlety.jpg" width="24px" height="24px">
+              </button>
+            </div>
+          </div>
+          <div class="row" *ngIf="lfm.GetClass('Shaman').Need()">
+            <div class="col">
+              <button type="button" class="btn btn-outline-dark border-0 rounded-circle mt-1 mr-1 p-1" *ngIf="lfm.GetClass('Shaman').Need()">
+                <img class="rounded-circle" src="assets/classes/icon-shaman.png" width="42px" height="42px">
+              </button>
+              <button type="button" class="btn btn-outline-dark rounded-circle mt-1 mr-1 p-1" *ngIf="lfm.GetClass('Shaman').GetSpec('Elemental').Need">
+                <img class="rounded-circle" src="assets/classes/shaman-elemental.jpg" width="24px" height="24px">
+              </button>
+              <button type="button" class="btn btn-outline-dark rounded-circle mt-1 mr-1 p-1" *ngIf="lfm.GetClass('Shaman').GetSpec('Enhancement').Need">
+                <img class="rounded-circle" src="assets/classes/shaman-enhancement.jpg" width="24px" height="24px">
+              </button>
+              <button type="button" class="btn btn-outline-dark rounded-circle mt-1 mr-1 p-1" *ngIf="lfm.GetClass('Shaman').GetSpec('Restoration').Need">
+                <img class="rounded-circle" src="assets/classes/shaman-restoration.jpg" width="24px" height="24px">
+              </button>
+            </div>
+          </div>
+          <div class="row" *ngIf="lfm.GetClass('Warlock').Need()">
+            <div class="col">
+              <button type="button" class="btn btn-outline-dark border-0 rounded-circle mt-1 mr-1 p-1" *ngIf="lfm.GetClass('Warlock').Need()">
+                <img class="rounded-circle" src="assets/classes/icon-warlock.png" width="42px" height="42px">
+              </button>
+              <button type="button" class="btn btn-outline-dark rounded-circle mt-1 mr-1 p-1" *ngIf="lfm.GetClass('Warlock').GetSpec('Affliction').Need">
+                <img class="rounded-circle" src="assets/classes/warlock-affliction.jpg" width="24px" height="24px">
+              </button>
+              <button type="button" class="btn btn-outline-dark rounded-circle mt-1 mr-1 p-1" *ngIf="lfm.GetClass('Warlock').GetSpec('Demonology').Need">
+                <img class="rounded-circle" src="assets/classes/warlock-demonology.jpg" width="24px" height="24px">
+              </button>
+              <button type="button" class="btn btn-outline-dark rounded-circle mt-1 mr-1 p-1" *ngIf="lfm.GetClass('Warlock').GetSpec('Destruction').Need">
+                <img class="rounded-circle" src="assets/classes/warlock-destruction.jpg" width="24px" height="24px">
+              </button>
+            </div>
+          </div>
+          <div class="row" *ngIf="lfm.GetClass('Warrior').Need()">
+            <div class="col">
+              <button type="button" class="btn btn-outline-dark border-0 rounded-circle mt-1 mr-1 p-1" *ngIf="lfm.GetClass('Warrior').Need()">
+                <img class="rounded-circle" src="assets/classes/icon-warrior.png" width="42px" height="42px">
+              </button>
+              <button type="button" class="btn btn-outline-dark rounded-circle mt-1 mr-1 p-1" *ngIf="lfm.GetClass('Warrior').GetSpec('Arms').Need">
+                <img class="rounded-circle" src="assets/classes/warrior-arms.jpg" width="24px" height="24px">
+              </button>
+              <button type="button" class="btn btn-outline-dark rounded-circle mt-1 mr-1 p-1" *ngIf="lfm.GetClass('Warrior').GetSpec('Fury').Need">
+                <img class="rounded-circle" src="assets/classes/warrior-fury.jpg" width="24px" height="24px">
+              </button>
+              <button type="button" class="btn btn-outline-dark rounded-circle mt-1 mr-1 p-1" *ngIf="lfm.GetClass('Warrior').GetSpec('Protection').Need">
+                <img class="rounded-circle" src="assets/classes/warrior-protection.jpg" width="24px" height="24px">
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4"></div>
+    </div>
+    <div class="row py-4">
+      <div class="col-md-4"></div>
+      <div class="col text-center">
+        <a class="btn btn-primary rounded-pill mx-1 px-5" href="https://bit.ly/apply_to_the_nomads_guild" role="button" target="_blank" *ngIf="lfm.Need()">Apply Now!</a>
+      </div>
+      <div class="col-md-4"></div>
+    </div>
   </div>
+  <!--/router-outlet-->
   <footer class="footer fixed-bottom">
-    <div class="row pb-2 pr-1">
+    <div class="row pb-2 pr-3">
       <div class="col text-right">
         <a href="https://worldofwarcraft.com/en-us/guild/us/thrall/the-nomads" target="_blank">
           <img src="assets/wow-icon.png" width="32px" height="32px">
