@@ -14,24 +14,16 @@ export class AppComponent {
 
   constructor() {
   	this.lfm = new Recruitment();
-    this.lfm.SetStatus('DeathKnight', 'Frost');
-    this.lfm.SetStatus('DeathKnight', 'Unholy');
-  	this.lfm.SetStatus('DemonHunter', 'Havoc');
-    this.lfm.SetStatus('Druid', 'Restoration');
     this.lfm.SetStatus('Druid', 'Balance');
     this.lfm.SetStatus('Druid', 'Feral');
-    this.lfm.SetStatus('Hunter', '*');
-  	this.lfm.SetStatus('Mage', '*');
     this.lfm.SetStatus('Monk', 'Mistweaver');
     this.lfm.SetStatus('Monk', 'Windwalker');
-    this.lfm.SetStatus('Paladin', 'Retribution');
+    this.lfm.SetStatus('Mage', '*');
     this.lfm.SetStatus('Paladin', 'Holy');
-  	this.lfm.SetStatus('Priest', '*');
-    this.lfm.SetStatus('Rogue', '*');
-  	this.lfm.SetStatus('Shaman', '*');
-  	this.lfm.SetStatus('Warlock', '*');
+    this.lfm.SetStatus('Paladin', 'Retribution');
     this.lfm.SetStatus('Warrior', 'Arms');
     this.lfm.SetStatus('Warrior', 'Fury');
+    this.lfm.SetStatus('DemonHunter', 'Havoc');
   }
 
   public about() {
